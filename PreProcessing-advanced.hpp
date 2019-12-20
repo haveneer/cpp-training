@@ -1,4 +1,5 @@
-// Advanced headers
+// Advanced include guard
+// Portability cf https://en.wikipedia.org/wiki/Pragma_once#Portability
 #pragma once
 
 // more portable than #warning (cf MSVC)

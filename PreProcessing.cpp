@@ -1,7 +1,7 @@
 // Standard system include
 #include <iostream>
 
-// First time (use headers)
+// First time (user headers)
 #include "PreProcessing-advanced.hpp"
 #include "PreProcessing-simple.hpp"
 
