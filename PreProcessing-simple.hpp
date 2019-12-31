@@ -1,3 +1,5 @@
+/* PreProcessing-simple.hpp */
+
 #ifndef CPP_TRAINING_PREPROCESSING_SIMPLE_HPP
 #define CPP_TRAINING_PREPROCESSING_SIMPLE_HPP
 // Il est de votre responsabilité de choisir un "guard" non ambigü

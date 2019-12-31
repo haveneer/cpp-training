@@ -1,3 +1,4 @@
+//#region [declarations]
 // Example from https://www.codingame.com/playgrounds/2205/7-features-of-c17-that-will-simplify-your-code/structured-bindings
 
 #include <cstdlib>
@@ -7,8 +8,8 @@
 #include <string>
 
 #include <tuple>
+//#endregion
 
-// { autofold
 struct S {
   int n;
   std::string s;
@@ -20,7 +21,6 @@ struct S {
     return std::tie(n, s, d) < std::tie(rhs.n, rhs.s, rhs.d);
   }
 };
-// }
 
 int main() {
   std::set<S> mySet;
