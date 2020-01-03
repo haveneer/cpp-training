@@ -12,43 +12,47 @@ std::ostream &operator<<(std::ostream &o,
   return o << std::chrono::duration_cast<output_unit>(d).count();
 }
 
-std::ostream &operator<<(std::ostream &o, const std::nullptr_t & p) {
+std::ostream &operator<<(std::ostream &o, const std::nullptr_t &p) {
   return o << static_cast<void *>(p);
 }
+
+#include <iomanip>
+#define DISPLAY(obj)                                                           \
+  std::cout << std::setw(59) << #obj << " : " << obj << std::endl;
 
 int main() {
   // clang-format off
   //#endregion
-  std::cout << nullptr                                                     << std::endl;
-  std::cout << true                                                        << std::endl;
-  std::cout << false                                                       << std::endl;
-  std::cout << "Hello, world"                                              << std::endl;
-  std::cout << "\\How\nare\tyou\x20?"                                      << std::endl;
-  std::cout << u"\\How\nare\tyou\x20?" /* C++11 */                         << std::endl;
-  std::cout << R"delim(Ce que vous voulez même des trucs "bizarres")delim" << std::endl;
-  std::cout << 'W'                                                         << std::endl;
-  std::cout << '+'                                                         << std::endl;
-  std::cout << 314                                                         << std::endl;
-  std::cout << 314U                                                        << std::endl;
-  std::cout << 18446744073709550592ull /* C++11 */                         << std::endl;
-  std::cout << 0b100111 /* C++14 */                                        << std::endl;
-  std::cout << 012345670                                                   << std::endl;
-  std::cout << 0x123DEF                                                    << std::endl;
-  std::cout << 6'700'417                                                   << std::endl;
-  std::cout << 3.1415                                                      << std::endl;
-  std::cout << 3.1415f                                                     << std::endl;
-  std::cout << 3.1415L                                                     << std::endl;
-  std::cout << 1.23456789e-10                                              << std::endl;
-  std::cout << 0xf.fp0f                                                    << std::endl;
-  std::cout << 0x1p10L                                                     << std::endl;
+  DISPLAY( nullptr                                                     ); /* C++11 */
+  DISPLAY( true                                                        );
+  DISPLAY( false                                                       );
+  DISPLAY( "Hello, world"                                              );
+  DISPLAY( "\\How\nare\tyou\x20?"                                      );
+  DISPLAY( u"\\How\nare\tyou\x20?"                                     ); /* C++11 */
+  DISPLAY( R"delim(Ce que vous voulez même des trucs "bizarres")delim" ); /* C++11 */
+  DISPLAY( 'W'                                                         );
+  DISPLAY( '+'                                                         );
+  DISPLAY( 314                                                         );
+  DISPLAY( 314U                                                        );
+  DISPLAY( 18446744073709550592ull                                     ); /* C++11 */
+  DISPLAY( 0b100111                                                    ); /* C++14 */
+  DISPLAY( 012345670                                                   );
+  DISPLAY( 0x123DEF                                                    );
+  DISPLAY( 6'700'417                                                   );
+  DISPLAY( 3.1415                                                      );
+  DISPLAY( 3.1415f                                                     );
+  DISPLAY( 3.1415L                                                     );
+  DISPLAY( 1.23456789e-10                                              );
+  DISPLAY( 0xf.fp0f                                                    );
+  DISPLAY( 0x1p10L                                                     );
 
-  using namespace std::literals::complex_literals; // cf std::complex C++14
-  std::cout << 5i                                                          << std::endl;
-  std::cout << 5if                                                         << std::endl;
+  using namespace std::literals::complex_literals;
+  DISPLAY( 5i                                                          ); /* C++14 */
+  DISPLAY( 5if                                                         ); /* C++14 */
 
-  using namespace std::chrono_literals; // cf std::chrono C++14
-  std::cout << 5min                                                        << std::endl;
-  std::cout << 5ms                                                         << std::endl;
+  using namespace std::chrono_literals;
+  DISPLAY( 5min                                                        ); /* C++14 */
+  DISPLAY( 5ms                                                         ); /* C++14 */
   //#region [ending]
   // clang-format on
 }
