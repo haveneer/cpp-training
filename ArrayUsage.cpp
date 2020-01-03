@@ -15,7 +15,7 @@ int main() {
   constants[4] = 1.732;
   std::cout << "last value is " << constants[4] << std::endl;
 
-  constants[5] = 0; // compile, run: silent overflow access error !!!
+  // constants[5] = 0; // compile, run: silent overflow access error !!!
 
   //#region [sizeof and pointer]
   // The array only contains its values

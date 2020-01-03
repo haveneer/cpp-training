@@ -11,7 +11,7 @@ int simple_function(int x) {
 #include <cmath>
 
 int main() {
-    std::cout << simple_function(2)
+    std::cout << simple_function(2);
 
 
 
