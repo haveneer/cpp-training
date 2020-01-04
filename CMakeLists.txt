@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 project(cpp-training)
 
 set(CMAKE_CXX_STANDARD 17)
+add_definitions(-DDEBUG_TYPE)
 
 message(STATUS "Use *.cpp file globbing")
 file(GLOB SRCS "*.cpp")

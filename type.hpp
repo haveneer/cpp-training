@@ -1,4 +1,3 @@
-// from https://stackoverflow.com/questions/281818/unmangling-the-result-of-stdtype-infoname
 #ifndef TYPE_HPP
 #define TYPE_HPP
 
@@ -8,9 +7,25 @@
 std::string demangle(const char* name);
 
 template <class T>
-std::string type(const T& t) {
+inline std::string type() {
+  typedef typename std::remove_reference<T>::type TR;
+  std::string r = demangle(typeid(TR).name());
 
-  return demangle(typeid(t).name());
+  if (std::is_const<TR>::value)
+    r += " const";
+  if (std::is_volatile<TR>::value)
+    r += " volatile";
+  if (std::is_lvalue_reference<T>::value)
+    r += "&";
+  else if (std::is_rvalue_reference<T>::value)
+    r += "&&";
+
+  return r;
+}
+
+template <class T>
+inline std::string type(const T&) {
+  return type<T>();
 }
 
 #ifdef __GNUG__
@@ -20,6 +35,10 @@ std::string type(const T& t) {
 
 // inline to enable .h only
 
+// Use GCC C++ ABI
+// (cf from https://stackoverflow.com/questions/281818/unmangling-the-result-of-stdtype-infoname
+//     and  https://stackoverflow.com/questions/28621844/is-there-a-typeid-for-references )
+//
 inline std::string demangle(const char* name) {
 
   int status = -4; // some arbitrary value to eliminate the compiler warning
@@ -35,7 +54,11 @@ inline std::string demangle(const char* name) {
 
 #else
 
-// does nothing if not g++
+// does nothing if not g++ compatible
+// TODO use portable boost
+// (cf https://stackoverflow.com/questions/38820579/using-auto-type-deduction-how-to-find-out-what-type-the-compiler-deduced
+//     https://stackoverflow.com/questions/28621844/is-there-a-typeid-for-references )
+//        boost::typeindex::type_id_with_cvr<decltype(x)>().pretty_name()
 inline std::string demangle(const char* name) {
     return name;
 }
