@@ -19,6 +19,7 @@ int main() {
   std::cout << "p+1 : " << q << std::endl;
 
   // char * s = &val; // illegal pointer assignment (wrong type)
+  void * v = &val; // void* can point any type
 
   //#region [pointer of pointer on array]
   int c[] = {10, 20, 30, 40, 50};

@@ -12,9 +12,11 @@ std::ostream &operator<<(std::ostream &o,
   return o << std::chrono::duration_cast<output_unit>(d).count();
 }
 
+#ifdef __clang__
 std::ostream &operator<<(std::ostream &o, const std::nullptr_t &p) {
   return o << static_cast<void *>(p);
 }
+#endif
 
 #include <iomanip>
 #define DISPLAY(obj)                                                           \
