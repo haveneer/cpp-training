@@ -1,5 +1,5 @@
 class Point3D {
-public:
+public: // without this, you cannot use this class
   double x,y,z;
 };
 

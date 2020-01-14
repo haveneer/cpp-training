@@ -15,9 +15,10 @@ private:
 public:
   // Constructeur par défaut (pas d'argument)
   Point3D() : Point3D{0} {}
+  // Constructeur par copie (argument du type de la classe courante)
+  Point3D(const Point3D &p);
   // Autres constructeurs
   Point3D(const Value &v) { initialize(v); }
-  Point3D(const Point3D &p);
   // Destructeur [par défaut]
   ~Point3D() = default;
   //#endregion
