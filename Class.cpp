@@ -26,7 +26,7 @@ private: // Private/internal part
 private: // Private/internal part
   // Internal function
   bool validateName(const String &name) const;
-};
+}; // Don't forget this semicolon !!
 
 //#region [Implementation]
 ClassName::ClassName(const String &name) {

@@ -16,6 +16,8 @@ int main() {
   int ta3[5] { 1, 2, 3 }; // fill missing values with 0
   int ta4[ ] { 1, 2, 3, 4, 5 }; // deduce size
   // int ta5[5] { 1, 2, 3, 4, 5, 6 }; // ERROR: too many values
+  int n = 3;
+  int ta6[n]; // C99 style : fill with non-initialized data
 
   std::array<int, 5> tb1; // fill with non-initialized data
   std::array<int, 5> tb2 {}; // fill with 0
@@ -34,6 +36,8 @@ int main() {
   DEBUG_ARRAY(ta2);
   DEBUG_ARRAY(ta3);
   DEBUG_ARRAY(ta4);
+  // DEBUG_ARRAY(ta5);
+  DEBUG_ARRAY(ta6);
   DEBUG_ARRAY(tb1);
   DEBUG_ARRAY(tb2);
   DEBUG_ARRAY(tb3);
