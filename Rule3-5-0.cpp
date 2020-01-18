@@ -33,3 +33,11 @@ public:
 private:
   resource *p;
 };
+
+
+int main() {
+  foo a;
+  foo b;
+  a = b;
+  b = std::move(a);
+}
