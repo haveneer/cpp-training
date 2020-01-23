@@ -4,6 +4,8 @@ project(cpp-training)
 set(CMAKE_CXX_STANDARD 17)
 add_definitions(-DDEBUG_TYPE)
 
+add_executable(manage_test_crash tools/manage_test_crash.c)
+
 message(STATUS "Use *.cpp file globbing")
 file(GLOB SRCS "*.cpp")
 
@@ -26,5 +28,13 @@ foreach(SRC_PATH ${SRCS})
   endif()
 
   add_executable(${EXE} ${SRC} ${HEADERS})
-  add_test(NAME ${TEST} COMMAND ${EXE})
+
+  set(WILL_FAIL_FOUND 0)
+  string(FIND ${SRC} "-will_fail" WILL_FAIL_FOUND)
+  if (${WILL_FAIL_FOUND} EQUAL "-1")
+    add_test(NAME ${TEST} COMMAND ${EXE})
+  else()
+    add_test(NAME ${TEST} COMMAND manage_test_crash ${EXE})
+    set_tests_properties(${TEST} PROPERTIES WILL_FAIL TRUE)
+  endif()
 endforeach()
