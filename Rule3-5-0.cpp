@@ -7,12 +7,12 @@ class resource {
   int x = 0;
 };
 
-class foo {
+class Foo {
 public:
-  foo() : p{new resource{}} {}
-  foo(const foo &other) : p{new resource{*(other.p)}} {}
-  foo(foo &&other) : p{other.p} { other.p = nullptr; }
-  foo &operator=(const foo &other) {
+  Foo() : p{new resource{}} {}
+  Foo(const Foo &other) : p{new resource{*(other.p)}} {}
+  Foo(Foo &&other) : p{other.p} { other.p = nullptr; }
+  Foo &operator=(const Foo &other) {
     if (&other != this) {
       delete p;
       p = nullptr;
@@ -20,7 +20,7 @@ public:
     }
     return *this;
   }
-  foo &operator=(foo &&other) {
+  Foo &operator=(Foo &&other) {
     if (&other != this) {
       delete p;
       p = other.p;
@@ -28,7 +28,7 @@ public:
     }
     return *this;
   }
-  ~foo() { delete p; }
+  ~Foo() { delete p; }
 
 private:
   resource *p;
@@ -36,8 +36,8 @@ private:
 
 
 int main() {
-  foo a;
-  foo b;
+  Foo a;
+  Foo b;
   a = b;
   b = std::move(a);
 }
