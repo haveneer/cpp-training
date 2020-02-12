@@ -28,6 +28,7 @@ int main() {
       throw std::out_of_range("");
   };
 
-  static constexpr int f2 = factorial2(1); // What happens if n is -1 ???
-  return f2;
+  constexpr int n = 1;
+  static constexpr int f2 = factorial2(n); // What happens if n is -1 ???
+  std::cout << n << "! is " << f2 << "\n";
 }
