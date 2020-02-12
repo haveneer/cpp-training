@@ -33,49 +33,24 @@ template <typename T> std::string type() { return typeid(T).name(); }
   }
 //#endregion
 
-auto minimal = [] {}; // do nothing
-auto get1 = [] { return 1; };
-auto sum = [](int a, int b) -> int { return a + b; };
-
 int main() {
-  int x = 2, n = 3;
-  auto f1 = [n]() { return n; };
-  auto f2 = [x](int a, int b) { return a * x + b; };
-  auto f3 = [&x]() -> void { x++; };
-  auto f4 = [&y=x, m=n]() -> void { y *= m; }; // rename capture (C++14)
-  auto f5 = [&]() {
-    n = x;
-    x = 2;
-    return x;
-  };
+  // All these 𝛌-functions are equivalent
+  auto f1 = [] { return 2; };
+  auto f2 = []() { return 2; };
+  auto f3 = [](void) { return 2; };
 
-  f1();
-  f2(2, 4);
-  f3();
-  f4();
-  f5();
-  [&x, n] { x += n; }(); // anonymous
+  // All these 𝛌-functions are equivalent
+  auto g1 = [](int i) { return 2 * i; };
+  auto g2 = [](int i) -> decltype(2 * i) { return 2 * i; };
+  auto g3 = [](int i) -> int { return 2 * i; };
 
-  std::cout << "n = " << n << "; x = " << x << "\n";
   //#region [Show types]
-  std::cout << "------------\n";
   DISPLAY_HEADER();
-  DISPLAY_TYPE(minimal);
-  DISPLAY_TYPE(get1);
-  DISPLAY_TYPE(sum);
   DISPLAY_TYPE(f1);
   DISPLAY_TYPE(f2);
   DISPLAY_TYPE(f3);
-  DISPLAY_TYPE(f4);
-  DISPLAY_TYPE(f5);
-  //#endregion
-
-  //#region [Advanced C++14]
-  std::cout << "------------\n";
-  auto gsum = [](auto a, auto b) { return a + b; };
-  auto as_tuple = [](auto... args) { return std::make_tuple(args...); };
-
-  std::cout << gsum(1.2, 2.4) << "\n";
-  std::cout << gsum(1, 2) << "\n";
+  DISPLAY_TYPE(g1);
+  DISPLAY_TYPE(g2);
+  DISPLAY_TYPE(g3);
   //#endregion
 }
