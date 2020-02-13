@@ -20,7 +20,7 @@ int buggy_function() {
   if (global_object > 0)
     return 1;
   /*
-  // Is it better with this ?
+  // TODO: Is it better with this ?
   else
     return;
   */

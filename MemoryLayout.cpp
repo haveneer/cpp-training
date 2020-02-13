@@ -2,7 +2,7 @@
 #include <iostream>
 //#endregion
 double bss_var2; /* Uninitialized variable stored in bss filled with 0 */
-short bss_var1; /* idem: what happens if bss_var1 is moved before bss_var2 ?? */
+short bss_var1; /* TODO what happens if bss_var1 is moved before bss_var2 ?? */
 
 char data_var[4] = "ABC"; /* Initialized variable stored in data */
 
@@ -11,7 +11,7 @@ int main() {
 
   static char static_var = 'Z'; /* Initialized variable stored in data */
 
-  // What is the result ?? (NB: may change when code optimization is enabled)
+  // TODO: What is the result ? (NB: may change with enabled code optimization)
   std::cout << "result is: " << data_var[4] << std::endl;
 
   //#region [dynamic allocation]

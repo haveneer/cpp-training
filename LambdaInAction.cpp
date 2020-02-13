@@ -9,7 +9,7 @@
 int f1(int a, int b) { return a + 2 * b; }
 
 int main() {
-  // non auto lambda assignment: why ?
+  // TODO: non auto lambda assignment: why ?
   std::function<void(void)> fend = [] { std::cout << "the end\n"; };
 
   std::vector<int> v{1, 2, 3, 4, 5}; // data

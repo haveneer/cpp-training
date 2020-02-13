@@ -29,6 +29,6 @@ int main() {
   };
 
   constexpr int n = 1;
-  static constexpr int f2 = factorial2(n); // What happens if n is -1 ???
+  static constexpr int f2 = factorial2(n); // TODO: What happens if n is -1 ???
   std::cout << n << "! is " << f2 << "\n";
 }

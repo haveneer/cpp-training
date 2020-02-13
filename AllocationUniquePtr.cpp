@@ -36,7 +36,7 @@ auto f_by_ref(std::unique_ptr<Foo> &p) {
 }
 
 auto f_by_move(std::unique_ptr<Foo> &&p) {
-  std::unique_ptr<Foo> &q = p; // what if not ref ?
+  std::unique_ptr<Foo> &q = p; // TODO: what if not ref ?
   std::cout << "By move: " << *q << "\n";
 }
 //#endregion

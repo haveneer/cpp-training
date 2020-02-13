@@ -40,7 +40,7 @@ int main() {
   constexpr const auto static_table = generateTable<20>();
 
   constexpr auto val = 120UL;
-  // auto val = 120UL;           // What happens here ?
-  // constexpr auto val = 121UL; //      and here ?
+  // auto val = 120UL;           // TODO: What happens here ?
+  // constexpr auto val = 121UL; // TODO:      and here ?
   static_assert(findValue(static_table, val), "Not found");
 }

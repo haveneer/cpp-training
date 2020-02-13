@@ -36,7 +36,7 @@ int main() {
     inverseMatrix(m1);
     std::cout << "inverseMatrix(m1) : done\n";
 
-    Matrix * m2 = new Matrix{2}; // Is it a good idea ??
+    Matrix * m2 = new Matrix{2}; // TODO: Is it a good idea ??
     inverseMatrix(*m2);
     std::cout << "inverseMatrix(m2) : done\n";
 
@@ -45,7 +45,7 @@ int main() {
     std::cout << "inverseMatrix(m3) : done\n";
 
     std::cout << m1.value() + m2->value() + m3.value() << '\n';
-    delete m2; // end of m2. Are you sure ?
+    delete m2; // TODO: end of m2. Are you sure ?
   } catch (MyException &e) {
     std::cout << "Catch exception: MyException{" << e.message << "}\n";
   } catch (...) {
