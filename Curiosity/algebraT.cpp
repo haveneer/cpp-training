@@ -591,7 +591,7 @@ void plot(const Function &f, const char *filename) {
   std::ofstream o(filename);
   const Real xmin = -1;
   const Real xmax = +1;
-  const int n = (2 << 22);
+  const int n = (1u << 16u);
 
   Real sum = 0;
   const Real dx = (xmax - xmin) / n;
