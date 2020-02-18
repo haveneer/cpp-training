@@ -24,11 +24,15 @@ public:
     std::cout << "new " << name(this) << " : A(&& " << name(&s) << ")\n";
   }
 
-  ~A() {}
+  ~A() = default;
 
   A &operator=(A const &s) {
-    std::cout << name(this) << " = (const& " << name(&s) << ")\n";
-    data_ = s.data_;
+    if (&s == this) {
+      std::cout << name(this) << " = (const& " << name(&s) << "): self copy\n";
+    } else {
+      std::cout << name(this) << " = (const& " << name(&s) << ")\n";
+      data_ = s.data_;
+    }
     return *this;
   }
 
@@ -49,4 +53,5 @@ int main() {
   b = A{};
   c = b;
   d = std::move(b);
+  d = d;
 }
