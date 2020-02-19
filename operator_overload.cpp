@@ -19,7 +19,7 @@ decltype(auto) operator<<(std::ostream &o, const Number &a) {
   return o << a.val;
 }
 
-// /!\ consitency of your operator overload is your responsability
+// /!\ consistency of your operator overload is your responsability
 Number operator*(const Number &a, const Number &b) { return {a.val - b.val}; }
 
 // Overload with a custom meaning (be careful to associativity and priority)
