@@ -1,16 +1,22 @@
+//#region [Declarations]
 /***********************************************************************
- * algebra.cc : an example of function algebra with differenciation    *
- * This version uses virtual mechanism.                                *
- *                                                                     *
+ * algebraT.cc : an example of function algebra with differenciation    *
  * Author : Pascal Havé (hpwxf@haveneer.com)                           *
  ***********************************************************************/
-
 #include <cmath>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 
-// Faut il optimiser statiquement les expressions ?
+#ifdef DEBUG_TYPE
+#include "../type.hpp" // advanced type printing
+#else
+#include <typeinfo>
+template <typename T> std::string type() { return typeid(T).name(); }
+#endif
+//#endregion
+
+// Enable static optimization of expressions
 #define OPTIMIZE
 
 typedef double Real;
@@ -600,7 +606,7 @@ void plot(const Function &f, const char *filename) {
     sum += f(x);
     // o << x << ' ' << f(x) << '\n';
   }
-  std::cout << "Sum is " << sum << std::endl;
+  // std::cout << "Sum is " << sum << std::endl;
   // auto-close when out of scope
 }
 
@@ -683,6 +689,9 @@ int main() {
 
   //   plot(f,"fT.dat");
   //   plot(d(f),"dfT.dat");
+
+  std::cout << "type of f is " << type<decltype(f)>() << '\n';
+  std::cout << "type of d(f) is " << type<decltype(d(f))>() << '\n';
 
   plot(fC, "fT.dat");
   plot(dfC3, "dfT.dat");
