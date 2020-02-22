@@ -51,13 +51,11 @@ int main() {
   }
 
   //#region [With array allocation]
-  {
-    std::cout << "---------------\n";
-    // std::shared_ptr<Foo[]> q1{new Foo[5]}; // shared ptr on [] requires C++17
-    // std::shared_ptr<Foo[]> q2 = std::make_shared<Foo[]>(5); // requires C++20
+  std::cout << "---------------\n";
+  // std::shared_ptr<Foo[]> q1{new Foo[5]}; // shared ptr on [] requires C++17
+  // std::shared_ptr<Foo[]> q2 = std::make_shared<Foo[]>(5); // requires C++20
 
-    // Hack to manage array with shared_ptr in C++11 (needs delete[] dtor)
-    std::shared_ptr<Foo> q3(new Foo[2], std::default_delete<Foo[]>());
-  }
+  // Hack to manage array with shared_ptr in C++11 (needs delete[] dtor)
+  std::shared_ptr<Foo> q3(new Foo[2], std::default_delete<Foo[]>());
   //#endregion
 }

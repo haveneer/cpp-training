@@ -62,10 +62,9 @@ int main() {
   }
 
   //#region [With array allocation]
-  { // Managing array with unique_ptr is available since C++11
-    std::cout << "---------------\n";
-    std::unique_ptr<Foo[]> q1{new Foo[2]};
-    std::unique_ptr<Foo[]> q2 = std::make_unique<Foo[]>(2); // requires C++14
-  }
+  // Managing array with unique_ptr is available since C++11
+  std::cout << "---------------\n";
+  std::unique_ptr<Foo[]> q1{new Foo[2]};
+  std::unique_ptr<Foo[]> q2 = std::make_unique<Foo[]>(2); // requires C++14
   //#endregion
 }

@@ -28,21 +28,47 @@ private:
 };
 
 int main() {
-  Foo foo{10};
+  Foo foo{10}; // Stack allocation for one Foo object
   std::cout << "foo=(" << foo << ")\n";
 
-  // Default object allocation
+  // Default dynamic object allocation (no initialization)
   int *pa = new int;
   std::cout << "*pa= " << *pa << "\n";
 
-  // Object allocation with given initial value
+  // Object dynamic allocation with given initial value
   int *pb = new int{10};
   std::cout << "*pb= " << *pb << "\n";
 
   int *pc = pb;
   std::cout << "*pc= " << *pc << "\n";
 
-  // delete pc; // don't disallocate pc; it would throw a double-free with pb
-  delete pb; // without this there are memory leaks
-  delete pa;
+  int *pd = new int[10]; // dynamic allocation of not initialized array
+  //#region [Print me]
+  std::cout << "pd=( ";
+  for (int i = 0; i < 10; ++i)
+    std::cout << pd[i] << ' ';
+  std::cout << ")\n";
+  //#endregion
+
+  int *pe = new int[10]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}; // initialized array
+  //#region [Print me]
+  std::cout << "pe=( ";
+  for (int i = 0; i < 10; ++i)
+    std::cout << pe[i] << ' ';
+  std::cout << ")\n";
+  //#endregion
+
+  try {
+    char *p = new char[1ull << 40]; // try to allocate 1To
+    delete[] p;
+  } catch (std::bad_alloc &e) {
+    std::cout << "Cannot allocate a such huge bunch of memory\n";
+  }
+
+  delete[] pe; // without this there are memory leaks /!\ np garbage collector
+  delete[] pd;
+  // delete pc; // don't deallocate pc; it would throw a double-free with pb
+  delete pb;
+  delete pa, pa = nullptr; // reset pointer to nullptr is a good practice
+  delete pa, pa = nullptr; // deleting a nullptr is always valid
 }

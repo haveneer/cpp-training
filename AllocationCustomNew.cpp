@@ -1,6 +1,7 @@
 //#region [Declarations]
 #include <cstddef>
 #include <iostream>
+#include <new>
 
 #if defined(__clang__) && __cplusplus >= 201703L && __clang_major__ < 6
 // This is a minimal workaround for clang 5.0 with missing std::byte type
@@ -62,4 +63,8 @@ int main() {
   std::cout << "foo2=" << *foo2 << ")\n";
   foo2->~Foo(); // rare case of explicit destructor call
   // delete foo2; // do not call it: it was not dynamically allocated
+
+  int *foo3 = new (std::nothrow) int[1ull<<40]; // return nullptr if fails
+  std::cout << "foo3=" << *foo3 << '\n';
+  delete[] foo3; // delete nullptr is legal
 }
