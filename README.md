@@ -1,3 +1,7 @@
+All this material is dedicated to a C++ training given by [me](https://www.haveneer.com).
+
+For more details about this training, contact me [hpwxf@haveneer.com](mailto:hpwxf@haveneer.com).
+
 # cpp-training
 
 * Any file `filename.cpp` is automatically compiled using header `filename-*.hpp`
