@@ -2,7 +2,7 @@
 #include <iostream>
 //#endregion
 double bss_var2; /* Uninitialized variable stored in bss filled with 0 */
-short bss_var1; /* TODO what happens if bss_var1 is moved before bss_var2 ?? */
+short bss_var1;  /* TODO what happens if bss_var1 is moved before bss_var2 ?? */
 
 char data_var[4] = "ABC"; /* Initialized variable stored in data */
 
@@ -17,7 +17,7 @@ int main() {
   //#region [dynamic allocation]
 #if (0)
   /* Dynamic memory allocation in heap */
-  short * heap_var = new short[10000];
+  short *heap_var = new short[10000];
   delete[] heap_var;
 #endif
   //#endregion

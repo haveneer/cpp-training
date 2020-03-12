@@ -10,7 +10,7 @@ public:
 
 class Engineer : public Employee {
 public:
-  Engineer(const std::string & name) :  _name{name} { }
+  Engineer(const std::string &name) : _name{name} {}
   std::string describe() const override { return "[Engineer: " + _name + "]"; }
 
 public:
