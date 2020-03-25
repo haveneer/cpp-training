@@ -1,9 +1,8 @@
 #include <exception>
 #include <iostream>
 
-struct rational {
-  int p;
-  int q;
+struct RationalNumber {
+  int p, q;
 };
 
 // https://en.wikipedia.org/wiki/Euclidean_algorithm
@@ -17,9 +16,9 @@ int pgcd(int u, int v) {
   return v;
 }
 
-rational make_rational(int p) { return {p, 1}; }
+RationalNumber make_rational(int p) { return {p, 1}; }
 
-rational make_rational(int p, int q) {
+RationalNumber make_rational(int p, int q) {
   if (q == 0) {
     throw std::invalid_argument{"Illegal null denominator"};
   }
@@ -33,7 +32,7 @@ rational make_rational(int p, int q) {
   return {sign * p / r, q / r};
 }
 
-std::ostream &operator<<(std::ostream &o, const rational &r) {
+std::ostream &operator<<(std::ostream &o, const RationalNumber &r) {
   if (r.q == 1) {
     return o << r.p;
   } else {
@@ -41,19 +40,19 @@ std::ostream &operator<<(std::ostream &o, const rational &r) {
   }
 }
 
-rational operator+(const rational &r1, const rational &r2) {
+RationalNumber operator+(const RationalNumber &r1, const RationalNumber &r2) {
   return make_rational(r1.p * r2.q + r1.q * r2.p, r1.q * r2.q);
 }
-rational operator+(const rational &r, int &n) {
+RationalNumber operator+(const RationalNumber &r, int &n) {
   return make_rational(r.p + r.q * n, r.q);
 }
-rational operator+(int &n, const rational &r) {
+RationalNumber operator+(int &n, const RationalNumber &r) {
   return make_rational(r.p + r.q * n, r.q);
 }
 
 int main() {
-  rational a = make_rational(1, -2);
-  rational b{1, 1};
+  RationalNumber a = make_rational(1, -2);
+  RationalNumber b{1, 1};
 
   std::cout << a << " + " << b << " = " << (a + b) << '\n';
 }

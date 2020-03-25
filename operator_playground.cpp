@@ -17,5 +17,5 @@ int main() {
   std::cout << "a = " << a << '\n'; // a,
   std::cout << "b = " << b << '\n'; // b,
   std::cout << "c = " << c << '\n'; // c,
-  std::cout << "d = " << d << '\n'; // and d
+  std::cout << "d = " << d << '\n'; // and d ?
 }

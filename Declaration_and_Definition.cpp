@@ -20,7 +20,7 @@ struct Point; // declare structure type `Point`
 void g(Point p); // declare function `g` using not defined (only declared) type p
 // void g(Point p) { } // Cannot define function `h` since p is not fully defined
 
-void h(Point * p) { } // TODO: Well defined; why ?
+void h(Point * p) { } // TODO: Well defined before definition of Point; why ?
 
 struct Point {
   Number x,y,z;
