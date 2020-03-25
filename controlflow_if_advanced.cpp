@@ -38,9 +38,17 @@ constexpr auto architecture_size() {
 FakeMutex mutex;
 extern bool shared_flag; // protected by mutex
 
-int main() {
+int main(int argc, char ** argv) {
   std::cout << "--------------\n";
+  if (int k = argc; argv[k]) {
+    std::cerr << "Catastrophe: last argv should be null\n";
+  }
 
+  // Be careful, if you mix it with comma operator (FIXME)
+  if (int k = argc, argv[k]; true) { // warning: variable length arrays are a C99 feature
+    std::cerr << "What argv is it ? argv[0] = " << argv[0] << "\n";
+  }
+  
   constexpr std::size_t arch = architecture_size();
 
   std::string str = "Hello world; how'r u?";

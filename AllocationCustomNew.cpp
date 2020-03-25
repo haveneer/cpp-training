@@ -2,6 +2,7 @@
 #include <cstddef>
 #include <iostream>
 #include <new>
+#include <memory>
 
 #if defined(__clang__) && __cplusplus >= 201703L && __clang_major__ < 6
 // This is a minimal workaround for clang 5.0 with missing std::byte type

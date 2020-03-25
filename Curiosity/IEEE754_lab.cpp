@@ -9,6 +9,7 @@ using Number = double;
 #include <limits>
 #include <sstream>
 #include <string>
+#include <cstring>
 
 constexpr int bit_size(unsigned long n) {
   // equivalent to fls function (from C lib)

@@ -38,7 +38,7 @@ int main() {
   update(v, 2);
   print(v);
 
-  // no control on accepted type
-  update(v, "string");
+  // lazy control on accepted type
+  update(v, 'c');
   print(v);
 }

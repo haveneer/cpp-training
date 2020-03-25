@@ -1,0 +1,29 @@
+//#region [Declarations]
+#include <cstddef> // std::size_t
+//#endregion
+
+// Requires C++20 ?
+// Clang and GCC not agree
+// https://godbolt.org/#z:OYLghAFBqd5QCxAYwPYBMCmBRdBLAF1QCcAaPECAM1QDsCBlZAQwBtMQBGAFlICsupVs1qhkAUgBMAISnTSAZ0ztkBPHUqZa6AMKpWAVwC2tLgA5SW9ABk8tTADljAI0zEuAZlIAHVAsLqtHqGJuY%2BfgF0tvZORq7unF5KKmp0DATMxATBxqacFsmYqoHpmQTRji5unooZWTmh%2BbVlFbHxngCUiqgGxMgcAOQA9ENSHsSYwIEA1OIArNIAIkXCxMyptArzi%2BIADACCY3bIhlizHjrICgToWFTiHtjTI9PX6CAg/gBemAD6BHt9iMxlYJlM6IDAS8AEqYACOBjwEwU0x0cjkkl2kIOaE2BEwAA9vMRps5UPppvjrr9cddCcSIGSKUZmABrP60/FE4gdWYAdlkB2m0wmBF6tGmLPZNLodO55wAYpTiAZMNMQJSEMRUAB3aZYjyCw58nYHKFDaYAVSU0wYCoAkg59k8iNMqHZ0Jq1WABq5rj7JetkAg7MA3QZaMUIQcXvaqF7NUjPfijN5hPjppkwywJa5pmhUwZ8ehSImUXQ1XgUQQEN7fZh/QNAwRg4CU2n1mqHjpmEXULNJAA2KSDhWl3tEAB00%2Bm%2B2IwAU47750W0wVEDnC%2Bnk46D2wgM59JJTNY0yrMrxR4gdgIvPEAsBwtF4uVqoeRvvpsOMYtyhtdsdZ1ph1PBWFPAhiAATzLaYK3HVgdWYSDy1ZUki0zaZ2AUJQSWJdRiEIaCIGQeNt0zeddwOdt0y7C4J37EcRzHTM%2BzIzctkefNZS5YlSXJU9z0PbkIG3O8BRFTAxWICUqDYJR335L9zWmAAVEMUSoCMowlKsuMveU8HjQhSTVHNpkwAA3NgDE7dAD24o8WNdc9LK0FdZgWbZr3oaZaDE6QJKkiUIAlKQ5mmSQVweVddjvDwlQg1V1U1bU9QNALP3fbF9hvQM7AgfzH2eC1rnWPBkF%2BZhsLcAhrwUC85WJbsXIsrRSw8PcIFi0spEkFqtAgDxeV02hUAIPTGuIXrd0NIrSrUCqqpw2rBIc7lmvq1zaFLSROu6gc%2Bs21raAgSRhpRUbxqEprJDOrKzRNAYulYEABjmAZSFMAZdg%2B1BXrRGQ5FeHo%2Bi7SQPE4D6CFen6Oi6VkQDmSRJ24QchzmABODGh12W65j5OYhFe7gPq%2Bn7SD%2BgYPoUEBdlIaHvqe0g4FgGAoDZiAkALbxQLcchKG53n3BOERgE4XYJdId1WHxYgacZGGPucOxMkg17IdIAsjC0AgAHlaFYNXGdILAWVEdhFZNpEijUVqaeNwkiiLQYNZvZRLdYPBnDWKC9CwdWoYIoxFa6Gh6CYNgOB4fhBGEUQUHRGQhC9mnIC6VBvA2e2AFps7eaKJEBmRMWmbPdY8anlBtwJNG0Bo8ksbRWiqBJwn8DZ68EXx28CZu4mqThFCr7TSnqfRckEQoR7qco7EqfvW9KseQgbpfZ5iFuuC6BQQf6Leibe0nLcpgkzEHbPB24fM47DcXJ12e/pggXBCBIAcIdLPRUyF9/OF5AHZAyChiHLotZmBYHcAVUgCM5h0xegMEmn1j6vWprTemIdmYcy5qgb%2B7AyAUGIjgnmeCQALloMwbwCgEBjSlqBWW8tfiMN2JQLozhLbK3IVBAOmscHa3oPrQ2ltTaiwtsbfAExih20to7ZAztuFu3geTPgCI3BGw8JOZGGt2CiBrLHL2PtIJ%2Bxdh9YklldbOD4DbSgjDfjMIgN8L47BOCwO4HyMw3BODi04IOOxEY7hz3eBAdgwArDwEHKQOmAxIZwzhkILQwBdGD1MRZcxljVDWKYZQPgABFVUUEPCSHFnMDwcxBycEkBjHxGM5hmF2NwSpnBKD4AUB2I2TMHFOJcW4jxXifGUD8Zgd09hAnBNCZAcJkTokxLiTopAf8ugQTwMHKJTMw6MBYBbaOAhJBCFFgnIu8hPbOFTlAjOWdXq53zh4RYhdAHSBLmXCuQ8Ug1wgFYTug8rB93aEkiIHdx6NDbpEWg3yB7POrmkGeHzwXTxaHPNoYK17QrXqChI29d5R2eq9d6SDjYnzPhfK%2BwBkDICfolWgrJeTP3wEQEkYxB6oiIT/MYZ1USJ2kMAxmsSwEQJYdAxGcDiYfWDrA3F5NKaoLpgzWGWKBiSGFQKsVv0UHoK5Zg%2BALNEAgB6AQbwRZ%2BaENwWCzANKSCCDWRHTZvAdRrG8AHWVOKybKoGPS4ChAEDTFPufS%2B19RbTDvg/cm0qnqgMwOA6oUCYGCoQUfPFKqaZSowZqzm2qix6oIAawWJCdkmtfq3C1Gyo7Wttfag%2BjrkEuvBpFECNZPUEp9cS0lEByWUs5TK0gPKI3w0VfAxBIq6ZOopvGtBwbYnwPlaQftSqh1U1Ve2hGriUYeLmHMVGHh12Xw8BYeBTzB0SrnSGg%2BE690qtHV0Vqcsa7cCAA%3D
+
+constexpr bool test_constexpr(bool make_constexpr) {
+  return make_constexpr ? true : throw 0;
+}
+
+// Use SFINAE to find the 'best' matching function
+// If the third template arg can be computed, this one is the 'best' match
+template <auto &&F, auto... Args, auto = F(Args...)>
+constexpr bool is_constexpr(int) {
+  return true;
+}
+
+// else SFINAE will try this one, always ok but a lesser priority (cf ... arg)
+template <auto &&F, auto... Args> constexpr bool is_constexpr(...) { return false; }
+
+// This function is constexpr if it be can evaluated
+constexpr auto is_even = [](int n) { return (n % 2 == 0) ? true : throw 0; };
+
+int main() {
+  // static_assert(is_constexpr<is_even, 3>(0), "is_even(3) is not constexpr");
+  static_assert(is_constexpr<is_even, 2>(0), "is_even(2) is not constexpr");
+}
