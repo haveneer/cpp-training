@@ -3,8 +3,8 @@
 //#endregion
 
 int main() {
-  const int n = 2; // TODO predict the output if n=2, n=1 and n=0
-  int i;
+  const int n = 2; // TODO predict the output when n=2, n=1 and n=0
+  int i{};
 
   i = 0;
   while (i < n) {
