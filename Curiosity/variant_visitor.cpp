@@ -62,4 +62,4 @@ int main() {
   std::visit(TwiceVisitor, v);
   std::visit(GenericPrintVisitor, v);
   std::visit(SpecializedPrintVisior, v);
-}
+}

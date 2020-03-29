@@ -5,14 +5,14 @@
 // TODO: and if it is 'int f(int)' ?
 int f(double) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
 
-int g(int i) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
-int g(long l) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
+int g(int) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
+int g(long) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
 
-int h_int(int &i) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
-int h_long(long &x) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
+int h_int(int &) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
+int h_long(long &) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
 
-int h(int &i) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
-int h(long &x) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
+int h(int &) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
+int h(long &) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
 
 int main() {
   f(1);   // Conversion int->double

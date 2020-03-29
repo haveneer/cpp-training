@@ -54,7 +54,7 @@ int main() {
   }
 
   // all local_nested_* are no more available; global_* local_main_* are available again
-  //#region [TODO: WHAT IS THE VALUES OF VISIBLE ENTITIES]
+  //#region [TODO: what are the values of visible entities ?]
   std::cout << type<global_type>() << "\n";
   std::cout << global_object << "\n";
   std::cout << type< decltype(global_function)>() << "\n";
@@ -64,12 +64,10 @@ int main() {
 
   // Examples with implicit block in statements
   if (bool local_statement_object1 = true; local_statement_object1)
-    int local_statement_object2 =
-        6; // in same scope than local_statement_object1
+    int local_statement_object2 = 6; // in same scope than local_statement_object1
 
   for (int local_statement_object3 = false; local_statement_object3;)
-    using local_statement_type =
-        bool; // in same scope than local_statement_object3
+    using local_statement_type = bool; // in same scope than local_statement_object3
 }
 
 // global_* are still available here

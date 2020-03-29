@@ -37,11 +37,9 @@ int main(int argc, char **argv) {
   // clang-format off
   //#endregion
   switch (fnv_hash(v)) {
-  case "stocking"_hash: r=f1(); break;
-  case "floor"_hash:    r=f2(); break;
+  case "floor"_hash:    r=f1(); break;
   case "suit"_hash:     r=f2(); break;
-  case "turkey"_hash:   r=f1(); break;
-  case "limit"_hash:    r=f2(); break;
+  case "limit"_hash:    r=f1(); break;
   case "measure"_hash:  r=f1(); break;
   case "goldfish"_hash: r=f2(); break;
   case "west"_hash:     r=f1(); break;
