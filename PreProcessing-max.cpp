@@ -17,7 +17,7 @@ int main() {
   int a = 1;
   int b = 2;
 
-  int m_v1 = MAX_V1(a | 1, b | 2);
+  int m_v1 = MAX_V1(a | 1, b | 2); // NB x | x == x (binary or operator)
   std::cout << "V1 : a=" << a << " b=" << b << " max=" << m_v1 << '\n';
   std::cout << "V2 : a=" << a << " b=" << b << " max=" << MAX_V2(a, b) << '\n';
   std::cout << '\n';
