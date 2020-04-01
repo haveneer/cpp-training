@@ -1,6 +1,7 @@
 //#region [Declarations]
 #include <iomanip>
 #include <iostream>
+#include <limits>
 
 struct S {
   bool v_bool;
@@ -24,8 +25,9 @@ int main() {
   std::cout.fill(' ');
 
   const auto precision = std::cout.precision(); // save current precision
-  std::cout << std::setprecision(16) << std::boolalpha // set new flags on stream
-            << std::showbase << std::scientific;
+  // set new flags on stream (with maximal precision for floating number)
+  std::cout << std::setprecision(std::numeric_limits<double>::digits10 + 1) 
+            << std::boolalpha << std::showbase << std::scientific;
   
   std::cout << std::left // for string, use alignment on the left with a width of 7
             << std::setw(7) << "bool"   << "= " << s.v_bool << '\n'
