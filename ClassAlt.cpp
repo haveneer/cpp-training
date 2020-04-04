@@ -11,7 +11,7 @@ public: // Public part [types]
 
 private: // Private/internal part
   // Internal data
-  String _name;
+  String m_name;
 
 public: // Public part
   // Special methods about construction & destruction
@@ -37,12 +37,12 @@ ClassName::~ClassName() {
   // nothing to do now
 }
 
-ClassName::String ClassName::getName() const { return _name; }
+ClassName::String ClassName::getName() const { return m_name; }
 
 bool ClassName::setName(const String &name) {
   bool isValid = validateName(name);
   if (isValid) {
-    _name = name;
+    m_name = name;
     return true;
   } else {
     return false;

@@ -1,6 +1,7 @@
 //#region [Declarations]
 #include <stdexcept>
 #include <string>
+#include <cctype>
 //#endregion
 
 /* Déclaration de la class ClassName
@@ -21,7 +22,7 @@ public: // An other public part [methods]
 
 private: // Private/internal part
   // Internal data
-  String _name;
+  String m_name;
 
 private: // Private/internal part
   // Internal function
@@ -39,13 +40,13 @@ ClassName::~ClassName() {
 }
 
 ClassName::String ClassName::getName() const {
-  return _name;
+  return m_name;
 }
 
 bool ClassName::setName(const String &name) {
   bool isValid = validateName(name);
   if (isValid) {
-    _name = name;
+    m_name = name;
     return true;
   } else {
     return false;
