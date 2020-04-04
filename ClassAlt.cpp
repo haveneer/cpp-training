@@ -1,6 +1,7 @@
 //#region [Declarations]
 #include <stdexcept>
 #include <string>
+#include <cctype>
 //#endregion
 
 /* Déclaration de la class ClassName

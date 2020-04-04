@@ -1,5 +1,6 @@
 //#region [Declarations]
 #include <iostream>
+#include <string>
 //#endregion
 
 class Employee {

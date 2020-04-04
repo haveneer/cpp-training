@@ -1,6 +1,7 @@
 //#region [Prologue; NB: delimiter is an empty string]
 #include <fstream>
 #include <iostream>
+#include <string>
 
 // clang-format off
 struct S {
