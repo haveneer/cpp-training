@@ -60,7 +60,7 @@ int main() {
 
   try {
     while (true) {
-      new int[100000000ul]; // allocated memory will be freed by OS
+      new int[100000000ul]; // FIXME allocated memory will be freed by OS
     }
   } catch (std::bad_alloc &e) {
     std::cout << "Cannot allocate a such huge bunch of memory\n";
