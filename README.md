@@ -1,3 +1,5 @@
+![C++ CI](https://github.com/haveneer/cpp-training/workflows/C++%20CI/badge.svg)
+
 All this material is dedicated to a C++ training given by [me](https://www.haveneer.com).
 
 For more details about this training, contact me [hpwxf@haveneer.com](mailto:hpwxf@haveneer.com).
