@@ -31,8 +31,9 @@ void f_by_const_ref(const BigStruct &x) {
 }
 
 int main() {
-  BigStruct a{.value = 1, .tab = {{1}}}; // C99 style
-
+  // BigStruct a{.value = 1, .tab = {{1}}}; // Designated initializers: C99 or C++20
+  BigStruct a{1, {{1}}};
+  
   f_by_value(a);       // COPY; ok for small objects
   f_by_const_value(a); // COPY; ok for small objects
                        // For big objects:
