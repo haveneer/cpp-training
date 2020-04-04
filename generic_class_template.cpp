@@ -1,6 +1,7 @@
 //#region [Declarations]
 #include <cmath>
 #include <iostream>
+#include <algorithm>
 //#endregion
 
 // Declaration
