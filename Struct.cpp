@@ -17,9 +17,9 @@ struct OtherPoint {
 int main() {
   Point p{1, 2}; // initialization list
   // OtherPoint q{p}; // same struct content is not same struct !
-  Point p2{.x = 2, .y = 1}; // C99 (and C++20) direct initialisation
   std::cout << "p =(" << p.x << ',' << p.y << ")\n";
-  std::cout << "p2=(" << p2.x << ',' << p2.y << ")\n";
+  // Point p2{.x = 2, .y = 1}; // Designated initializers: requires C99 or C++20 
+  // std::cout << "p2=(" << p2.x << ',' << p2.y << ")\n";
 
   // You can define struct anywhere, even in a function
   struct Node {
