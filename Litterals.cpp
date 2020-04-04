@@ -12,12 +12,6 @@ std::ostream &operator<<(std::ostream &o,
   return o << std::chrono::duration_cast<output_unit>(d).count();
 }
 
-#ifdef __clang__
-std::ostream &operator<<(std::ostream &o, const std::nullptr_t &p) {
-  return o << static_cast<void *>(p);
-}
-#endif
-
 #ifdef DEBUG_TYPE
 #include "type.hpp" // advanced type printing
 #else
@@ -34,16 +28,17 @@ template <typename T> std::string type() { return typeid(T).name(); }
   }
 
 int main() {
+  
   // clang-format off
+  // DISPLAY( nullptr                                             ); /* C++17 */
   //#endregion
-  DISPLAY( nullptr                                             ); /* C++11 */
   DISPLAY( true                                                );
   DISPLAY( false                                               );
   DISPLAY( "Hello, world"                                      );
   DISPLAY( "Hello\0world"                                      ); // cut at \0
   DISPLAY( "\\How\nare\tyou\x20?"                              );
   DISPLAY( u"\\How\nare\tyou\x20?"                             ); /* C++11 */
-  DISPLAY( R"delim(Whatever even "stranges" things)delim"      ); /* C++11 */
+  DISPLAY( R"delim(Whatever even "strange" things)delim"       ); /* C++11 */
   DISPLAY( 'W'                                                 );
   DISPLAY( '+'                                                 );
   DISPLAY( 314                                                 );
@@ -61,7 +56,7 @@ int main() {
   DISPLAY( 0x1p10L                                             );
 
   using namespace std::string_literals;
-  DISPLAY( "Hello\0world"s /* ATTN: wrong HTML display */      ); /* C++ 14 */
+  DISPLAY( "Hello\0world"s /* ATTN: wrong HTML display */      ); /* C++14 */
 
   using namespace std::literals::complex_literals;
   DISPLAY( 5i                                                  ); /* C++14 */
