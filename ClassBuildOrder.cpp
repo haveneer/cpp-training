@@ -1,6 +1,10 @@
 //#region [Declaration]
 #include <iostream>
-#define PRINTME() std::cout << __PRETTY_FUNCTION__ << "\n"
+#ifndef _MSC_VER
+#define PRINTME() std::cout << __PRETTY_FUNCTION__ << '\n'
+#else
+#define PRINTME() std::cout << __FUNCSIG__ << '\n'
+#endif
 //#endregion
 
 struct BaseF0 {

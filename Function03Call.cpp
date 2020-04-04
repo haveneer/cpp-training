@@ -1,18 +1,23 @@
 //#region [Declarations]
 #include <iostream>
+#ifndef _MSC_VER
+#define PRINTME() std::cout << __PRETTY_FUNCTION__ << '\n'
+#else
+#define PRINTME() std::cout << __FUNCSIG__ << '\n'
+#endif
 //#endregion
 
 // TODO: and if it is 'int f(int)' ?
-int f(double) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
+int f(double) { PRINTME(); return 0; }
 
-int g(int) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
-int g(long) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
+int g(int) { PRINTME(); return 0; }
+int g(long) { PRINTME(); return 0; }
 
-int h_int(int &) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
-int h_long(long &) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
+int h_int(int &) { PRINTME(); return 0; }
+int h_long(long &) { PRINTME(); return 0; }
 
-int h(int &) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
-int h(long &) { std::cout << __PRETTY_FUNCTION__ << '\n'; return 0; }
+int h(int &) { PRINTME(); return 0; }
+int h(long &) { PRINTME(); return 0; }
 
 int main() {
   f(1);   // Conversion int->double

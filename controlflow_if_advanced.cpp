@@ -1,6 +1,11 @@
 //#region [Declarations]
 #include <iostream>
 #include <vector>
+#ifndef _MSC_VER
+#define PRINTME() std::cout << __PRETTY_FUNCTION__ << '\n'
+#else
+#define PRINTME() std::cout << __FUNCSIG__ << '\n'
+#endif
 
 bool shared_flag; // may be located in any compilation unit
 
@@ -8,14 +13,14 @@ class FakeMutex;
 
 class FakeLock {
 public:
-  FakeLock(FakeMutex &) { std::cout << __PRETTY_FUNCTION__ << '\n'; }
-  ~FakeLock() { std::cout << __PRETTY_FUNCTION__ << '\n'; }
+  FakeLock(FakeMutex &) { PRINTME(); }
+  ~FakeLock() { PRINTME(); }
 };
 
 class FakeMutex {
 public:
-  FakeMutex() { std::cout << __PRETTY_FUNCTION__ << '\n'; }
-  ~FakeMutex() { std::cout << __PRETTY_FUNCTION__ << '\n'; }
+  FakeMutex() { PRINTME(); }
+  ~FakeMutex() { PRINTME(); }
 };
 //#endregion
 
