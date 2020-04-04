@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <string>
 
 #ifdef DEBUG_TYPE
 #include "../type.hpp" // advanced type printing
@@ -469,6 +470,8 @@ public: /* Données internes */
   const Real m_v;
 };
 template <> struct Opt<Mult<Constant, Constant>> { typedef Constant Type; };
+template <> struct Opt<Mult<Constant, One>> { typedef Constant Type; };
+template <> struct Opt<Mult<Constant, Zero>> { typedef Zero Type; };
 
 // Règle: 0 * F = 0
 template <typename Function>
