@@ -1,0 +1,41 @@
+name: C++ CI
+
+on: [ push ]
+
+jobs:
+  build-unix:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+    
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+    # Runs a set of commands using the runners shell
+    - name: configure
+      run: |
+        echo "Configure on $(uname -a)"
+        mkdir build && cd build && cmake ..
+    # Runs a single command using the runners shell
+    - name: build
+      run: cmake --build build
+    - name: test
+      run: cd build && ctest
+
+  build-windows:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, windows-2016]
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: configure
+      run: mkdir build && cd build && cmake ..
+    - name: build
+      run: cmake --build build --config Debug
+    - name: test
+      run: cd build && ctest
