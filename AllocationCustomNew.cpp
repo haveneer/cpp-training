@@ -66,6 +66,6 @@ int main() {
   // delete foo2; // do not call it: it was not dynamically allocated
 
   int *foo3 = new (std::nothrow) int[1ull<<40]; // return nullptr if fails
-  std::cout << "foo3=" << *foo3 << '\n';
+  std::cout << "foo3=" << foo3 << '\n';
   delete[] foo3; // delete nullptr is legal
 }

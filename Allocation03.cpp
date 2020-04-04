@@ -59,8 +59,9 @@ int main() {
   //#endregion
 
   try {
-    char *p = new char[1ull << 40]; // try to allocate 1To
-    delete[] p;
+    while (true) {
+      new int[100000000ul]; // allocated memory will be freed by OS
+    }
   } catch (std::bad_alloc &e) {
     std::cout << "Cannot allocate a such huge bunch of memory\n";
   }
