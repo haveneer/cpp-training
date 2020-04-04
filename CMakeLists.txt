@@ -24,7 +24,7 @@ endif ()
 
 set(EXCLUDED)
 if (MSVC)
-    list(APPEND EXCLUDED Lambda_y-combinator.cpp operator_funky_overload.cpp)
+    list(APPEND EXCLUDED Lambda_y-combinator.cpp operator_funky_overload.cpp controlflow_if_advanced.cpp)
 endif ()
 
 enable_testing()
