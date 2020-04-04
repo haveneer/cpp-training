@@ -11,11 +11,12 @@ void print(const char *message) {
 
 struct Object {
   // Object() {} // breaks nothrow_default_constructible
-  static_assert(sizeof(long) == 8, "Supports only 64bits arithmetic"); // anywhere
+  static_assert(sizeof(long) == 4 || sizeof(long) == 8,
+                "Supports only 32bits and 64bits arithmetic"); // anywhere
 };
 
 int main() {
-  static_assert(2 + 2 == 4, "Something aweful is happening");
+  static_assert(2 + 2 == 4, "Something awful is happening");
 
   static_assert(1. + 1. == 2.);    // Some floating-point operations can be tested
   static_assert(0.1 + 0.2 != 0.3); // be careful: rounded computation here
