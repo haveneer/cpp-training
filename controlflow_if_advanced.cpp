@@ -1,6 +1,7 @@
 //#region [Declarations]
 #include <iostream>
 #include <vector>
+#include <string>
 #ifndef _MSC_VER
 #define PRINTME() std::cout << __PRETTY_FUNCTION__ << '\n'
 #else
@@ -50,7 +51,8 @@ int main(int argc, char ** argv) {
   }
 
   // Be careful, if you mix it with comma operator (FIXME)
-  if (int k = argc, argv[k]; true) { // warning: variable length arrays are a C99 feature
+  const int n = argc;
+  if (int k = n, argv[n]; true) {
     std::cerr << "What argv is it ? argv[0] = " << argv[0] << "\n";
   }
   
