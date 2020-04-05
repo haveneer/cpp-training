@@ -25,6 +25,7 @@ mkdir -p build
 cd build
 cmake \
   -DCMAKE_GENERATOR_PLATFORM=x64 \
+  -DDONT_VS_EXCLUDE=true \
   -G "Visual Studio 16 2019" \
   ..
 
