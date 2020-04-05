@@ -6,8 +6,9 @@ if [[ "$DEBUG_CI" == true ]]; then
 fi
 
 if [[ "$DEBUG_CI" == true ]]; then
-    echo $PATH
-    cmake --version
+    choco install vswhere
     vswhere
     vswhere -all -prerelease -property installationPath
+    echo $PATH
+    cmake --version
 fi

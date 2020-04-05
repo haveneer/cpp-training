@@ -17,4 +17,3 @@ fi
 
 choco install visualstudio2019community
 choco install visualstudio2019-workload-nativedesktop
-choco install vswhere
