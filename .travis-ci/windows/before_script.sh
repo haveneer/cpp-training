@@ -8,15 +8,6 @@ fi
 if [[ "$DEBUG_CI" == true ]]; then
     echo $PATH
     cmake --version
+    vswhere
+    vswhere -all -prerelease -property installationPath
 fi
-
-#cmake --version # 3.16.2
-vswhere
-vswhere -all -prerelease -property installationPath
-echo "-------------------------------------------"
-#cmake -G || true
-#echo "PATH = $PATH"
-#echo "-------------------------------------------"
-#echo "VS160COMNTOOLS = $VS160COMNTOOLS"
-#echo "-------------------------------------------"
-#find -name "/c/"

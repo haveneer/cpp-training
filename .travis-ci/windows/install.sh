@@ -15,6 +15,6 @@ echo
     cd ${TRAVIS_BUILD_DIR}
 fi
 
-choco install visualstudio2019community # --package-parameters "--allWorkloads --includeRecommended --includeOptional --passive --locale en-US"
+choco install visualstudio2019community
 choco install visualstudio2019-workload-nativedesktop
 choco install vswhere
