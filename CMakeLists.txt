@@ -23,11 +23,15 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 endif ()
 
 set(EXCLUDED)
-if (MSVC AND NOT DONT_VS_EXCLUDE)
+if (MSVC)
     # Lambda_y-combinator.cpp operator_funky_overload.cpp : pb with CTAD
     # controlflow_if_advanced.cpp : pb with if selector with initializer
     # Struct.cpp RAII.cpp DefaultCtor.cpp move_vs_copy.cpp : slow down with Github ??
-    list(APPEND EXCLUDED Lambda_y-combinator.cpp operator_funky_overload.cpp controlflow_if_advanced.cpp move_vs_copy.cpp DefaultCtor.cpp RAII.cpp Struct.cpp)
+    list(APPEND EXCLUDED Lambda_y-combinator.cpp operator_funky_overload.cpp controlflow_if_advanced.cpp)
+    list(APPEND EXCLUDED move_vs_copy.cpp)
+    if (NOT DONT_VS_EXCLUDE)
+        list(APPEND EXCLUDED DefaultCtor.cpp RAII.cpp Struct.cpp)
+    endif ()
 endif ()
 
 enable_testing()
