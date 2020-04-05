@@ -1,4 +1,4 @@
-![C++ CI](https://github.com/haveneer/cpp-training/workflows/C++%20CI/badge.svg)
+![C++ CI](https://github.com/haveneer/cpp-training/workflows/C++%20CI/badge.svg) [![Build Status](https://travis-ci.com/haveneer/cpp-training.svg?branch=master)](https://travis-ci.com/haveneer/cpp-training)
 
 All this material is dedicated to a C++ training given by [me](https://www.haveneer.com).
 
