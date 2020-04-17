@@ -1,17 +1,26 @@
 #include <array>
-#include <charconv> // C++17
+
+#ifdef __has_include
+#if __has_include(<charconv>) // C++17
+#include <charconv>           // C++17 (requires GCC 8.1)
+#define HAS_CHARCONV 1        // define to relate the availability
+#endif
+#endif
+
 #include <iostream>
 #include <string>
 
 int main() {
   char str[] = {" 42 a"};
   int result;
+#ifdef HAS_CHARCONV
   std::cout << "Using std::from_chars (C++17)\n";
   auto [p, ec] = std::from_chars(str, str + sizeof(str), result);
   std::cout << "ec is success = " << (ec == std::errc{}) << '\n';
   std::cout << "result = " << result << '\n';
   std::cout << "p = " << p << '\n';
-
+#endif
+  
   std::cout << "\nUsing std::stoi (C++11)\n";
   std::size_t pos;
   try {
