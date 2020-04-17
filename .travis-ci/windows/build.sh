@@ -20,7 +20,6 @@ fi
 export VS160COMNTOOLS="/c/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/Tools"
 echo "VS160COMNTOOLS = $VS160COMNTOOLS"
 
-echo $PWD
 mkdir -p build
 cd build
 cmake \
@@ -29,4 +28,5 @@ cmake \
   -G "Visual Studio 16 2019" \
   ..
 
-cmake --build . --target ALL_BUILD --config ${MODE}
+cmake --build . --target ALL_BUILD --config ${MODE} \
+  && ctest -C ${MODE} # --verbose

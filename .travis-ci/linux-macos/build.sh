@@ -21,4 +21,5 @@ cmake \
   -DCMAKE_BUILD_TYPE="${MODE}" \
   ..
 
-cmake --build . --config "${MODE}"
+cmake --build . --config "${MODE}" \
+  && ctest -C "${MODE}" # --verbose
