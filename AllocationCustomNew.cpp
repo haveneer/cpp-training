@@ -3,6 +3,10 @@
 #include <iostream>
 #include <memory>
 #include <new>
+#include <stack>
+std::stack<int*> stack; // to avoid unused memory optimization
+auto n = 1'000'000'000ul;
+#define FAKE_USE(p) stack.push(p)
 
 #if defined(__clang__) && __cplusplus >= 201703L && __clang_major__ < 6
 // This is a minimal workaround for clang 5.0 with missing std::byte type
@@ -55,20 +59,22 @@ private:
 int main() {
   // Standard allocation
   std::unique_ptr foo1 = std::make_unique<Foo>(6);
-  std::cout << "foo1=" << *foo1 << ")\n";
+  std::cout << "foo1=" << *foo1 << '\n';
 
   // Stack allocation and placement new
   std::byte buffer[sizeof(Foo)]; // before C++17 uses 'unsigned char'
   //                             // in place of std::byte
   Foo *foo2 = new (buffer) Foo{10};
-  std::cout << "foo2=" << *foo2 << ")\n";
+  std::cout << "foo2=" << *foo2 << '\n';
   foo2->~Foo(); // rare case of explicit destructor call
   // delete foo2; // do not call it: it was not dynamically allocated
 
   int *foo3 = nullptr;
   do {
     // FIXME allocated memory will be freed by OS
-    foo3 = new (std::nothrow) int[100000000ul]; // return nullptr if fails
+    foo3 = new (std::nothrow) int[n]; // return nullptr if fails
+    FAKE_USE(foo3); // simulate memory usage
+    n *= 2;
   } while (foo3 != nullptr);
   std::cout << "foo3=" << foo3 << '\n';
   delete[] foo3; // delete nullptr is legal

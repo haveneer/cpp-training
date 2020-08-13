@@ -1,6 +1,10 @@
 //#region [Declarations]
 #include <cstddef>
 #include <iostream>
+#include <stack>
+std::stack<int*> stack; // to avoid unused memory optimization
+auto n = 1'000'000'000ul;
+#define FAKE_USE(p) stack.push(p)
 //#endregion
 
 class Foo {
@@ -60,10 +64,12 @@ int main() {
 
   try {
     while (true) {
-      new int[100000000ul]; // FIXME allocated memory will be freed by OS
+      int * p = new int[n]; // FIXME allocated memory will be freed by OS
+      FAKE_USE(p); // simulate memory usage
+      n *= 2;
     }
   } catch (std::bad_alloc &e) {
-    std::cout << "Cannot allocate a such huge bunch of memory\n";
+    std::cout << "Cannot allocate\n";
   }
 
   delete[] pe; // without this there are memory leaks /!\ np garbage collector
