@@ -1,3 +1,5 @@
+# To debug a workflow see: https://docs.github.com/en/actions/configuring-and-managing-workflows/managing-a-workflow-run#enabling-debug-logging
+
 name: C++ CI
 
 on: [ push ]
