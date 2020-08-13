@@ -1,8 +1,24 @@
 cmake_minimum_required(VERSION 3.12)
 project(cpp-training)
+option(ENABLE_STATIC_ANALYSIS "Enable static analysis" OFF)
 
 set(CMAKE_CXX_STANDARD 17)
 add_definitions(-DDEBUG_TYPE)
+
+#------------------------------------------------------
+
+if (ENABLE_STATIC_ANALYSIS)
+    # search for clang-tidy (while be used while adding library or executable)
+    find_program(CLANG_TIDY clang-tidy)
+    if (CLANG_TIDY)
+        set(CMAKE_CXX_CLANG_TIDY ${CLANG_TIDY})
+        message(STATUS "Static analysis enabled while compiling.")
+    else()
+        message(FATAL_ERROR "Static analysis requested but not available.")
+    endif()
+endif()
+
+#------------------------------------------------------
 
 add_executable(manage_test_crash tools/manage_test_crash.c)
 
