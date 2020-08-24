@@ -60,7 +60,7 @@ int main() { // Error messages come from GCC 9.2
   //#endregion
 
   //#region [const Lvalue reference]
-  const int &kref = 1;
+  const int &kref = 1; // even from getGlobal()
   from_const_ref(1);
   // kref++; // error: increment of read-only reference 'kref'
 

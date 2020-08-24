@@ -12,6 +12,7 @@ public:
 class Engineer : public Employee {
 public:
   Engineer(const std::string &name) : _name{name} {}
+  // Avec override les implémentations doivent suivre l'interface
   std::string describe() const override { return "[Engineer: " + _name + "]"; }
 
 public:
