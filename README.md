@@ -13,3 +13,9 @@ For more details about this training, contact me [hpwxf@haveneer.com](mailto:hpw
 * Any file `filaname.cxx` is not compiled and usually contains explicit bugs 
 
 * `type.h` contains tool `type(obj)` to get printable type name for given object argument 
+
+# CMake options
+
+* `-DENABLE_STATIC_ANALYSIS=ON|OFF` : enable/disable static analysis while compiling
+ 
+* `-DCMAKE_CXX_COMPILER_LAUNCHER=ccache` : enable `ccache` as compiler cache
