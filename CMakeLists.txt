@@ -59,7 +59,7 @@ if (MSVC)
     list(APPEND EXCLUDED src/Lambda_y-combinator.cpp src/operator_funky_overload.cpp src/controlflow_if_advanced.cpp)
     list(APPEND EXCLUDED src/move_vs_copy.cpp)
     if (NOT DONT_VS_EXCLUDE)
-        list(APPEND EXCLUDED DefaultCtor.cpp RAII.cpp Struct.cpp)
+        list(APPEND EXCLUDED src/DefaultCtor.cpp src/RAII.cpp src/Struct.cpp)
     endif ()
 endif ()
 
