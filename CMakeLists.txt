@@ -114,10 +114,8 @@ foreach (SRC_PATH ${SRCS})
         endif ()
 
         if (NEED_GTEST)
-            target_include_directories(${EXE} PUBLIC gtestXXX)
             target_link_libraries(${EXE} gtest gtest_main)
             set_property(TEST ${TEST} PROPERTY LABELS "GTest" )
-            
         endif()
     endif ()
 endforeach ()
