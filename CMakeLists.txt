@@ -33,12 +33,14 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 add_executable(manage_test_crash tools/manage_test_crash.c)
 
 message(STATUS "Detect file to compile using globbing")
-file(GLOB SRCS1 "*.cpp")
+file(GLOB SRCS1 "src/*.cpp")
 file(GLOB SRCS2 "Solutions/*.cpp")
 file(GLOB SRCS3 "Curiosity/*.cpp")
 file(GLOB SRCS4 "extras/*.cpp")
 file(GLOB SRCS5 "gtest/*--unittest.cpp")
 set(SRCS ${SRCS1} ${SRCS2} ${SRCS3} ${SRCS4} ${SRCS5})
+
+include_directories(include)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -Wextra")

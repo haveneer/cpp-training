@@ -10,7 +10,7 @@
 #include <string>
 
 #ifdef DEBUG_TYPE
-#include "../type.hpp" // advanced type printing
+#include "type.hpp" // advanced type printing
 #else
 #include <typeinfo>
 template <typename T> std::string type() { return typeid(T).name(); }
