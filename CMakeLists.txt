@@ -20,6 +20,11 @@ endif()
 
 #------------------------------------------------------
 
+# to enable shared lib in WIN32
+# cf    https://github.com/google/googletest/tree/master/googletest#incorporating-into-an-existing-cmake-project
+#   and https://stackoverflow.com/questions/12540970/how-to-make-gtest-build-mdd-instead-of-mtd-by-default-using-cmake
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE) # 
+
 add_subdirectory(third_party/googletest)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
