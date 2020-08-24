@@ -13,7 +13,7 @@
 struct S {
   int n;
   std::string s;
-  float d;
+  double d;
   bool operator<(const S &rhs) const {
     // compares n to rhs.n,
     // then s to rhs.s,
