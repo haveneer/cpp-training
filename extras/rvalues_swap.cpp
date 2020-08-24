@@ -1,12 +1,12 @@
 #include <iostream>
 
 struct Object {
-  Object() {}
-  Object(const Object &o) { std::cout << "Copying ctor\n"; }
-  void operator=(const Object &o) { std::cout << "Coping =\n"; }
+  Object() = default;
+  Object(const Object &) { std::cout << "Copying ctor\n"; }
+  void operator=(const Object &) { std::cout << "Coping =\n"; }
 #if 1 // TODO switch me and see
-  Object(Object &&o) { std::cout << "Moving ctor\n"; }
-  void operator=(Object &&o) { std::cout << "Moving =\n"; }
+  Object(Object &&) { std::cout << "Moving ctor\n"; }
+  void operator=(Object &&) { std::cout << "Moving =\n"; }
 #endif
 };
 
