@@ -6,7 +6,9 @@ For more details about this training, contact me [hpwxf@haveneer.com](mailto:hpw
 
 # cpp-training
 
-* Any file `filename.cpp` is automatically compiled using header `filename-*.hpp`
+* Any file `filename.cpp` is automatically compiled using extra files `filename.h*` `filename--*.*`
+
+* Any file `filename--unittest.cpp` is a google test and is automatically compiled using extra files `filename.h*` `filename--*.*`
 
 * Any file `filaname.cxx` is not compiled and usually contains explicit bugs 
 

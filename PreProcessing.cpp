@@ -2,12 +2,12 @@
 #include <iostream>
 
 // First time (user headers)
-#include "PreProcessing-advanced.hpp"
-#include "PreProcessing-simple.hpp"
+#include "PreProcessing--advanced.hpp"
+#include "PreProcessing--simple.hpp"
 
 // Second time ?
-#include "PreProcessing-advanced.hpp"
-#include "PreProcessing-simple.hpp"
+#include "PreProcessing--advanced.hpp"
+#include "PreProcessing--simple.hpp"
 
 // Utilisation de macros définies ci-dessus
 FUNCTION(one, 1);
