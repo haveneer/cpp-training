@@ -38,7 +38,7 @@ DReal operator*(const DReal &f, const DReal &g) {
 class MyException : std::exception {
 public:
   explicit MyException(const char *what) : m_what(what) {}
-  const char *what() noexcept { return m_what; }
+  const char *what() const noexcept override { return m_what; }
 
 private:
   const char *m_what;
