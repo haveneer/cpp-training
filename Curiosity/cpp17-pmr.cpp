@@ -3,6 +3,7 @@
 // Special memory management :
 // https://en.cppreference.com/w/cpp/header/memory_resource
 // see also: https://stackoverflow.com/questions/38010544/polymorphic-allocator-when-and-why-should-i-use-it
+// https://www.bfilipek.com/2020/08/pmr-dbg.html
 
 // later: use https://github.com/google/benchmark
 #ifndef QUICK_BENCH

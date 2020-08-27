@@ -1,5 +1,6 @@
 //#region [Declarations]
 // doc https://rosettacode.org/wiki/Y_combinator
+//     https://humanreadablemag.com/issues/1/articles/the-y-combinator-for-programmers
 #include <functional>
 #include <iostream>
 #include <type_traits>
