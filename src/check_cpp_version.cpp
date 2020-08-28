@@ -43,7 +43,7 @@ int main() {
 #ifdef _MSC_VER
   const long std_release = _MSVC_LANG;
 #else
-  const long std_release = __cplusplus
+  const long std_release = __cplusplus;
 #endif
 
   switch (std_release) {
