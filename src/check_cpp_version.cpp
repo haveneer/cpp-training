@@ -1,10 +1,14 @@
 #include <iostream>
+#include <string>
+#include <sstream>
 
 // more info, see https://sourceforge.net/p/predef/wiki/Compilers/
 
-#define STRINGIFY(x) #x
-#define VER_STRING(major, minor, patch) \
-  STRINGIFY(major) "." STRINGIFY(minor) "." STRINGIFY(patch)
+std::string version_string(int a, int b, int c) {
+	std::ostringstream ss;
+	ss << a << '.' << b << '.' << c;
+	return ss.str();
+}
 
 int main() {
 #ifdef __GNUG__
@@ -15,22 +19,34 @@ int main() {
   std::string cxx_compiler = "Clang";
 #endif
   std::string cxx_compiler_version =
-      VER_STRING(__clang_major__, __clang_minor__, __clang_patchlevel__);
+	  version_string(__clang_major__, __clang_minor__, __clang_patchlevel__);
 #else
   std::string cxx_compiler = "GCC";
   std::string cxx_compiler_version =
-      VER_STRING(__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__);
+	  version_string(__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__);
 #endif
 #elif defined(_MSC_VER)
   std::string cxx_compiler = "MSVC";
-  std::string cxx_compiler_version = STRINGIFY(_MSC_FULL_VER)
+  long n = _MSC_FULL_VER;
+  int major = n / 10000000L;
+  n %= 10000000L;
+  int minor = n / 100000L;
+  n %= 100000L;
+  int patch = n;
+  std::string cxx_compiler_version = version_string(major, minor, patch);
 #else
   std::string cxx_compiler = "unknown compiler";
   std::string cxx_compiler_version = "";
 #endif
 
   std::string cxx_standard = "undefined";
-  switch (__cplusplus) {
+#ifdef _MSC_VER
+  const long std_release = _MSVC_LANG;
+#else
+  const long std_release = __cplusplus
+#endif
+
+  switch (std_release) {
   case 199711L:
     cxx_standard = "C++98";
     break;
