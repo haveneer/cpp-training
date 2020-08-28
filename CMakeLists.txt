@@ -53,6 +53,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
 endif ()
 
+set(CMAKE_EXECUTABLE_SUFFIX ".exe") # .exe suffix for all OS
 
 set(EXCLUDED)
 if (MSVC)
@@ -70,7 +71,7 @@ enable_testing()
 foreach (SRC_PATH ${SRCS})
     string(REGEX REPLACE "^${CMAKE_SOURCE_DIR}/" "" SRC ${SRC_PATH})
     get_filename_component(SHORT_SRC ${SRC} NAME)
-    string(REGEX REPLACE ".cpp$" ".exe" EXE ${SHORT_SRC})
+    string(REGEX REPLACE ".cpp$" "" EXE ${SHORT_SRC})
     list(FIND EXCLUDED ${SRC} IS_EXCLUDED)
     if (IS_EXCLUDED GREATER_EQUAL 0)
         message(STATUS "\tExclude example ${SRC}")
