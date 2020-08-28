@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
+#include <string>
 
 /* http://en.cppreference.com/w/cpp/language/aggregate_initialization
  If the number of initializer clauses is less than the number of members or initializer clauses is completely empty, the remaining members are initialized by their brace-or-equal initializers, if provided in the class definition, and otherwise (since C++14) by empty lists, which performs value-initialization. If a member of a reference type is one of these remaining members, the program is ill-formed (references cannot be value-initialized) 
