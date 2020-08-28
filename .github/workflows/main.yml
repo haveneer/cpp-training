@@ -26,7 +26,7 @@ jobs:
     - name: build
       run: cmake --build build
     - name: test
-      run: cd build && ctest
+      run: cd build && ctest -V
 
   build-windows:
 
@@ -45,4 +45,4 @@ jobs:
     - name: build
       run: cmake --build build --config Debug
     - name: test
-      run: cd build && ctest -C Debug
+      run: cd build && ctest -C Debug -V
