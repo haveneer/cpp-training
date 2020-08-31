@@ -270,7 +270,7 @@ Function Pow::diff() const {
     return m_n * (Function(m_f) ^ (m_n - 1)) * m_f->diff();
 }
 
-// Op�rateur de d�rivation
+// Opérateur de dérivation
 Function d(const Function &f) { return f.diff(); }
 
 // Affichage d'une expression

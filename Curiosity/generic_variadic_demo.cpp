@@ -26,7 +26,7 @@ template <int... N> struct integer_sequence {};
 template <int... N> void print(integer_sequence<N...> const &) {
   bool dummy[] = {(std::cout << N, true)...};
   std::cout << "\n";
-  [](auto &&){}(dummy); // silennt ignore of unused variable
+  [](auto &&){}(dummy); // silent ignore of unused variable
 }
 
 int main() {
