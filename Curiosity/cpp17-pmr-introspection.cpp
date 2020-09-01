@@ -8,6 +8,7 @@
 
 // later: use https://github.com/google/benchmark
 
+#include <array>
 #include <list>
 #include <set>
 #include <string>
@@ -35,12 +36,14 @@ void print_buffer(const std::string_view &header,
   std::cout << header << "\n";
   std::cout << "---------------------\n";
   for (const auto &e : container) {
-    std::string hint = (&e < buffer.data()) || (&e >= buffer.data()+N)?" (out of buffer)":"";
+    std::string hint =
+        (&e < buffer.data()) || (&e >= buffer.data() + N) ? " (out of buffer)" : "";
     std::cout << "Item @ " << static_cast<const void *>(&e) << hint << "\n";
   }
   std::cout
       << "---------------------------------------------------------------------\n";
-  std::cout << std::setw(18) << "Buffer" << "\n";
+  std::cout << std::setw(18) << "Buffer"
+            << "\n";
   const std::size_t line_size = 16;
   for (std::size_t i = 0; i < N; ++i) {
     if (i % line_size == 0) {
@@ -62,16 +65,16 @@ int main() {
 #ifdef HAS_PMR
   std::pmr::monotonic_buffer_resource rsrc(buffer.data(), buffer.size());
 
-//    std::pmr::list<uint8_t> container{&rsrc};
-//    auto hint = [&container] { return ""s; };
+  //    std::pmr::list<uint8_t> container{&rsrc};
+  //    auto hint = [&container] { return ""s; };
 
-//    std::pmr::vector<uint8_t> container{&rsrc};
-//    auto hint = [&container] {
-//      return container.size() == container.capacity() ? " (need resize)"s : ""s;
-//    };
+  //    std::pmr::vector<uint8_t> container{&rsrc};
+  //    auto hint = [&container] {
+  //      return container.size() == container.capacity() ? " (need resize)"s : ""s;
+  //    };
 
-    std::pmr::set<uint8_t> container{&rsrc};
-    auto hint = [&container] { return ""s; };
+  std::pmr::set<uint8_t> container{&rsrc};
+  auto hint = [&container] { return ""s; };
 
   print_buffer("New container" + hint(), buffer, container);
   container.insert(container.end(), 0x1);
