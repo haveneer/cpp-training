@@ -65,27 +65,35 @@ int main() {
 #ifdef HAS_PMR
   std::pmr::monotonic_buffer_resource rsrc(buffer.data(), buffer.size());
 
+  // Choose one of these datastructures (list, vector, set) to observe
+  // buffer evolution while inserting items
+
   //    std::pmr::list<uint8_t> container{&rsrc};
   //    auto hint = [&container] { return ""s; };
 
-  //    std::pmr::vector<uint8_t> container{&rsrc};
-  //    auto hint = [&container] {
-  //      return container.size() == container.capacity() ? " (need resize)"s : ""s;
-  //    };
+  std::pmr::vector<uint8_t> container{&rsrc};
+  auto hint = [&container, memo = (uint8_t *)nullptr]() mutable {
+    if (!container.empty() && memo != container.data()) {
+      memo = container.data();
+      return " (has been resized)"s;
+    } else {
+      return ""s;
+    }
+  };
 
-  std::pmr::set<uint8_t> container{&rsrc};
-  auto hint = [&container] { return ""s; };
+  //  std::pmr::set<uint8_t> container{&rsrc};
+  //  auto hint = [&container] { return ""s; };
 
   print_buffer("New container" + hint(), buffer, container);
   container.insert(container.end(), 0x1);
-  print_buffer("After push 1" + hint(), buffer, container);
+  print_buffer("After insert 1" + hint(), buffer, container);
   container.insert(container.end(), 0x2);
-  print_buffer("After push 2" + hint(), buffer, container);
+  print_buffer("After insert 2" + hint(), buffer, container);
   container.insert(container.end(), 0x3);
-  print_buffer("After push 3" + hint(), buffer, container);
+  print_buffer("After insert 3" + hint(), buffer, container);
   container.insert(container.end(), 0x4);
-  print_buffer("After push 4" + hint(), buffer, container);
+  print_buffer("After insert 4" + hint(), buffer, container);
   container.insert(container.end(), 0x5);
-  print_buffer("After push 5" + hint(), buffer, container);
+  print_buffer("After insert 5" + hint(), buffer, container);
 #endif
 }
