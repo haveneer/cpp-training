@@ -23,6 +23,10 @@ auto df(const VectorNewton::Vector &x) -> VectorNewton::Matrix {
   return r;
 }
 
+TEST(Canary, is_alive) {
+  ASSERT_EQ(2,1+1);
+}
+
 TEST(VectorNewton, MatrixOperation) {
   std::cout << "--------------------------------------------------\n";
   using namespace VectorNewton;
