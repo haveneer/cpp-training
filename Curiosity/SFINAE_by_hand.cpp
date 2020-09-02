@@ -14,8 +14,7 @@ struct has_size_member : bool_<false> {};
 #define has_member(T, M) decltype(std::declval<T>() M)
 
 template <typename T>
-struct has_size_member<T,
-                       requires<has_member(T, .size()), typename T::size_type>>
+struct has_size_member<T, requires<has_member(T, .size()), typename T::size_type>>
     : bool_<true> {};
 
 // Examples
