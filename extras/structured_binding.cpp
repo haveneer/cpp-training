@@ -2,6 +2,7 @@
 #include <iostream>
 #include <memory>
 #include <tuple>
+#include <array>
 //#endregion
 
 struct MyStruct {
