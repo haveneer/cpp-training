@@ -1,15 +1,17 @@
+//#region [declarations]
 #include <iostream>
 #include <memory>
 #include <tuple>
+//#endregion
 
-struct Struct {
+struct MyStruct {
   int a;
   double b;
   std::shared_ptr<int> c;
 };
 
 auto f1() {
-  Struct s{1, 3.14, std::make_shared<int>(42)};
+  MyStruct s{1, 3.14, std::make_shared<int>(42)};
   return s;
 }
 
@@ -25,4 +27,14 @@ int main() {
 
   auto [a2, b2, c2] = f2(); // full structured bind required
   std::cout << a2 << " " << b2 << " " << *c2 << '\n';
+
+  int e=1, f=2;
+  auto [c,d] = std::tie(e,f); // also from tied values
+
+  // int a[2] = {1,2}; 
+  std::array<int,2> a = {1,2}; 
+
+  auto [x,y] = a; // xr refers to a[0], yr refers to a[1] as values
+  auto& [xr, yr] = a; // xr refers to a[0], yr refers to a[1] as references
+  std::cout << (&xr==&a[0]) << " " << (&yr==&a[1]) << "\n"; 
 }
