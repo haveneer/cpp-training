@@ -1,11 +1,12 @@
-/* - typedef
-- I/O
-- initalization
-- operator
-- overload
-- exception
-
-Gnuplot avec "set terminal dumb" pour le mode Ascii Art */
+/* Shown in this example
+ * - typedef/using
+ * - I/O
+ * - initalization
+ * - operator
+ * - overload
+ * - exception
+ * Gnuplot avec "set terminal dumb" pour le mode Ascii Art
+ */
 
 #include <cmath>
 #include <fstream>
@@ -53,17 +54,27 @@ DReal operator/(const DReal &f, const DReal &g) {
 }
 
 DReal sin(const DReal &g) { return {sin(g.value), g.dvalue * cos(g.value)}; }
-DReal sqrt(const DReal &g) {
-  return DReal{0.5 * g.dvalue} / DReal{sqrt(g.value)};
-}
+DReal sqrt(const DReal &g) { return DReal{0.5 * g.dvalue} / DReal{sqrt(g.value)}; }
 
 auto sqr = [](const DReal &f) -> DReal { return f * f; };
 auto cube = [](const DReal &f) -> DReal { return f * f * f; };
 
-// template<typename F> void plot(const char * filename, const Real xmin, const
-// Real xmax, const int n, const F & f) {
-void plot(const char *filename, const Real xmin, const Real xmax, const int n,
-          const std::function<DReal(DReal)> &f) {
+// clang-format off
+// // C++03 style
+//template <typename F>
+//void plot(const char *filename, const Real xmin, const Real xmax, const int n,
+//          const F &f) {
+// // C++11 style
+//void plot(const char *filename, const Real xmin, const Real xmax, const int n,
+//          const std::function<DReal(DReal)> &f) {
+// // C++14 style
+auto plot = [](const char *filename, const Real xmin, const Real xmax, const int n,
+            auto f) {
+// // C++20 style
+//void plot(const char *filename, const Real xmin, const Real xmax, const int n,
+//        auto f) {
+  // clang-format on
+
   std::ofstream out(filename);
   Real dx = (xmax - xmin) / n;
   Real x = xmin;
@@ -75,7 +86,7 @@ void plot(const char *filename, const Real xmin, const Real xmax, const int n,
       std::cout << "Exception " << e.what() << " at position x=" << x << "\n";
     }
   }
-}
+}; // trailing ; is only required for C++14 style
 
 int main() {
   Real Pi = 4 * atan(1);
@@ -86,8 +97,7 @@ int main() {
     DReal v = cube(sin(x_at(x0)));
     std::cout << "sin(x^3) at " << x0 << " : " << v << "\n";
   } catch (MyException &e) {
-    std::cout << "Exception catched while evaluating sin(x)^3 at " << x0
-              << "\n";
+    std::cout << "Exception catched while evaluating sin(x)^3 at " << x0 << "\n";
   }
 
   Real x1 = 1;
