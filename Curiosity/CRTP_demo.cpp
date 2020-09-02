@@ -6,7 +6,7 @@ public:
   ShapeT &self() { return static_cast<ShapeT&>(*this); }
   const ShapeT &self() const { return static_cast<const ShapeT&>(*this); }
 
-  void print() const {
+  void print() const { // static interface
     std::cout << "A shape will be printed\n";
     self().print_impl();
     std::cout << "A shape has be printed\n";
