@@ -3,7 +3,11 @@
 #include <iostream>
 
 #define _explicit03_ explicit // on constructors
-#define _explicit11_ // explicit // on conversionss
+#define _explicit11_ // explicit // on conversions
+
+// Trick; see https://stackoverflow.com/questions/3781520/how-to-test-if-preprocessor-symbol-is-defined-but-has-no-value
+#define DO_EXPAND(VAL) VAL##1
+#define EXPAND(VAL) DO_EXPAND(VAL)
 
 class Year {
   int m_y;
@@ -38,12 +42,12 @@ public:
 
 int main() {
   //#region [Details]
-#if _explicit03_ + 0
+#if EXPAND(_explicit03_) == 1
   std::cout << "Without C++03 explicit constructor\n";
 #else
   std::cout << "With C++03 explicit constructor\n";
 #endif
-#if _explicit11_ + 0
+#if EXPAND(_explicit11_) == 1
   std::cout << "Without C++11 explicit conversion\n";
 #else
   std::cout << "With C++11 explicit conversion\n";
