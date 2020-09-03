@@ -26,7 +26,6 @@ endif ()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE) # 
 
 add_subdirectory(third_party/googletest)
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 #------------------------------------------------------
 
@@ -123,6 +122,8 @@ foreach (SRC_PATH ${SRCS})
 
         if (NEED_GTEST)
             target_link_libraries(${EXE} gtest gtest_main)
+            target_include_directories(${EXE} PUBLIC ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+            target_include_directories(${EXE} PUBLIC ${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
             set_property(TEST ${TEST} PROPERTY LABELS "GTest")
         endif ()
     endif ()
