@@ -3,9 +3,9 @@
 #include <iostream>
 
 TEST(MyTest, Feature1) {
-  EXPECT_EQ(1, 2); // Non fatal error: continue
-  ASSERT_EQ(1, 2); // fatal error: stop
-  EXPECT_EQ(1, 2); // never executed
+  EXPECT_EQ(1, 1);                // Non fatal error: continue
+  ASSERT_STREQ("hello", "world"); // fatal error: stop
+  EXPECT_EQ(1, 1);                // never executed
 }
 
 // Disbaled by name
@@ -30,16 +30,14 @@ TEST(MyTest, SquareRoot) {
   EXPECT_DOUBLE_EQ(square_root(4), 2 + 1e-14);  // exact floating point match
   EXPECT_NEAR(square_root(4), 2 + 1e-14, 1e-8); // exact floating point match
   EXPECT_EXIT(square_root(-4), ::testing::ExitedWithCode(1),
-              "Error: Negative Input"); // parse std::cerr using regex 
+              "Error: Negative Input"); // parse std::cerr using regex
 }
-
-
-
-
 
 // This is the default main.
 // If not defined gtest_main will do it for you.
 int main(int argc, char **argv) {
   testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+  /* return */ RUN_ALL_TESTS(); // result should be returned
+                                // (here fatal tests are ok)
+  return EXIT_SUCCESS;
 }
