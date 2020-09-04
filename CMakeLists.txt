@@ -37,7 +37,8 @@ file(GLOB SRCS2 "Solutions/*.cpp")
 file(GLOB SRCS3 "Curiosity/*.cpp")
 file(GLOB SRCS4 "extras/*.cpp")
 file(GLOB SRCS5 "gtest/*--unittest.cpp")
-set(SRCS ${SRCS1} ${SRCS2} ${SRCS3} ${SRCS4} ${SRCS5})
+file(GLOB SRCS6 "gtest/samples/*--unittest.cpp")
+set(SRCS ${SRCS1} ${SRCS2} ${SRCS3} ${SRCS4} ${SRCS5} ${SRCS6})
 
 include_directories(include)
 
