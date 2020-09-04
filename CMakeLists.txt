@@ -121,7 +121,7 @@ foreach (SRC_PATH ${SRCS})
         endif ()
 
         if (NEED_GTEST)
-            target_link_libraries(${EXE} gtest gtest_main)
+            target_link_libraries(${EXE} gtest gtest_main gmock)
             target_include_directories(${EXE} PUBLIC ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
             target_include_directories(${EXE} PUBLIC ${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
             set_property(TEST ${TEST} PROPERTY LABELS "GTest")
