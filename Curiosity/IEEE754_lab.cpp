@@ -11,6 +11,11 @@ using Number = double;
 #include <string>
 #include <cstring>
 
+/* exciting blog on floating numbers:
+ * https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
+ * https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html#689
+ */
+
 constexpr int bit_size(unsigned long n) {
   // equivalent to fls function (from C lib)
   int r = 1;
