@@ -1,6 +1,9 @@
 [![C++ CI](https://github.com/haveneer/cpp-training/workflows/C++%20CI/badge.svg)](https://github.com/haveneer/cpp-training/actions) [![Build Status](https://travis-ci.com/haveneer/cpp-training.svg?branch=master)](https://travis-ci.com/haveneer/cpp-training)
 
 <p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text">
+    <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0">
+        <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+    </a><br>
     <a rel="cc:attributionURL" property="dct:title" href="https://github.com/haveneer/cpp-training">
         Code snippets for C++ training
     </a>
@@ -8,12 +11,10 @@
     <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="mailto:hpwxf@haveneer.com">
         Pascal HAVÉ
     </a> is licensed under 
-    <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0
-        <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" />
-    </a>
+    <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>
 </p>
 
-For more details about this training, contact me [hpwxf@haveneer.com](mailto:hpwxf@haveneer.com).
+For more details about this training, contact [hpwxf@haveneer.com](mailto:hpwxf@haveneer.com).
 
 # cpp-training
 
