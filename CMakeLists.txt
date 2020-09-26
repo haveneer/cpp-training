@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(cpp-training)
 option(ENABLE_STATIC_ANALYSIS "Enable static analysis" OFF)
+set(CPP_TRAINING_SOURCE_DIR ${PROJECT_SOURCE_DIR}) # to locate main root source in sub-projects
 
 set(CMAKE_CXX_STANDARD 17)
 add_definitions(-DDEBUG_TYPE)
@@ -129,3 +130,5 @@ foreach (SRC_PATH ${SRCS})
         endif ()
     endif ()
 endforeach ()
+
+add_subdirectory(Solutions/dicho_project)
