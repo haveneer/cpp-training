@@ -2,6 +2,7 @@
 #include "dicho.hpp"
 #include "f.hpp"
 #include "gtest/gtest.h"
+#include <cmath>
 
 TEST(dicho, Success) {
   x0 = 1; // global
