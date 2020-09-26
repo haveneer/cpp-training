@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <iostream>
 #include <stdexcept>
+#include <string>
 
 // in f.h
 using Real = double;
@@ -26,7 +27,7 @@ double ulp(double f); // Unit in the Last Place function (is close to abs(f)*eps
 // Output:
 // a,b: updated current search interval
 // *niter: number of algorithm steps used (if niter != nullptr)
-template<typename F> // C++20 supports auto argument type
+template <typename F> // C++20 supports auto argument type
 void dicho(double &a, double &b, F f, double eps, int *niter) {
   if (a > b) {
     throw std::invalid_argument("[a;b] is an empty interval");
@@ -96,7 +97,8 @@ double ulp(double f) {
   // then ULP(x) = b^{max(e,emin)−p+1}
 
   int f_exp{};
-  /* double f_frac = */ std::frexp(f, &f_exp); // decompose number as fraction-exponent
+  /* double f_frac = */ std::frexp(f,
+                                   &f_exp); // decompose number as fraction-exponent
   // i.e. f == f_frac * 2^f_exp
 
   auto e_min = std::numeric_limits<double>::min_exponent;
