@@ -13,6 +13,7 @@ Real f(Real x);
 const Real e = std::exp(1);
 Real x0 = 1; // TODO: increase x0 from 1 to 40
 
+// Could be also interesting with cbrt and pow(_, 1./3)
 Real f(Real x) { return x - x0 + std::exp(x) - std::pow(e, x); }
 
 // in main.cpp
