@@ -30,6 +30,7 @@ Widget get_widget() { return Widget{}; }
 #include <mutex>
 #include <set>
 #include <string>
+#include <atomic>
 using namespace std::chrono_literals;
 using namespace std::string_literals;
 const int employee_id = 1;
