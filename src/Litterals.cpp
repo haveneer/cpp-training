@@ -30,6 +30,7 @@ template <typename T> std::string type() { return typeid(T).name(); }
 int main() {
   
   // clang-format off
+  // DISPLAY( nullptr                                             ); /* C++11 */
   //#endregion
   DISPLAY( true                                                );
   DISPLAY( false                                               );
@@ -54,7 +55,6 @@ int main() {
   DISPLAY( 1.23456789e-10                                      );
   DISPLAY( 0xf.fp0f                                            ); /* C++17 */
   DISPLAY( 0x1p10L                                             );
-  DISPLAY( nullptr                                             ); /* C++11 */
 
   using namespace std::string_literals;
   DISPLAY( "Hello\0world"s /* ATTN: wrong HTML display */      ); /* C++14 */
