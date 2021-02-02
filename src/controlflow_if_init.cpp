@@ -25,22 +25,6 @@ public:
 };
 //#endregion
 
-constexpr auto architecture_size() {
-  // compile-tme evaluation
-  if constexpr (sizeof(void *) == 4) {
-    return 32;
-  } else if constexpr (sizeof(void *) == 8) {
-    return 64;
-  } else {
-    // even discarded statement must be well formed
-    // error: cannot initialize variable of type 'int *' with an rvalue of type 'int'
-    // int * p = 1;
-
-    // but do not participate in function return type deduction
-    return; // not an int value
-  }
-}
-
 FakeMutex mutex;
 extern bool shared_flag; // protected by mutex
 
@@ -56,15 +40,17 @@ int main(int argc, char ** argv) {
     std::cerr << "What argv is it ? argv[0] = " << argv[0] << "\n";
   }
   
-  constexpr std::size_t arch = architecture_size();
-
   std::string str = "Hello world; how'r u?";
   std::string token = "w";
   if (auto pos = str.find(token); pos != std::string::npos) {
     std::cout << "Token [" << token << "] found at position " << pos << "\n";
   }
 
+  std::string value = "1234";
+  if (auto i = std::stoi(value); i > 0) { std::cout << "Positive value\n"; }
+
   std::cout << "--- Before ---\n";
+  // A perfect solution for effectful scoped object
   if (FakeLock lock{mutex}; shared_flag) {
     std::cout << "Do unsafe job\n";
   } else {

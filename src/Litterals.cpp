@@ -30,7 +30,6 @@ template <typename T> std::string type() { return typeid(T).name(); }
 int main() {
   
   // clang-format off
-  // DISPLAY( nullptr                                             ); /* C++17 */
   //#endregion
   DISPLAY( true                                                );
   DISPLAY( false                                               );
@@ -44,16 +43,18 @@ int main() {
   DISPLAY( 314                                                 );
   DISPLAY( 314U                                                );
   DISPLAY( 18446744073709550592ull                             ); /* C++11 */
+  DISPLAY( 1'844'674'407'370'955'0592ull                       ); /* C++14 */
   DISPLAY( 0b100111                                            ); /* C++14 */
   DISPLAY( 012345670                                           );
   DISPLAY( 0x123DEF                                            );
-  DISPLAY( 6'700'417                                           );
+  DISPLAY( 6'700'417                                           ); /* C++14 */
   DISPLAY( 3.1415 /* floating numbers are double by default */ );
   DISPLAY( 3.1415f                                             );
   DISPLAY( 3.1415L                                             );
   DISPLAY( 1.23456789e-10                                      );
-  DISPLAY( 0xf.fp0f                                            );
+  DISPLAY( 0xf.fp0f                                            ); /* C++17 */
   DISPLAY( 0x1p10L                                             );
+  DISPLAY( nullptr                                             ); /* C++11 */
 
   using namespace std::string_literals;
   DISPLAY( "Hello\0world"s /* ATTN: wrong HTML display */      ); /* C++14 */
