@@ -3,10 +3,26 @@
 #include <iostream>
 #include <map>
 #include <string_view>
-#define DISPLAY(s)                                                                \
-  std::cout << #s << "=\"" << (s) << "\"" << std::setw(40 - s.size())             \
-            << " with length=" << (s).size() << ": " << check(s.data(), s.size()) \
-            << "\n";
+#ifdef WIN32
+#define DISPLAY(s)                                                        \
+  {                                                                       \
+    if (auto v = check(s.data(), s.size()); v == "valid data")            \
+      std::cout << #s << "=\"" << (s) << "\"" << std::setw(50 - s.size()) \
+                << " with length=" << (s).size() << ": " << v << "\n";    \
+    else {                                                                \
+      std::string_view alts = " CANNOT DISPLAY ";                         \
+      std::cout << #s << "=" << alts << std::setw(50 - alts.size())       \
+                << " with length=" << (s).size() << ": " << v << "\n";    \
+    }                                                                     \
+  }
+#else
+#define DISPLAY(s)                                                                  \
+  {                                                                                 \
+    std::cout << #s << "=\"" << (s) << "\"" << std::setw(50 - s.size())             \
+              << " with length=" << (s).size() << ": " << check(s.data(), s.size()) \
+              << "\n";                                                              \
+  }
+#endif
 
 std::string_view location;
 #define LOCATE(msg)                                                  \
@@ -60,7 +76,7 @@ void delete_it(void *p) {
 }
 
 void operator delete(void *p) { return delete_it(p); }
-void operator delete(void *p, std::size_t) { return delete_it(p); }
+void operator delete(void *p, std::size_t /*unused*/) { return delete_it(p); }
 //#endregion
 
 // TODO change return type to std::string
@@ -102,6 +118,6 @@ int main() {
   DISPLAY(sv3); // Dangling pointer
 
   LOCATE("make a const string& from a temporary string");
-  const std::string &s3{makeTemporaryString()};
-  DISPLAY(s3); // OK (no dangling ref; cf https://wg21.link/p0936 and C++17 Draft)
+  const std::string &s4{makeTemporaryString()};
+  DISPLAY(s4); // OK (no dangling ref; cf https://wg21.link/p0936 and C++17 Draft)
 }
