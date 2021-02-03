@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+/* Entropy area */
 //#endregion
 
 std::vector<std::string> split(const std::string &s, char delimiter) {
