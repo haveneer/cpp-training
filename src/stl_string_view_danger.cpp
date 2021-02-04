@@ -32,7 +32,7 @@
 std::string_view location;
 #define LOCATE(msg)                                                        \
   {                                                                        \
-    if (do_monitor || true)                                                \
+    if (do_monitor && false)                                               \
       std::cout << "\tLine " << std::setw(3) << __LINE__ << "... (" << msg \
                 << ")\n";                                                  \
     location = msg;                                                        \
@@ -59,15 +59,13 @@ std::string_view check(const char *data, std::size_t n) {
 void *operator new(std::size_t n) {
   void *p = malloc(n);
   if (!inside_allocator) {
+    inside_allocator = true;
     if (allocations == nullptr) {
-      inside_allocator = true;
       allocations =
           new std::map<void *, std::tuple<std::size_t, std::string_view>>{};
-      inside_allocator = false;
     }
     if (do_monitor)
       std::cout << "\tnew() " << n << " bytes for '" << location << "'\n";
-    inside_allocator = true;
     (*allocations)[p] = std::make_tuple(n, location);
     inside_allocator = false;
   }
