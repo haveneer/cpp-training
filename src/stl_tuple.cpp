@@ -44,6 +44,7 @@ private:
 };
 
 struct Y {
+  // no explicit constructor => not std::is_constructible
   const char c;
   const int i;
   const double f;
