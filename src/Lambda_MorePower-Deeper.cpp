@@ -1,16 +1,16 @@
 //#region [Declarations]
 #include <algorithm>
 #include <iostream>
+#include <string>
 #include <utility>
 #include <variant>
 #include <vector>
-#include <string>
 using namespace std::string_literals;
 //#endregion
 
 // clang-format off
-struct Circle { void draw() const { std::cout << "Draw a Circle\n"; } };
-struct Square { void draw() const { std::cout << "Draw a Square\n"; } };
+struct Circle   { void draw() const { std::cout << "Draw a Circle\n";   } };
+struct Square   { void draw() const { std::cout << "Draw a Square\n";   } };
 struct Triangle { void draw() const { std::cout << "Draw a Triangle\n"; } };
 // clang-format on
 
