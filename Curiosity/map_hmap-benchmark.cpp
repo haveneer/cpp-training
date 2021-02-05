@@ -31,17 +31,19 @@ template <typename T> void DoNotOptimize(const T &t) {}
 
 #include <ctime>
 #include <map>
-#include <unordered_map>
 #include <random>
+#include <unordered_map>
 
+#define COUNT 500
 #define SIZE 100
 
 static void Random(benchmark::State &state) {
   for (auto _ : state) {
-    srandom(123);
+    std::mt19937 engine{123};
+    std::uniform_int_distribution<int> dist{0, SIZE};
     std::map<int, double> m;
-    for (int i = 0; i < SIZE; ++i) {
-      benchmark::DoNotOptimize(random() % SIZE);
+    for (int i = 0; i < COUNT; ++i) {
+      benchmark::DoNotOptimize(dist(engine));
     }
   }
 }
@@ -50,10 +52,11 @@ BENCHMARK(Random);
 
 static void Map(benchmark::State &state) {
   for (auto _ : state) {
-    srandom(123);
+    std::mt19937 engine{123};
+    std::uniform_int_distribution<int> dist{0, SIZE};
     std::map<int, double> m;
-    for (int i = 0; i < SIZE; ++i) {
-      m[random() % SIZE]++;
+    for (int i = 0; i < COUNT; ++i) {
+      m[dist(engine)]++;
     }
     benchmark::DoNotOptimize(m);
   }
@@ -63,10 +66,11 @@ BENCHMARK(Map);
 
 static void UMap(benchmark::State &state) {
   for (auto _ : state) {
-    srandom(123);
+    std::mt19937 engine{123};
+    std::uniform_int_distribution<int> dist{0, SIZE};
     std::unordered_map<int, double> m;
-    for (int i = 0; i < SIZE; ++i) {
-      m[random() % SIZE]++;
+    for (int i = 0; i < COUNT; ++i) {
+      m[dist(engine)]++;
     }
     benchmark::DoNotOptimize(m);
   }
@@ -76,7 +80,7 @@ BENCHMARK(UMap);
 
 // ------------------------------------------------>%
 int main() {
-  benchmark::State state{10*SIZE};
+  benchmark::State state{10 * SIZE};
 #ifdef HAS_PMR
   PMRList(state);
   PMRVector(state);
