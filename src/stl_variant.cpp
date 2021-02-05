@@ -26,7 +26,6 @@ private:
 
 int main() {
   std::variant<char, int, double> v1;
-  assert(v1.valueless_by_exception()); // nothing inside
   v1 = 'Z'; // can be set by any supported types (as declared)
   v1 = 3;
   v1 = 4.2; // 4.2f also allowed
