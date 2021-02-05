@@ -3,6 +3,7 @@
 #include <cmath>
 #include <iostream>
 #include <tuple>
+#include <functional>
 //#endregion
 
 #include <optional>
@@ -72,4 +73,10 @@ int main() {
   assert(r4opt == std::nullopt); // comparable to std::nullopt (any T)
   std::cout << "Get or default: " << r4opt.value_or(0) << "\n"; // get default value
   std::cout << "sizeof(r4opt) = " << sizeof(r4opt) << "\n";     // could be expensive
+
+  std::string a_string = "Hello";
+  std::optional<std::reference_wrapper<std::string>> r5ref;
+  r5ref = std::ref(a_string); // std::ref creates a std::reference_wrapper
+  std::cout << "Get optional ref: " << r5ref->get() << '\n';
+  assert(&a_string == &r5ref->get()); // same address; not a copy
 }
