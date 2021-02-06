@@ -7,24 +7,25 @@ matrix:
   include:
     - name: "Linux Debug"
       os: linux
-      dist: bionic
+      dist: focal
       env:
         - BUILD_NAME="linux-macos"
         - MODE=Debug
 
     - name: "MacOS Debug"
       os: osx
-      osx_image: xcode9.4
+      osx_image: xcode12.2
       env:
         - BUILD_NAME="linux-macos"
         - MODE=Debug
-        - CC=gcc-9
-        - CXX=g++-9
-      addons:
-        homebrew:
-          # update: true
-          packages:
-            - gcc@9 # ou llvm@10
+      # too long installation
+      #  - CC=/usr/local/opt/llvm/bin/clang-11
+      #  - CXX=/usr/local/opt/llvm/bin/clang-11
+      #addons:
+      #  homebrew:
+      #    # update: true
+      #    packages:
+      #      - llvm@11
 
     - name: "Windows Debug"
       os: windows
