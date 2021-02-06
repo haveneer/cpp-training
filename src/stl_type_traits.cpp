@@ -38,5 +38,4 @@ int main() {
   DISPLAY((std::is_polymorphic<std::istream>::value)); // has virtual method
   DISPLAY((std::is_pointer_v<void *>));
   DISPLAY((std::is_trivially_copyable_v<int>));
-  
 }
