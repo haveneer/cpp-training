@@ -24,6 +24,11 @@ int buggy_function() {
   else
     return;
   */
+  //#region [To avoid "Illegal instruction" crash with ubuntu/clang-10: ]
+#ifdef SAFE_RUN
+  return 0;
+#endif
+  //#endregion
 }
 
 int main() {

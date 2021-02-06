@@ -5,6 +5,7 @@ set(CPP_TRAINING_SOURCE_DIR ${PROJECT_SOURCE_DIR}) # to locate main root source 
 
 set(CMAKE_CXX_STANDARD 17)
 add_definitions(-DDEBUG_TYPE)
+add_definitions(-DSAFE_RUN) # add workaround for explicitly buggy example (or on the edge behavior)
 
 #------------------------------------------------------
 
@@ -56,7 +57,6 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
 endif ()
-
 
 set(EXCLUDED)
 if (MSVC)
