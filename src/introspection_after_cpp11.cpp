@@ -9,16 +9,18 @@ struct Foo {
 //#endregion
 
 //#region [C++11]
-template <typename, typename = void> constexpr bool has_value_type_11_v = false;
+template <typename, typename = void> // default behavior
+constexpr bool has_value_type_11_v = false;
 
 template <typename T>
 constexpr bool
     has_value_type_11_v< // you can also use sizeof(X) in place of std::declval<X>()
-    T, decltype(std::declval<typename T::value_type>(), void())> = true;
-//#endregion 
+        T, decltype(std::declval<typename T::value_type>(), void())> = true;
+//#endregion
 
 //#region [C++17]
-template <typename, typename = void> constexpr bool has_value_type_17_v = false;
+template <typename, typename = void> // default behavior
+constexpr bool has_value_type_17_v = false;
 
 template <typename T>
 constexpr bool has_value_type_17_v<T, std::void_t<typename T::value_type>> = true;
