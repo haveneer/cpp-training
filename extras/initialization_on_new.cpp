@@ -1,4 +1,6 @@
+//#region [Declarations]
 #include <algorithm>
+#include <cstring>
 #include <iomanip>
 #include <iostream>
 #include <string_view>
@@ -33,6 +35,7 @@
  * 3) If T is an array type, each element of the array is value-initialized
  * 4) Otherwise, the object is zero-initialized.
  */
+//#endregion
 
 struct A {
   int x, y, z;
