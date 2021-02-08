@@ -25,7 +25,7 @@ int main() {
   enum class Suit { Heart, Spade, Diamond, Club };
   Suit suit = Suit::Heart; // NOTA: with a scope prefix !
 
-  // You also can define the underlying integral type (to optimize allocation)
+  // C++14: you also can define the underlying integral type (to optimize allocation)
   enum class Value : unsigned char { Figure, Number };
   Value value = Value::Figure;
 

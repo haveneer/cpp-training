@@ -23,7 +23,7 @@ private:
   uint64_t m_current;
 };
 
-template <typename T> void DoNotOptimize(const T &t) {}
+template <typename T> void DoNotOptimize(const T &) {}
 
 } // namespace benchmark
 #define BENCHMARK(X)

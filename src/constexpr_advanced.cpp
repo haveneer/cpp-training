@@ -1,5 +1,6 @@
 //#region [Declarations]
 #include <cstddef> // std::size_t
+#include <stdexcept>
 //#endregion
 
 template <typename T, std::size_t N> class MyTable {
@@ -16,15 +17,16 @@ public:
   constexpr value_type &operator[](size_type n) { return vals[n]; }
 };
 
-class Zut {};
-constexpr unsigned long facto(int n) {
-  return n < 0 ? throw Zut{} : n == 0 ? 1ULL : n * facto(n - 1);
+constexpr unsigned long factorial(int n) {
+  return n < 0    ? throw std::out_of_range("Invalid negative argument")
+         : n == 0 ? 1ULL
+                  : n * factorial(n - 1);
 }
 
 template <std::size_t N> constexpr auto generateTable() {
   MyTable<unsigned long, N> res;
   for (std::size_t i = 0; i != N; ++i)
-    res[i] = facto(i);
+    res[i] = factorial(i);
   return res;
 }
 
@@ -37,6 +39,7 @@ constexpr auto findValue(const MyTable<T, N> &tab, const T &val) -> bool {
 }
 
 int main() {
+  // constexpr auto bad_call = factorial(-1);
   constexpr const auto static_table = generateTable<20>();
 
   constexpr auto val = 120UL;
