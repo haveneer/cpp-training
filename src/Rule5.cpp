@@ -15,12 +15,12 @@ char name(const A *a) {
 
 class A {
 public:
-  A() : data_(100) { std::cout << "new " << name(this) << " : A()\n"; }
+  A() : m_data(100) { std::cout << "new " << name(this) << " : A()\n"; }
 
-  A(A const &s) : data_(s.data_) {
+  A(A const &s) : m_data(s.m_data) {
     std::cout << "new " << name(this) << " : A(const& " << name(&s) << ")\n";
   }
-  A(A &&s) : data_(std::move(s.data_)) {
+  A(A &&s) : m_data(std::move(s.m_data)) {
     std::cout << "new " << name(this) << " : A(&& " << name(&s) << ")\n";
   }
 
@@ -31,19 +31,19 @@ public:
       std::cout << name(this) << " = (const& " << name(&s) << "): self copy\n";
     } else {
       std::cout << name(this) << " = (const& " << name(&s) << ")\n";
-      data_ = s.data_;
+      m_data = s.m_data;
     }
     return *this;
   }
 
   A &operator=(A &&s) {
     std::cout << name(this) << " = (&& " << name(&s) << ")\n";
-    data_ = std::move(s.data_);
+    m_data = std::move(s.m_data);
     return *this;
   }
 
 private:
-  std::vector<int> data_;
+  std::vector<int> m_data;
 };
 
 int main() {

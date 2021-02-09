@@ -2,19 +2,24 @@
 
 using T = std::string;
 
-void whatReferenceType(T & a) {
-  std::cout << "This is a lvalue\n";
+void whatReferenceType(const T &a) {
+  std::cout << "Pass by lvalue const reference\n";
 }
 
-void whatReferenceType(T && a) {
-  std::cout << "This is a rvalue\n";
+void whatReferenceType(T &a) { // TODO: what happens if we remove this function ?
+  std::cout << "Pass by lvalue mutable reference\n";
+}
+
+void whatReferenceType(T &&a) { // TODO: what happens if we remove this function ?
+  std::cout << "Pass by rvalue reference\n";
 }
 
 int main() {
-  std::string hello = "hello ";
-  std::string world = "world";
-  std::string text = hello + world;
+  T hello = "hello ";
+  T world = "world";
+  T text = hello + world;
   whatReferenceType(hello);
   whatReferenceType(text);
+  whatReferenceType(T{});
   whatReferenceType(hello + world);
 }
