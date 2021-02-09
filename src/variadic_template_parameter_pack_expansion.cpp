@@ -38,6 +38,7 @@ int f(int i) { return 2 * i; }
 template <typename... Ts> void demo(Ts... args) {
   show(args...);
   show(args + 1 ...);
+  show(&args + 1 ...);
   show(str(args)...);
   show(3 + f(args)...);
   show(strs({args...}) + str(args)...);
