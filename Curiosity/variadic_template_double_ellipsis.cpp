@@ -18,14 +18,14 @@ template <typename T> std::string type() { return typeid(T).name(); }
 
 // Obscure double ellipsis usage
 template <typename T> struct X {};
-template <typename T, typename... U> struct X<T(U......)> /* double ellipsis */ {};
+template <typename T, typename... U> struct X<T(U..., ...)> /* double ellipsis */ {};
 
 // Ready to use usage
 template <typename T> T const &printf_helper(T const &x) { return x; }
 char const *printf_helper(std::string const &x) { return x.c_str(); }
 
 template <typename... Req, typename... Given>
-int wrap_printf(int (*fn)(Req......), // better syntax: puts a comma between ellipses
+int wrap_printf(int (*fn)(Req..., ...), // GCC/Clang allows to avoid comma (not VS)
                 Given... args) {
   return fn(printf_helper(args)...);
 }
