@@ -16,33 +16,51 @@ struct T {
   T operator[](const int i) const { return T{*this, '[' + std::to_string(i) + ']'}; }
   T operator[](const T &i) const { return T{*this, '[' + i.expr + ']'}; }
   T operator()(const T &i) const { return T{*this, '(' + i.expr + ')'}; }
+  // operator-> is not implemented
 
   const std::string expr;
 };
 
-T operator+(const T &a, const T &b) { return T{a, "+", b}; }
-T operator!(const T &b) { return T{"!", b}; }
-T operator&&(const T &a, const T &b) { return T{a, "&&", b}; }
-T operator||(const T &a, const T &b) { return T{a, "||", b}; }
-T operator*(const T &b) { return T{"*", b}; }
 T operator++(const T &b) { return T{"++", b}; }
 T operator++(const T &a, int) { return T{a, "++"}; }
 T operator--(const T &b) { return T{"--", b}; }
 T operator--(const T &a, int) { return T{a, "--"}; }
+T operator+(const T &a) { return T{"+", a}; }
+T operator-(const T &a) { return T{"-", a}; }
+T operator!(const T &b) { return T{"!", b}; }
 T operator~(const T &b) { return T{"~", b}; }
-T operator&(const T &a, const T &b) { return T{a, "&", b}; }
-T operator|(const T &a, const T &b) { return T{a, "|", b}; }
-T operator^(const T &a, const T &b) { return T{a, "^", b}; }
-T operator-(const T &a, const T &b) { return T{a, "-", b}; }
+T operator*(const T &b) { return T{"*", b}; }
+T operator&(const T &b) { return T{"&", b}; }
+T operator->*(const T &a, const T &b) { return T{a, "->*", b}; }
 T operator*(const T &a, const T &b) { return T{a, "*", b}; }
 T operator/(const T &a, const T &b) { return T{a, "/", b}; }
 T operator%(const T &a, const T &b) { return T{a, "%", b}; }
-T operator-(const T &b) { return T{"-", b}; }
-T operator+=(const T &a, const T &b) { return T{a, "+=", b}; }
-T operator&(const T &b) { return T{"&", b}; }
-T operator,(const T &a, const T &b) { return T{a, ",", b}; }
-T operator<(const T &a, const T &b) { return T{a, "<", b}; }
+T operator+(const T &a, const T &b) { return T{a, "+", b}; }
+T operator-(const T &a, const T &b) { return T{a, "-", b}; }
 T operator<<(const T &a, const T &b) { return T{a, "<<", b}; }
+T operator>>(const T &a, const T &b) { return T{a, ">>", b}; }
+// T operator<=>(const T &a, const T &b) { return T{a, "<=>", b}; } // C++20
+T operator<(const T &a, const T &b) { return T{a, "<", b}; }
+T operator>(const T &a, const T &b) { return T{a, ">", b}; }
+T operator<=(const T &a, const T &b) { return T{a, "<=", b}; }
+T operator>=(const T &a, const T &b) { return T{a, ">=", b}; }
+T operator==(const T &a, const T &b) { return T{a, "==", b}; }
+T operator!=(const T &a, const T &b) { return T{a, "!=", b}; }
+T operator&(const T &a, const T &b) { return T{a, "&", b}; }
+T operator^(const T &a, const T &b) { return T{a, "^", b}; }
+T operator|(const T &a, const T &b) { return T{a, "|", b}; }
+T operator&&(const T &a, const T &b) { return T{a, "&&", b}; }
+T operator||(const T &a, const T &b) { return T{a, "||", b}; }
+T operator+=(const T &a, const T &b) { return T{a, "+=", b}; }
+T operator-=(const T &a, const T &b) { return T{a, "-=", b}; }
+T operator/=(const T &a, const T &b) { return T{a, "/=", b}; }
+T operator%=(const T &a, const T &b) { return T{a, "%=", b}; }
+T operator<<=(const T &a, const T &b) { return T{a, "<<=", b}; }
+T operator>>=(const T &a, const T &b) { return T{a, ">>=", b}; }
+T operator&=(const T &a, const T &b) { return T{a, "&=", b}; }
+T operator^=(const T &a, const T &b) { return T{a, "^=", b}; }
+T operator|=(const T &a, const T &b) { return T{a, "|=", b}; }
+T operator,(const T &a, const T &b) { return T{a, ",", b}; }
 
 #define HEADER_LINE()                                   \
   std::cout << std::setfill('-') << std::setw(20) << "" \
