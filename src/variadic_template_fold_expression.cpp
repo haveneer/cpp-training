@@ -98,7 +98,10 @@ template <typename... Ts> void demo(const Ts &...args) {
   EXPLAIN2(((std::cout << ... << args), " (display)"));
 }
 
-template <typename... Ts> auto sum17(const Ts &...ts) { return (ts + ...); }
+template <typename... Ts> // no more explicit recursion
+auto sum17(const Ts &...ts) {
+  return (ts + ...);
+}
 
 int main() {
   T a{"a"}, b{"b"}, c{"c"}, d{"d"};
