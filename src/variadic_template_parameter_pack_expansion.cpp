@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <tuple>
+#include <vector>
 
 #ifdef DEBUG_TYPE
 #include "type.hpp" // advanced type printing
@@ -11,7 +12,7 @@
 template <typename T> std::string type() { return typeid(T).name(); }
 #endif
 
-#define DISPLAY(x) std::cout << #x << " is a " << type<decltype(x)>() << '\n'
+#define DISPLAY(x) std::cout << '\n' << #x << " is a " << type<decltype(x)>() << '\n'
 //#endregion
 
 template <typename Head, typename... Tail> void show(Head arg0, Tail... args) {
@@ -42,6 +43,11 @@ template <typename... Ts> void demo(Ts... args) {
   show(str(args)...);
   show(3 + f(args)...);
   show(strs({args...}) + str(args)...);
+
+  auto v = {args...}; // or std::vector v = {args...} using CTAD (C++17)
+  for (auto &&x : v)
+    std::cout << x << "  ";
+  DISPLAY(v);
 }
 
 // Surprising but somewhat useful expansion
@@ -49,4 +55,13 @@ template <typename... Ts> class MultiInheritance : public Ts... {
   std::tuple<Ts...> data;
 };
 
-int main() { demo(1, 2, 3, 4); }
+auto sum11() { return 0; }
+template <typename T0, typename... Ts>
+auto sum11(T0 s, Ts... ts) { // requires a recursion to combine data
+  return s + sum11(ts...);
+}
+
+int main() {
+  demo(1, 2, 3, 4); // see demo for details
+  std::cout << "sum = " << sum11(1, 2, 3, 4) << "\n";
+}
