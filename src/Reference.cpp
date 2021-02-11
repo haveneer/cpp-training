@@ -29,7 +29,7 @@ int main() { // Error messages come from GCC 9.2
   //             // warning: ISO C++ forbids converting a string constant to 'char*'
 
   const char *w = "Hello";
-  const char **x = &w;
+  const char **ch = &w;
   //#endregion
 
   //#region [With functions returns]
@@ -64,6 +64,9 @@ int main() { // Error messages come from GCC 9.2
   from_const_ref(1);
   // kref++; // error: increment of read-only reference 'kref'
 
+  struct X {};      // a rvalue can be assigned to a lvalue const ref
+  const X &x = X{}; // "Temporary object lifetime" rule
+
   const int m = 2;
   // m = 3; // error: assignment of read-only variable 'm'
   //#endregion
@@ -78,7 +81,7 @@ int main() { // Error messages come from GCC 9.2
             << ", d=" << d << std::endl;
   set_ref(++i);
   set_ref(a = b);
-  set_ref((c, d));
+  set_ref((c, d)); // comma instruction
   std::cout << "AFTER  i=" << i << ", a=" << a << ", b=" << b << ", c=" << c
             << ", d=" << d << std::endl;
   // set_ref(i++); // error: cannot bind non-const lvalue reference of type

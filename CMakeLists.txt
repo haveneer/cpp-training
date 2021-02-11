@@ -63,7 +63,7 @@ if (MSVC)
     # Lambda_y-combinator.cpp operator_funky_overload.cpp : pb with CTAD
     # controlflow_if_advanced.cpp : pb with if selector with initializer
     # Struct.cpp RAII.cpp DefaultCtor.cpp move_vs_copy.cpp : slow down with Github ??
-    list(APPEND EXCLUDED src/Lambda_y-combinator.cpp src/operator_funky_overload.cpp src/controlflow_if_init.cpp)
+    list(APPEND EXCLUDED Curiosity/Lambda_y-combinator.cpp src/operator_funky_overload.cpp src/controlflow_if_init.cpp)
     list(APPEND EXCLUDED src/move_vs_copy.cpp)
     if (NOT DONT_VS_EXCLUDE)
         list(APPEND EXCLUDED src/DefaultCtor.cpp src/RAII.cpp src/Struct.cpp)
