@@ -56,6 +56,8 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL
     # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wunused-member-function -Wunused-private-field -Wno-unused-variable -Wno-unused-parameter -Wno-unused-value -Wno-unused-result -Wno-unused-but-set-variable")
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "PGI")
+    set(PGI TRUE)
 endif ()
 
 set(EXCLUDED)
@@ -69,6 +71,15 @@ if (MSVC)
         list(APPEND EXCLUDED src/DefaultCtor.cpp src/RAII.cpp src/Struct.cpp)
     endif ()
 endif ()
+
+if (PGI)
+    # compile time errors
+    list(APPEND EXCLUDED src/stl_string_view_danger.cpp src/Scope.cpp src/controlflow_if_init.cpp src/Litterals.cpp
+            src/controlflow_switch2.cpp extras/stl_things.cpp extras/char_conversion.cpp)
+    # runtime errors
+    list(APPEND EXCLUDED src/operator_associativity.cpp src/type_specialvalues.cpp)
+endif()
+
 
 enable_testing()
 foreach (SRC_PATH ${SRCS})

@@ -30,6 +30,12 @@ jobs:
           # - name: macOS 11
           #   os: macOS-11
           #   compiler: # default
+          - name: NVidia HPC 20.11
+            os: ubuntu-20.04
+            container: # C++17 support
+              image: nvcr.io/nvidia/nvhpc:20.11-devel-cuda_multi-ubuntu20.04
+            c-compiler: nvc
+            cxx-compiler: nvc++
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
