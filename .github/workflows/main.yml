@@ -8,6 +8,7 @@ jobs:
   build-unix:
 
     runs-on: ${{ matrix.os }}
+    container: ${{ matrix.container }}
     strategy:
       fail-fast: false
       matrix:
