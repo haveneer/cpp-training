@@ -501,6 +501,7 @@ int main()
   references_17();
   folding_demo();
   lambda_17();
+  map_demo();
   variant_demo();
   clamp_demo();
   dynamic_memory_17();
