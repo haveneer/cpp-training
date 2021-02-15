@@ -1,6 +1,7 @@
 //#region [Declarations]
 // doc https://rosettacode.org/wiki/Y_combinator
 //     https://humanreadablemag.com/issues/1/articles/the-y-combinator-for-programmers
+#include <cmath>
 #include <functional>
 #include <iostream>
 #include <type_traits>
@@ -12,6 +13,12 @@
 template <typename T> std::string type() { return typeid(T).name(); }
 #endif
 //#endregion
+
+// Y combinator : C++ try again ?
+auto Y = [](auto &&f) {
+  auto A = [f](auto &&x) { return [f, x](auto &&y) { return f(x(x))(y); }; };
+  return A(A);
+};
 
 template <typename F> struct recursive {
   F f; // the lambda will be stored here
@@ -25,8 +32,7 @@ template <typename F> struct recursive {
   //  }
 
   // a forwarding operator() (const version)
-  template <typename... Ts>
-  constexpr decltype(auto) operator()(Ts &&... ts) const {
+  template <typename... Ts> constexpr decltype(auto) operator()(Ts &&...ts) const {
     // std:cref will be constexpr in C++20
     // return f(std::cref(*this), std::forward<Ts>(ts)...);
     return f(*this, std::forward<Ts>(ts)...);
@@ -40,7 +46,7 @@ template <typename F> recursive<std::decay_t<F>> rec14(F &&f) {
 
 // With C++17 and CTAD we can add a deduction guide and a simpler 𝛌 function
 // with C++20 this deduction guide could be not necessary
-template <typename F> recursive(F)->recursive<F>;
+template <typename F> recursive(F) -> recursive<F>;
 // helper to build recursive object
 auto const rec17 = [](auto f) { return recursive{std::move(f)}; };
 
@@ -80,4 +86,8 @@ int main() {
 
   static_assert((sum_from_1(3) == 14), "");
   std::cout << sum_from_1(3) << '\n';
+
+  //  auto s = [](auto &&x) { return std::sin(x); };
+  //  auto ys = Y(s);
+  //  std::cout << ys(1) << "\n";
 }

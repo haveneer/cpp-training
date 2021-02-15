@@ -1,11 +1,11 @@
 #include <iostream>
 #include <tuple>
 
-template <size_t n, typename... T>
+template <size_t n, typename... T> // std::enable_if<predicate, return_type>::type
 typename std::enable_if<(n >= sizeof...(T))>::type
 print_tuple(std::ostream &, const std::tuple<T...> &) {}
 
-template <size_t n, typename... T>
+template <size_t n, typename... T> // std::enable_if<!predicate, return_type>::type
 typename std::enable_if<(n < sizeof...(T))>::type
 print_tuple(std::ostream &os, const std::tuple<T...> &tup) {
   if (n != 0)
