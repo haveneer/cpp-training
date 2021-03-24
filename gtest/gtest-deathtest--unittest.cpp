@@ -6,7 +6,10 @@
 
 /***************************************************/
 
-TEST(DeathTestSuit, SegFault) {
+// /!\ for thread safety: test suit including Death Assertion 
+// must be suffixed by DeathTest
+
+TEST(DemoDeathTest, SegFault) {
   ASSERT_DEATH(
       {
         int *p = new int[10];
@@ -16,7 +19,7 @@ TEST(DeathTestSuit, SegFault) {
       "");
 }
 
-TEST(DeathTestSuit, ExitSuccess) {
+TEST(DemoDeathTest, ExitSuccess) {
   EXPECT_EXIT(
       {
         std::cerr << "It is a Success; good bye" << std::endl;
@@ -25,7 +28,7 @@ TEST(DeathTestSuit, ExitSuccess) {
       ::testing::ExitedWithCode(0), "Success");
 }
 
-TEST(DeathTestSuit, ExitFailure) {
+TEST(DemoDeathTest, ExitFailure) {
   EXPECT_EXIT(
       {
         std::cerr << "Failure" << std::endl;
@@ -35,7 +38,7 @@ TEST(DeathTestSuit, ExitFailure) {
 }
 
 #ifndef WIN32
-TEST(DeathTestSuit, ExitSignal) {
+TEST(DemoDeathTest, ExitSignal) {
   EXPECT_EXIT(
       {
         std::cerr << "Suicide" << std::endl;

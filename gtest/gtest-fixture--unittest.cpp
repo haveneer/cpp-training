@@ -4,9 +4,10 @@
 #include "gtest/gtest.h"
 //#endregion
 
+// TestSuit level fixture
 class MyTestFixture : public ::testing::Test {
   //#region [For set-up / tear-down at the suit level]
-public: // needs to be publicly accessible (e.g. TEST_P)
+public:                          // needs to be publicly accessible (e.g. TEST_P)
   static void SetUpTestSuite() { // /!\ there is no guard if you misspell it
     if (m_verbose)
       std::cout << "MyTestFixture test suit set up\n";
@@ -15,7 +16,6 @@ public: // needs to be publicly accessible (e.g. TEST_P)
     if (m_verbose)
       std::cout << "MyTestFixture test suit tear down "
                 << "(" << m_count << " auxMethod calls)\n";
-    ASSERT_EQ(2, m_count);
   }
   inline static int m_count = 0; // inline static is a C++17 feature
 
@@ -29,7 +29,7 @@ public: // needs to be publicly accessible (e.g. TEST_P)
   }
   //#endregion
 
-protected: // needs to be accessible by sub-classes (e.g. TEST*)
+protected:                // needs to be accessible by sub-classes (e.g. TEST*)
   void SetUp() override { // don't forget 'override' (TODO why ?)
     std::cout << "MyTestFixture test case set up\n";
   }
@@ -39,9 +39,17 @@ protected: // needs to be accessible by sub-classes (e.g. TEST*)
 
   void auxMethod(const std::string &suitName, const std::string &testCaseName) {
     std::cout << " in " << suitName << "." << testCaseName << "\n";
+
+    // Retrieve info about running test
+    const testing::TestInfo *const test_info =
+        testing::UnitTest::GetInstance()->current_test_info();
+
+    EXPECT_EQ(suitName, test_info->test_suite_name());
+    EXPECT_EQ(testCaseName, test_info->name());
+
     ++m_count;
   }
-  inline static bool m_verbose = false; // FIXME // inline static is a C++17 feature
+  inline static bool m_verbose = true; // FIXME // inline static is a C++17 feature
 };
 
 TEST_F(MyTestFixture, test1) {
@@ -53,6 +61,18 @@ TEST_F(MyTestFixture, test1) {
 TEST_F(MyTestFixture, test2) {
   auxMethod("MyTestFixture", "test2");
   EXPECT_LT(1, 2);
+}
+
+using MyTestFixtureDeathTest = MyTestFixture; // Special alias for DeathTest suits
+TEST_F(MyTestFixtureDeathTest, test3) {
+  auxMethod("MyTestFixtureDeathTest", "test3");
+  ASSERT_DEATH(
+      {
+        int *p = new int[10];
+        for (int i = 0;; ++i)
+          p[i] = 42;
+      },
+      "");
 }
 
 // Optional; if you need something "special"
