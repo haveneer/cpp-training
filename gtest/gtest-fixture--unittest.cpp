@@ -54,3 +54,10 @@ TEST_F(MyTestFixture, test2) {
   auxMethod("MyTestFixture", "test2");
   EXPECT_LT(1, 2);
 }
+
+// Optional; if you need something "special"
+int main(int argc, char **argv) {
+  std::cout << "## I run GoogleTest myself ##\n";
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}
