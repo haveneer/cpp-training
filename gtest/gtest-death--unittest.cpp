@@ -34,6 +34,7 @@ TEST(DeathTestSuit, ExitFailure) {
       ::testing::ExitedWithCode(1), "Failure");
 }
 
+#ifndef WIN32
 TEST(DeathTestSuit, ExitSignal) {
   EXPECT_EXIT(
       {
@@ -42,3 +43,4 @@ TEST(DeathTestSuit, ExitSignal) {
       },
       ::testing::KilledBySignal(SIGKILL), "Suicide");
 }
+#endif /* WIN32 */
