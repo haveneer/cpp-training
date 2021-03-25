@@ -27,15 +27,18 @@ jobs:
             cxx-compiler: clang++-10
           - name: macOS 10.15
             os: macOS-10.15
+            
           # macOS-11 not yet publicly available
           # - name: macOS 11
           #   os: macOS-11
           #   compiler: # default
-          - name: NVidia HPC 20.11
-            os: ubuntu-20.04
-            c-compiler: nvc
-            cxx-compiler: nvc++
-            container: nvcr.io/nvidia/nvhpc:20.11-devel-cuda_multi-ubuntu20.04 # C++17 support
+          
+          # Too big image (sometimes: no space left on runner)
+          # - name: NVidia HPC 20.11
+          #   os: ubuntu-20.04
+          #   c-compiler: nvc
+          #   cxx-compiler: nvc++
+          #   container: nvcr.io/nvidia/nvhpc:20.11-devel-cuda_multi-ubuntu20.04 # C++17 support            
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
