@@ -17,6 +17,7 @@ private:
   int *m_data; // default copy is not safe with pointer
 };
 
+// This should be compared to explicit ctor which avoids conversion
 void call_with_true_double_only(float) = delete;
 void call_with_true_double_only(double param) {}
 
