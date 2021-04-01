@@ -10,36 +10,11 @@
 template <typename T> std::string type() { return typeid(T).name(); }
 #endif
 
-#define DISPLAY(a, b)                                                         \
-  std::cout << std::right << std::setw(30) << #a << " : " << std::left        \
-            << std::setw(12) << a << " | " << std::left << std::setw(13) << b \
-            << " : " << #b << '\n';
-
 #define DISPLAY_TYPE(X) \
   std::cout << std::setw(45) << #X << " : " << type<X>() << '\n'
-
-using namespace std::string_literals;
 //#endregion
 
-auto foo(const int &) { return "lvalue"s; }
-auto foo(int &&) { return "rvalue"s; }
-
-template <typename T> auto indirectT(T &&x) { return foo(x) + " T=" + type<T>(); }
-template <typename T> auto indirect_and_forwardT(T &&x) {
-  return foo(std::forward<T>(x)) + " T=" + type<T>();
-}
-
 int main() {
-  auto bar = [] { return 42; };
-  int i{};
-
-  // Direct call behaves perfectly: choose the right foo() signature according arg
-  DISPLAY(foo(bar()), foo(i));
-  // Indirect call without forwarding : always choose lvalue signature
-  DISPLAY(indirectT(bar()), indirectT(i)); //
-  // Indirect call with forwarding : always choose the right signature
-  DISPLAY(indirect_and_forwardT(bar()), indirect_and_forwardT(i));
-
   struct X {};
   const X &x = X{}; // HINT because a rvalue can be assigned to a lvalue const ref
   // /!\ x is still valid (extended lifetime for temporary objects)
