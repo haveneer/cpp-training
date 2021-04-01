@@ -5,20 +5,21 @@
 #include <string>
 #include <string_view>
 #include <type_traits>
+#define DISPLAY(v) std::cout << std::setw(24) << #v << " : " << f(v) << '\n';
 //#endregion
 
 template <typename T,
           std::enable_if_t<(sizeof(T) < 32 &&
                             std::is_trivially_copy_constructible_v<T>)> * = nullptr>
 std::string_view f(T t) {
-  return "by copy";
+  return "call f by copy";
 }
 
 template <typename T, std::enable_if_t<(
                           !(sizeof(T) < 32 &&
                             std::is_trivially_copy_constructible_v<T>))> * = nullptr>
 std::string_view f(const T &t) {
-  return "by const reference";
+  return "call f by const reference";
 }
 
 struct X {
@@ -31,8 +32,6 @@ struct Y {
   // Y(const Y &y) = default; // TODO: is there a difference ?
   double v;
 };
-
-#define DISPLAY(v) std::cout << std::setw(24) << #v << " : " << f(v) << '\n';
 
 int main() {
   DISPLAY((1));

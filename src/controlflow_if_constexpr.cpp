@@ -34,11 +34,17 @@ template <typename T> T f() {
   }
 }
 
-int main(int argc, char **argv) {
+int main() {
 
   std::cout << "Running on " << architecture_size() << " bits arch\n";
 
   f<double>(); // only available for arithmetic types
   // f<int*>(); // error: static_assert failed due to requirement
   //            //        'dependent_false<void *>::value' "Must be arithmetic"
+
+  // Better than #if preprocessing directive; code is fully checked
+  if constexpr (false) {
+    int i = 0;
+    // static_assert(false); // error: Error even though in discarded statement
+  }
 }
