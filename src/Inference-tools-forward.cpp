@@ -10,29 +10,51 @@
 template <typename T> std::string type() { if (std::is_same_v<std::remove_extent_t<std::remove_const_t< std::remove_pointer_t<std::remove_reference_t<T>>>>, T>) return typeid(T).name(); else if (std::is_array_v<T>) return type<std::remove_extent_t<T>>() + "[]"; else if (std::is_const_v<T>) return type<std::remove_const_t<T>>() + " const"; else if (std::is_pointer_v<T>) return type<std::remove_pointer_t<T>>() + "*"; else if (std::is_reference_v<T>) return type<std::remove_reference_t<T>>() + ((std::is_lvalue_reference_v<T>) ? "&" : "") + ((std::is_rvalue_reference_v<T>) ? "&&" : ""); else std::string("cannot decode ") + typeid(T).name(); }
 #endif              // clang-format on
 
-#define DISPLAY(a, b)                                                         \
-  std::cout << std::right << std::setw(30) << #a << " : " << std::left        \
-            << std::setw(12) << a << " | " << std::left << std::setw(13) << b \
-            << " : " << #b << '\n';
-//#endregion
+#define DISPLAY1(a, b)                                                     \
+  std::cout << std::right << std::setw(21) << #a << "  : " << std::right    \
+            << std::setw(24) << type<decltype(a)>() << " | " << std::left  \
+            << std::setw(23) << type<decltype(b)>() << " : " << std::right \
+            << std::setw(32) << #b << '\n';
+#define DISPLAY2(a, b, note)                                                        \
+  std::cout << std::right << std::setw(22) << #a << " : " << std::left              \
+            << std::setw(14) << a.meta << " -> " << std::setw(6) << a.mode << " | " \
+            << std::left << std::setw(6) << b.mode << " <- " << std::setw(13)       \
+            << b.meta << " : " << std::right << std::setw(33) << #b << " // "       \
+            << (note) << '\n';
 using namespace std::string_literals;
+//#endregion
 
-auto foo(const int &) { return "lvalue"s; }
-auto foo(int &&) { return "rvalue"s; }
+struct Concrete {
+  Concrete(int &param) : mode{"lvalue"}, value{param} {}  // make using copy
+  Concrete(int &&param) : mode{"rvalue"}, value(param) {} // make using move
+  //#region [addMeta method]
+  Concrete &addMeta(std::string &&meta) {
+    this->meta = meta;
+    return *this;
+  }
+  //#endregion
+  std::string mode, meta;
+  int value;
+};
 
-template <typename T> auto indirectT(T &&x) { return foo(x) + " T=" + type<T>(); }
-template <typename T> auto indirect_and_forwardT(T &&x) {
-  return foo(std::forward<T>(x)) + " T=" + type<T>();
+template <typename T> auto direct_factory(T &&param) {
+  return Concrete(param) //
+      .addMeta("(thru: T="s + type<T>() + ")");
+}
+template <typename T> auto forward_factory(T &&param) {
+  return Concrete(std::forward<T>(param)) //
+      .addMeta("(thru: T="s + type<T>() + ")");
 }
 
 int main() {
-  auto bar = [] { return 42; }; // our rvalue generator
-  int i{};                      // our typical lvalue
+  int param{}; // for demo, we use `int` because move of int do not invalidate data
 
-  // Direct call behaves perfectly: choose the right foo() signature according arg
-  DISPLAY(foo(bar()), foo(i));
+  // argument before any call
+  DISPLAY1(param, std::move(param));
+  // Direct call behaves perfectly: choose the right ctor according arg
+  DISPLAY2(Concrete(param), Concrete(std::move(param)), "Perfect");
   // Indirect call without forwarding : always choose lvalue signature
-  DISPLAY(indirectT(bar()), indirectT(i)); //
+  DISPLAY2(direct_factory(param), direct_factory(std::move(param)), "Not perfect");
   // Indirect call with forwarding : always choose the right signature
-  DISPLAY(indirect_and_forwardT(bar()), indirect_and_forwardT(i));
+  DISPLAY2(forward_factory(param), forward_factory(std::move(param)), "Perfect");
 }
