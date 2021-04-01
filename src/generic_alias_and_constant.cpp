@@ -6,23 +6,24 @@
 #include <set>
 #include <vector>
 
+static struct Init {
+  Init() { std::cout.precision(20); }
+} init;
+
 #ifdef DEBUG_TYPE
 #include "type.hpp" // advanced type printing
 #else // clang-format off
 #include <typeinfo>
 template <typename T> std::string type() { if (std::is_same_v<std::remove_extent_t<std::remove_const_t< std::remove_pointer_t<std::remove_reference_t<T>>>>, T>) return typeid(T).name(); else if (std::is_array_v<T>) return type<std::remove_extent_t<T>>() + "[]"; else if (std::is_const_v<T>) return type<std::remove_const_t<T>>() + " const"; else if (std::is_pointer_v<T>) return type<std::remove_pointer_t<T>>() + "*"; else if (std::is_reference_v<T>) return type<std::remove_reference_t<T>>() + ((std::is_lvalue_reference_v<T>) ? "&" : "") + ((std::is_rvalue_reference_v<T>) ? "&&" : ""); else std::string("cannot decode ") + typeid(T).name(); }
-#endif              // clang-format on
+#endif // clang-format on
 //#endregion
 
 template <typename T> constexpr T zero = 0.; // Constants always in the best type
 template <typename T> constexpr T pi = T(3.1415926535897932384626L);
 
-template <typename T> T compute_disk_area_from_radius(T radius) {
-  return pi<T> * radius * radius;
-}
+template <typename T> T compute_disk_area_from_radius(T r) { return pi<T> * r * r; }
 
 void step1() {
-  std::cout << std::setprecision(20);
   std::cout << compute_disk_area_from_radius<float>(1) << '\n';
   std::cout << compute_disk_area_from_radius<double>(1) << '\n';
   std::cout << compute_disk_area_from_radius<long double>(1) << '\n';
@@ -39,9 +40,8 @@ void step2() { // Generic management; TODO change Container type to test it
                 [n = 0](auto x) mutable { std::cout << n++ << " : " << x << '\n'; });
 }
 
-// decay: applies type transformations as when passing a function argument by value
-template <typename T>
-using simplify =
+template <typename T> // decay: applies type transformations
+using simplify =      // as when passing a function argument by value
     typename std::conditional<std::is_pointer_v<T>, // note all _t and _v suffixes
                               typename std::decay_t<std::remove_pointer_t<T>>,
                               typename std::decay_t<T>>::type;
