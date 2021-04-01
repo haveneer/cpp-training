@@ -10,24 +10,31 @@ template <typename T> std::string type() { if (std::is_same_v<std::remove_extent
 
 //#endregion
 
+using namespace std::string_literals;
+#ifdef _MSC_VER
+#define TYPE "int"s
+#else
+#define TYPE "i"s
+#endif
+
 TEST(CheckType, simple) {
-  EXPECT_EQ(type<int>(), "i");
-  EXPECT_EQ(type<const int>(), "i const");
+  EXPECT_EQ(type<int>(), TYPE);
+  EXPECT_EQ(type<const int>(), TYPE + " const");
 }
 TEST(CheckType, pointer) {
-  EXPECT_EQ(type<int *>(), "i*");
-  EXPECT_EQ(type<int *const>(), "i* const");
-  EXPECT_EQ(type<int const *>(), "i const*");
-  EXPECT_EQ(type<int const *const>(), "i const* const");
+  EXPECT_EQ(type<int *>(), TYPE + "*");
+  EXPECT_EQ(type<int *const>(), TYPE + "* const");
+  EXPECT_EQ(type<int const *>(), TYPE + " const*");
+  EXPECT_EQ(type<int const *const>(), TYPE + " const* const");
 }
 TEST(CheckType, reference) {
-  EXPECT_EQ(type<int &>(), "i&");
-  EXPECT_EQ(type<int &&>(), "i&&");
-  EXPECT_EQ(type<int const>(), "i const");
-  EXPECT_EQ(type<int const &>(), "i const&");
-  EXPECT_EQ(type<int const &&>(), "i const&&");
+  EXPECT_EQ(type<int &>(), TYPE + "&");
+  EXPECT_EQ(type<int &&>(), TYPE + "&&");
+  EXPECT_EQ(type<int const>(), TYPE + " const");
+  EXPECT_EQ(type<int const &>(), TYPE + " const&");
+  EXPECT_EQ(type<int const &&>(), TYPE + " const&&");
 }
 TEST(CheckType, extent) {
-  EXPECT_EQ(type<int[]>(), "i[]");
-  EXPECT_EQ(type<int const[]>(), "i const[]");
+  EXPECT_EQ(type<int[]>(), TYPE + "[]");
+  EXPECT_EQ(type<int const[]>(), TYPE + " const[]");
 }
