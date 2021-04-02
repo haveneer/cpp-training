@@ -50,7 +50,7 @@ int main() {
       return 3 * n + 1;
   };
 
-  for (auto x : Generator{1, syracuse, [](int n) { return n == 1; }}) {
+  for (auto x : Generator{10, syracuse, [](int n) { return n == 1; }}) {
     std::cout << x << "\n";
   }
 }
