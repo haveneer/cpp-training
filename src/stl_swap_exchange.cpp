@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include <cassert>
 
 class Counter {
 public:
@@ -45,10 +46,10 @@ private:
 #else
 #define COUNT_ME() Counter::add(__FUNCSIG__)
 #endif
-
 //#endregion
 
-struct X { // struct to debug what happens (using rule of 5)
+struct X {
+  // struct to debug what happens (using rule of 5)
   X() { COUNT_ME(); }
   X(const X &x) { COUNT_ME(); }
   X(X &&x) { COUNT_ME(); }
