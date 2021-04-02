@@ -9,8 +9,8 @@ int object2 = 1;
 namespace N1 {
 int n1_object = 2;
 
-namespace N2 { // nested namespace (in N1)
-int n1_n2_object = 3;
+inline namespace N2 { // nested namespace (in N1)
+int n1_n2_object = 3; // since N2 is inline using N1 will also 'load' N2
 }
 } // namespace N1
 
@@ -45,13 +45,13 @@ int main() {
   double object = 3.14;
   double n1_n2_object = 2.72;
 
-  std::cout << n1_object << "\n";            // local shadowing object
-  std::cout << n3_object << "\n";            // inherited from using N3 in N1::N2
-  std::cout << n1_n2_object << "\n";         // local shadowing object
-  std::cout << N1::N2::n1_n2_object << "\n"; // original object
-  std::cout << n1_n2_object2 << "\n";        // original object (shadowing local obj)
-  std::cout << object << "\n";               // local shadowing object
-  std::cout << ::object << "\n";             // original global object
+  std::cout << n1_object << "\n";        // local shadowing object
+  std::cout << n3_object << "\n";        // inherited from using N3 in N1::N2
+  std::cout << n1_n2_object << "\n";     // local shadowing object
+  std::cout << N1::n1_n2_object << "\n"; // original object using inlined N2
+  std::cout << n1_n2_object2 << "\n";    // original object (shadowing local obj)
+  std::cout << object << "\n";           // local shadowing object
+  std::cout << ::object << "\n";         // original global object
   // std::cout << object2 << "\n";  // error: object2 is ambiguous
   std::cout << ::object2 << "\n";   // specify the one from global scope
   std::cout << N4::object2 << "\n"; // specify the one from N4 namespace
