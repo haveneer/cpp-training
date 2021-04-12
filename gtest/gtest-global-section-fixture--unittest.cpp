@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <sstream>
 #include <tuple>
+#include<chrono>
+#include <thread>
 //#endregion
 
 // Existing global data
@@ -82,7 +84,7 @@ TEST_P(GlobalSectionFixtureAlt, DISABLED_JobA) {
   std::cout << ::testing::UnitTest::GetInstance()->current_test_info()->name()
             << " (" << id << ", " << val << ")\n";
   p_global_section.p->id = id;
-  usleep(10000);
+  std::this_thread::sleep_for(std::chrono::milliseconds(10));
   EXPECT_EQ(p_global_section.p->id, id);
 }
 
@@ -91,7 +93,8 @@ TEST_P(GlobalSectionFixtureAlt, JobB) {
   std::cout << ::testing::UnitTest::GetInstance()->current_test_info()->name()
             << " (" << id << ", " << val << ")\n";
   p_global_section.p->id = id;
-  usleep(10000);
+  using namespace std::literals::chrono_literals;
+  std::this_thread::sleep_for(10ms);
   EXPECT_EQ(p_global_section.p->id, id);
 }
 
