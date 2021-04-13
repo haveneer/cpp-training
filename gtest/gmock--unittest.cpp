@@ -59,8 +59,8 @@ TEST(Database, WithDerivingMock) {
   using ::testing::Invoke;
   using ::testing::Return;
 
-  MockDerivingDBAuth auth;
-  Database<DBAuthenticator> db(auth);
+  MockDerivingDBAuth mock_auth;
+  Database<DBAuthenticator> db(mock_auth);
   DBAuthenticator true_auth;
 
   std::string username = "Goldorak";
@@ -68,9 +68,9 @@ TEST(Database, WithDerivingMock) {
 
   InSequence s; // will force expected ordered calls
 
-  EXPECT_CALL(auth, login(username, password)).Times(1).WillOnce(Return(true));
+  EXPECT_CALL(mock_auth, login(username, password)).Times(1).WillOnce(Return(true));
 
-  EXPECT_CALL(auth, logout(username)) // caught from Database destructor
+  EXPECT_CALL(mock_auth, logout(username)) // caught from Database destructor
       .Times(1)
       .WillOnce(Invoke(
           &true_auth,
@@ -93,18 +93,18 @@ TEST(Database, WithNotDerivingMock) {
   using ::testing::InSequence;
   using ::testing::Return;
 
-  MockDerivingDBAuth auth;
-  Database<MockDerivingDBAuth> db(auth);
+  MockNotDerivingDBAuth mock_auth;
+  Database<MockNotDerivingDBAuth> db(mock_auth);
 
   std::string username = "Goldorak";
   std::string password = "cornofulgure";
 
   InSequence s; // will force expected ordered calls
 
-  ON_CALL(auth, login(_, _)).WillByDefault(Return(true));
+  ON_CALL(mock_auth, login(_, _)).WillByDefault(Return(true));
 
-  EXPECT_CALL(auth, login(username, password)).Times(1).WillOnce(DoDefault());
-  EXPECT_CALL(auth, logout(username))
+  EXPECT_CALL(mock_auth, login(username, password)).Times(1).WillOnce(DoDefault());
+  EXPECT_CALL(mock_auth, logout(username))
       .Times(1)
       .WillOnce(Return(true)); // caught from Database destructor
   ASSERT_EQ(db.init(username, password), 0);
