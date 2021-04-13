@@ -2,66 +2,86 @@
 #include <gtest/gtest.h>
 #include <iostream>
 
-class DBAuthenticator {
+class IAuthenticator {
 public:
-  virtual bool login(std::string username, std::string password) {
-    std::cout << "DBAuthenticator::login call\n";
+  virtual bool login(std::string username, std::string password) = 0;
+  virtual bool logout(std::string username) = 0;
+  virtual void something() = 0;
+};
+
+class Authenticator : public IAuthenticator {
+public:
+  bool login(std::string username, std::string password) override {
+    std::cout << "Authenticator::login call\n";
     return true;
   }
-  virtual bool logout(std::string username) {
-    std::cout << "DBAuthenticator::logout call\n";
+  bool logout(std::string username) override {
+    std::cout << "Authenticator::logout call\n";
     return true;
+  }
+  void something() override { //
+    std::cout << "Authenticator::something call\n";
   }
 };
 
-template <typename DBAuthT> class Database {
+class Service {
 public:
-  explicit Database(DBAuthT &db_auth) : m_db_auth(db_auth) {}
+  explicit Service(IAuthenticator *auth) : m_auth(auth) {}
   int init(std::string username, std::string password) {
-    if (m_db_auth.login(username, password) != true) {
-      std::cerr << "DB init failed" << std::endl;
+    if (m_auth->login(username, password) != true) {
+      std::cerr << "Service init failed" << std::endl;
       return -1;
     } else {
-      std::cout << "DB init succeeded" << std::endl;
+      std::cout << "Service init succeeded" << std::endl;
       m_username = username;
       return 0;
     }
   }
-  virtual ~Database() { m_db_auth.logout(m_username); }
+  void something() {
+    std::cout << "Service::something" << std::endl;
+    m_auth->something();
+  }
+  virtual ~Service() {
+    // TODO "forget" the logout call
+    m_auth->logout(m_username); 
+  }
 
 private:
-  DBAuthT &m_db_auth;
+  IAuthenticator *m_auth;
   std::string m_username;
 };
 
 // Direct test without mock
-TEST(Database, WithoutMock) {
-  DBAuthenticator auth;
-  Database<DBAuthenticator> db(auth);
+TEST(Service, WithoutMock) {
+  std::cout << "------------------------------\n";
+  Authenticator auth;
+  Service service(&auth);
 
   std::string username = "Goldorak";
   std::string password = "cornofulgure";
 
-  ASSERT_EQ(db.init(username, password), 0);
+  ASSERT_EQ(service.init(username, password), 0);
+  service.something();
 }
 
-// Test with deriving mock of DBAuth
-class MockDerivingDBAuth : public DBAuthenticator {
+// Test with deriving mock of Authenticator
+class MockDerivingAuth : public Authenticator {
 public:
-  // Before 1.10.0 use MOCK_METHOD1
+  // Before 1.10.0 use MOCK_METHOD1...
   MOCK_METHOD(bool, login, (std::string username, std::string password), (override));
   MOCK_METHOD(bool, logout, (std::string username), (override));
 };
 
-TEST(Database, WithDerivingMock) {
+TEST(Service, WithDerivingMock) {
+  std::cout << "------------------------------\n";
   using ::testing::_; // _ is the joker argument for expected calls
   using ::testing::InSequence;
   using ::testing::Invoke;
   using ::testing::Return;
 
-  MockDerivingDBAuth mock_auth;
-  Database<DBAuthenticator> db(mock_auth);
-  DBAuthenticator true_auth;
+  MockDerivingAuth mock_auth;
+  Service service(&mock_auth);
+  Authenticator true_auth;
 
   std::string username = "Goldorak";
   std::string password = "cornofulgure";
@@ -69,32 +89,37 @@ TEST(Database, WithDerivingMock) {
   InSequence s; // will force expected ordered calls
 
   EXPECT_CALL(mock_auth, login(username, password)).Times(1).WillOnce(Return(true));
-
   EXPECT_CALL(mock_auth, logout(username)) // caught from Database destructor
       .Times(1)
-      .WillOnce(Invoke(
-          &true_auth,
-          &DBAuthenticator::logout)); // redirect call to another object/method
+      .WillOnce(
+          Invoke(&true_auth,
+                 &Authenticator::logout)); // redirect call to another object/method
 
-  ASSERT_EQ(db.init(username, password), 0);
+  ASSERT_EQ(service.init(username, password), 0);
+  service.something();
 }
 
-// Test with not deriving mock of DBAuth
-class MockNotDerivingDBAuth /* : public DBAuthenticator */ {
+// Test with not deriving mock of Authenticator
+// With template instanciation, inheritance is not required
+class MockNotDerivingAuth : public IAuthenticator {
 public:
   // Before 1.10.0 use MOCK_METHOD1
   MOCK_METHOD(bool, login, (std::string username, std::string password));
   MOCK_METHOD(bool, logout, (std::string username));
+
+public: // other methods required by interface
+  void something() {}
 };
 
-TEST(Database, WithNotDerivingMock) {
+TEST(Service, WithNotDerivingMock) {
+  std::cout << "------------------------------\n";
   using ::testing::_; // _ is the joker argument for expected calls
   using ::testing::DoDefault;
   using ::testing::InSequence;
   using ::testing::Return;
 
-  MockNotDerivingDBAuth mock_auth;
-  Database<MockNotDerivingDBAuth> db(mock_auth);
+  MockNotDerivingAuth mock_auth;
+  Service service(&mock_auth);
 
   std::string username = "Goldorak";
   std::string password = "cornofulgure";
@@ -107,7 +132,8 @@ TEST(Database, WithNotDerivingMock) {
   EXPECT_CALL(mock_auth, logout(username))
       .Times(1)
       .WillOnce(Return(true)); // caught from Database destructor
-  ASSERT_EQ(db.init(username, password), 0);
+  ASSERT_EQ(service.init(username, password), 0);
+  service.something();
 }
 
 // This is the default main.
