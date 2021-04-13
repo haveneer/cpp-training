@@ -131,7 +131,7 @@ TEST(Service, WithNotDerivingMock) {
   EXPECT_CALL(mock_auth, login(username, password)).Times(1).WillOnce(DoDefault());
   EXPECT_CALL(mock_auth, logout(username))
       .Times(1)
-      .WillOnce(Return(true)); // caught from Database destructor
+      .WillOnce(Return(true)); // caught from Auth destructor
   ASSERT_EQ(service.init(username, password), 0);
   service.something();
 }
