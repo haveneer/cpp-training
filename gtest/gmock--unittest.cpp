@@ -87,10 +87,10 @@ TEST(Service, WithDerivingMock) {
   using ::testing::Invoke;
   using ::testing::Return;
 
-  MockDerivingAuth mock_auth;
-  Service service(&mock_auth);
-  Authenticator true_auth;
-
+  Authenticator true_auth;     // This code is not very safe, since true_auth
+  MockDerivingAuth mock_auth;  // and mock_auth should be alive as long as service is
+  Service service(&mock_auth); // In production prefer using shared_ptr or protect
+                               // using block scope
   std::string username = "Goldorak";
   std::string password = "cornofulgure";
 
@@ -117,7 +117,7 @@ public:
   MOCK_METHOD(bool, logout, (std::string username));
 
 public: // other methods required by interface
-  void something() {}
+  void something() override {}
 };
 
 TEST(Service, WithNotDerivingMock) {
