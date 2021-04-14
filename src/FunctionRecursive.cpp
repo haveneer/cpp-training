@@ -44,13 +44,13 @@ auto norec_fib(unsigned n) {
 int main() {
   const unsigned n = 35;
   //#region [Computation and timers]
-  const auto start = std::chrono::system_clock::now();
+  const auto start = std::chrono::steady_clock::now();
   const unsigned rec_fib_result = rec_fib(n);
-  const auto rec_fib_end = std::chrono::system_clock::now();
+  const auto rec_fib_end = std::chrono::steady_clock::now();
   const unsigned tailrec_fib_result = tailrec_fib(n);
-  const auto tailrec_fib_end = std::chrono::system_clock::now();
+  const auto tailrec_fib_end = std::chrono::steady_clock::now();
   const unsigned norec_fib_result = norec_fib(n);
-  const auto norec_fib_end = std::chrono::system_clock::now();
+  const auto norec_fib_end = std::chrono::steady_clock::now();
 
   auto elapsed = [=](auto start, auto end) {
     return std::chrono::duration_cast<std::chrono::microseconds>(end - start)

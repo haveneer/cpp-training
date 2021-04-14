@@ -106,7 +106,7 @@ int main() {
 
   //// using std::set
   {
-    auto start = std::chrono::system_clock::now();
+    auto start = std::chrono::steady_clock::now();
 
     class Point3DComparator {
     public:
@@ -129,7 +129,7 @@ int main() {
     std::copy(std::begin(points), std::end(points),
               std::inserter(ordered_point_set, ordered_point_set.end()));
 
-    auto end = std::chrono::system_clock::now();
+    auto end = std::chrono::steady_clock::now();
     int elapsed_us =
         std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
     std::cout << "Point list using std::set (" << elapsed_us << "_us):\n";
@@ -141,7 +141,7 @@ int main() {
 
   //// using std::multimap // TODO what if only std::map ??
   {
-    auto start = std::chrono::system_clock::now();
+    auto start = std::chrono::steady_clock::now();
     std::multimap<double, Point3D> ordered_point_map;
     std::transform(
         points.begin(), points.end(),
@@ -149,7 +149,7 @@ int main() {
         [center](const Point3D &p) -> decltype(ordered_point_map)::value_type {
           return {distance2(p, center), p};
         });
-    auto end = std::chrono::system_clock::now();
+    auto end = std::chrono::steady_clock::now();
     int elapsed_us =
         std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
     std::cout << "Point list using std::map (" << elapsed_us << "_us):\n";
@@ -162,12 +162,12 @@ int main() {
 
   //// using vector data structure (will change points object)
   {
-    auto start = std::chrono::system_clock::now();
+    auto start = std::chrono::steady_clock::now();
     std::sort(points.begin(), points.end(),
               [center](const Point3D &a, const Point3D &b) {
                 return distance2(a, center) < distance2(b, center);
               });
-    auto end = std::chrono::system_clock::now();
+    auto end = std::chrono::steady_clock::now();
     int elapsed_us =
         std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
     std::cout << "Point list using std::vector (" << elapsed_us << "_us):\n";

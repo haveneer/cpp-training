@@ -29,18 +29,18 @@ template <typename T> void bench_copy_vs_move(T t, const std::string &cont) {
 
   std::ofstream devNull("/dev/null");
 
-  auto start = std::chrono::system_clock::now();
+  auto start = std::chrono::steady_clock::now();
   T t1(t);
-  auto duration = std::chrono::system_clock::now() - start;
+  auto duration = std::chrono::steady_clock::now() - start;
   auto copyTime = std::chrono::duration<double>(duration).count();
 
   auto begin = std::begin(t1); // work around too aggressive optimization
   for(int i=0;i<SIZE/2;++i) ++begin;
     devNull << &*begin;
 
-  start = std::chrono::system_clock::now();
+  start = std::chrono::steady_clock::now();
   T t2(std::move(t));
-  duration = std::chrono::system_clock::now() - start;
+  duration = std::chrono::steady_clock::now() - start;
   auto moveTime = std::chrono::duration<double>(duration).count();
 
   begin = std::begin(t2); // work around too aggressive optimization
