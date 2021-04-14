@@ -101,7 +101,8 @@ private:
 TEST(ProducerConsumerSuit, TestCaseName) {
   ConcurrentQueue<int> queue;
 
-  std::list<Consumer> consumers; // or std::vector with reserve (to avoid relocation)
+  std::list<Consumer> consumers; // or std::vector with reserve 
+                                 // (to avoid relocation + pointer invalidation)
   std::vector<std::thread> consumer_threads;
   for (unsigned i = 0; i < 3; ++i) {
     consumers.emplace_back(queue, consumers.size());
@@ -121,14 +122,9 @@ TEST(ProducerConsumerSuit, TestCaseName) {
   ASSERT_DURATION_LE(1, {
     for (auto &&t : producer_threads)
       t.join();
-  });
-
-  for (auto &&c : consumers) { // will stop consumers
-    queue.push(-1);
-  }
-
-  // Not a gtest standard assertion
-  ASSERT_DURATION_LE(1, {
+    for (auto &&c : consumers) { // will stop consumers
+      queue.push(-1);
+    }
     for (auto &&t : consumer_threads)
       t.join();
   });
