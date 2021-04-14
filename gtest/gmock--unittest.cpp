@@ -7,6 +7,7 @@ public:
   virtual bool login(std::string username, std::string password) = 0;
   virtual bool logout(std::string username) = 0;
   virtual void something() = 0;
+  virtual ~IAuthenticator() = default;
 };
 
 class Authenticator : public IAuthenticator {
@@ -43,7 +44,7 @@ public:
   }
   virtual ~Service() {
     // TODO "forget" the logout call
-    m_auth->logout(m_username); 
+    m_auth->logout(m_username);
   }
 
 private:
@@ -72,6 +73,13 @@ public:
   MOCK_METHOD(bool, logout, (std::string username), (override));
 };
 
+TEST(IAuthenticator, dtor_must_be_virual) {
+  std::unique_ptr<IAuthenticator> p = std::make_unique<MockDerivingAuth>();
+  ASSERT_TRUE(std::has_virtual_destructor_v<MockDerivingAuth>);
+  // static_assert(std::has_virtual_destructor_v<MockDerivingAuth>); // or statically
+  // when p is destroyed destructor is not call => no report is destroyed this way
+}
+
 TEST(Service, WithDerivingMock) {
   std::cout << "------------------------------\n";
   using ::testing::_; // _ is the joker argument for expected calls
@@ -88,6 +96,7 @@ TEST(Service, WithDerivingMock) {
 
   InSequence s; // will force expected ordered calls
 
+  // Will only catch call after EXPECT_CALL rules
   EXPECT_CALL(mock_auth, login(username, password)).Times(1).WillOnce(Return(true));
   EXPECT_CALL(mock_auth, logout(username)) // caught from Database destructor
       .Times(1)
