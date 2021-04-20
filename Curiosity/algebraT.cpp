@@ -140,9 +140,9 @@ public: /* Données internes */
 template <typename Function1, typename Function2>
 class Mult : public FunctionT<Mult<Function1, Function2>> {
 public:
-  typedef typename Opt<Add<
-      typename Opt<Mult<Function1, typename Function2::DiffType>>::Type,
-      typename Opt<Mult<typename Function1::DiffType, Function2>>::Type>>::Type
+  typedef typename Opt<
+      Add<typename Opt<Mult<Function1, typename Function2::DiffType>>::Type,
+          typename Opt<Mult<typename Function1::DiffType, Function2>>::Type>>::Type
       DiffType;
 
 public:
@@ -164,15 +164,13 @@ public: /* Données internes */
 };
 
 // Inverse
-template <typename Function>
-class Inverse : public FunctionT<Inverse<Function>> {
+template <typename Function> class Inverse : public FunctionT<Inverse<Function>> {
 public:
   typedef typename Opt<Mult<
       Constant,
-      typename Opt<Mult<
-          typename Function::DiffType,
-          Inverse<typename Opt<Mult<Function, Function>>::Type>>>::Type>>::Type
-      DiffType;
+      typename Opt<Mult<typename Function::DiffType,
+                        Inverse<typename Opt<Mult<Function, Function>>::Type>>>::
+          Type>>::Type DiffType;
 
 public:
   Inverse(Function f) : m_f(std::move(f)) {}
@@ -190,12 +188,11 @@ public: /* Données internes */
 };
 
 // Puissance
-template <int n, typename Function>
-class Pow : public FunctionT<Pow<n, Function>> {
+template <int n, typename Function> class Pow : public FunctionT<Pow<n, Function>> {
 public:
-  typedef typename Opt<Mult<
-      Constant, typename Opt<Mult<typename Opt<Pow<n - 1, Function>>::Type,
-                                  typename Function::DiffType>>::Type>>::Type
+  typedef typename Opt<
+      Mult<Constant, typename Opt<Mult<typename Opt<Pow<n - 1, Function>>::Type,
+                                       typename Function::DiffType>>::Type>>::Type
       DiffType;
 
 public:
@@ -218,9 +215,8 @@ public: /* Données internes */
 // Sinus
 template <typename Function> class Sinus : public FunctionT<Sinus<Function>> {
 public:
-  typedef
-      typename Opt<Mult<Cosinus<Function>, typename Function::DiffType>>::Type
-          DiffType;
+  typedef typename Opt<Mult<Cosinus<Function>, typename Function::DiffType>>::Type
+      DiffType;
 
 public:
   Sinus(Function f) : m_f(std::move(f)) {}
@@ -238,13 +234,12 @@ public: /* Données internes */
 };
 
 // Cosinus
-template <typename Function>
-class Cosinus : public FunctionT<Cosinus<Function>> {
+template <typename Function> class Cosinus : public FunctionT<Cosinus<Function>> {
 public:
   typedef typename Opt<Mult<
       Constant,
-      typename Opt<Mult<Sinus<Function>, typename Function::DiffType>>::Type>>::
-      Type DiffType;
+      typename Opt<Mult<Sinus<Function>, typename Function::DiffType>>::Type>>::Type
+      DiffType;
 
 public:
   Cosinus(Function f) : m_f(std::move(f)) {}
@@ -265,8 +260,7 @@ public: /* Données internes */
 template <typename Function> Sinus<Function> sin(const FunctionT<Function> &f) {
   return Sinus<Function>(f.cast());
 }
-template <typename Function>
-Cosinus<Function> cos(const FunctionT<Function> &f) {
+template <typename Function> Cosinus<Function> cos(const FunctionT<Function> &f) {
   return Cosinus<Function>(f.cast());
 }
 // Des opérateurs primaires
@@ -288,8 +282,8 @@ operator/(const FunctionT<Function1> &f, const FunctionT<Function2> &g) {
 
 // Autres opérateurs associés
 template <typename Function>
-typename Opt<Add<Function, Constant>>::Type
-operator+(const FunctionT<Function> &f, const Real &a) {
+typename Opt<Add<Function, Constant>>::Type operator+(const FunctionT<Function> &f,
+                                                      const Real &a) {
   return Add<Function, Constant>(f.cast(), Constant(a));
 }
 template <typename Function>
@@ -298,8 +292,8 @@ operator*(const Real &a, const FunctionT<Function> &f) {
   return Mult<Constant, Function>(Constant(a), f.cast());
 }
 template <typename Function>
-typename Opt<Add<Function, Constant>>::Type
-operator-(const FunctionT<Function> &f, const Real &a) {
+typename Opt<Add<Function, Constant>>::Type operator-(const FunctionT<Function> &f,
+                                                      const Real &a) {
   return Add<Function, Constant>(f.cast(), Constant(-a));
 }
 template <typename Function>
@@ -308,25 +302,25 @@ operator/(const Real &a, const FunctionT<Function> &f) {
   return Constant(a) * Inverse<Function>(f.cast());
 }
 template <typename Function>
-typename Opt<Mult<Function, Constant>>::Type
-operator/(const FunctionT<Function> &f, const Real &a) {
+typename Opt<Mult<Function, Constant>>::Type operator/(const FunctionT<Function> &f,
+                                                       const Real &a) {
   return f.cast() * Constant(1. / a);
 }
 
 // Des opérations déduits
 template <typename Function>
-typename Opt<Add<Function, Constant>>::Type
-operator+(const Real &a, const FunctionT<Function> &f) {
+typename Opt<Add<Function, Constant>>::Type operator+(const Real &a,
+                                                      const FunctionT<Function> &f) {
   return f.cast() + a;
 }
 template <typename Function>
-typename Opt<Mult<Constant, Function>>::Type
-operator*(const FunctionT<Function> &f, const Real &a) {
+typename Opt<Mult<Constant, Function>>::Type operator*(const FunctionT<Function> &f,
+                                                       const Real &a) {
   return a * f.cast();
 }
 template <typename Function>
-typename Opt<Add<Function, Constant>>::Type
-operator-(const Real &a, const FunctionT<Function> &f) {
+typename Opt<Add<Function, Constant>>::Type operator-(const Real &a,
+                                                      const FunctionT<Function> &f) {
   return f.cast() - a;
 }
 template <typename Function>
@@ -335,8 +329,7 @@ operator-(const FunctionT<Function> &f) {
   return Constant(-1) * f.cast();
 }
 template <typename Function1, typename Function2>
-typename Opt<
-    Add<Function1, typename Opt<Mult<Constant, Function2>>::Type>>::Type
+typename Opt<Add<Function1, typename Opt<Mult<Constant, Function2>>::Type>>::Type
 operator-(const FunctionT<Function1> &f, const FunctionT<Function2> &g) {
   return f + (-g);
 }
@@ -482,9 +475,7 @@ public:
 public:
   operator Zero() { return Zero(); }
 };
-template <typename Function> struct Opt<Mult<Zero, Function>> {
-  typedef Zero Type;
-};
+template <typename Function> struct Opt<Mult<Zero, Function>> { typedef Zero Type; };
 
 // Règle: F * 0 = 0
 template <typename Function>
@@ -495,9 +486,7 @@ public:
 public:
   operator Zero() { return Zero(); }
 };
-template <typename Function> struct Opt<Mult<Function, Zero>> {
-  typedef Zero Type;
-};
+template <typename Function> struct Opt<Mult<Function, Zero>> { typedef Zero Type; };
 
 // Règle: F^1 = F
 template <typename Function>
@@ -511,9 +500,7 @@ public:
 public: /* Données internes */
   const Function m_f;
 };
-template <typename Function> struct Opt<Pow<1, Function>> {
-  typedef Function Type;
-};
+template <typename Function> struct Opt<Pow<1, Function>> { typedef Function Type; };
 
 // Règle: F^0 = 1
 template <typename Function>
@@ -548,8 +535,7 @@ public: /* Données internes */
 template <typename Function1, typename Function2>
 struct Opt<Mult<Constant, Mult<Function1, Function2>>> {
   typedef typename Opt<
-      Mult<Function1, typename Opt<Mult<Function2, Constant>>::Type>>::Type
-      Type;
+      Mult<Function1, typename Opt<Mult<Function2, Constant>>::Type>>::Type Type;
 };
 // Règle: (F * G) * H = F * (G * H)
 template <typename Function1, typename Function2, typename Function3>
@@ -573,8 +559,7 @@ public: /* Données internes */
 template <typename Function1, typename Function2, typename Function3>
 struct Opt<Mult<Mult<Function1, Function2>, Function3>> {
   typedef typename Opt<
-      Mult<Function1, typename Opt<Mult<Function2, Function3>>::Type>>::Type
-      Type;
+      Mult<Function1, typename Opt<Mult<Function2, Function3>>::Type>>::Type Type;
 };
 // Règle: C * F = F * C
 template <typename Function>
@@ -595,8 +580,7 @@ template <typename Function> struct Opt<Mult<Constant, Function>> {
 
 #endif /* OPTIMIZE */
 
-template <typename Function>
-void plot(const Function &f, const char *filename) {
+template <typename Function> void plot(const Function &f, const char *filename) {
   std::ofstream o(filename);
   const Real xmin = -1;
   const Real xmax = +1;
@@ -633,15 +617,14 @@ double dfC(double x) {
             ((std::pow((x) + (-1), 3)) *
              (((-1) * (((1) + (0)) + (((3) * (std::pow((0.5) * (x), 2))) *
                                       (((0) * (x)) + ((0.5) * (1)))))) *
-              (1. /
-               (std::pow(((x) + (1)) + (std::pow((0.5) * (x), 3)), 2))))))));
+              (1. / (std::pow(((x) + (1)) + (std::pow((0.5) * (x), 3)), 2))))))));
 }
 
 // C style function of d(f) extracted from the algebraT.cpp example without
 // OPTIMIZE
 double dfC2(double x) {
-  return ((4) * ((std::pow(((2) * (x)) + (1), 3)) *
-                 ((((2) * (1)) + ((0) * (x))) + (0)))) +
+  return ((4) *
+          ((std::pow(((2) * (x)) + (1), 3)) * ((((2) * (1)) + ((0) * (x))) + (0)))) +
          (((-1) *
            (((std::pow((x) + (-1), 3)) *
              ((-1) * ((((1) + (0)) + ((3) * ((std::pow((x) * (0.5), 2)) *
@@ -672,15 +655,15 @@ int main() {
 
   auto g = sin(x);
   auto dg = d(g);
-  std::cout << "g(1) = " << std::setw(8) << g(1.)
-            << ";\t g'(1) = " << std::setw(8) << dg(1.) << std::endl;
+  std::cout << "g(1) = " << std::setw(8) << g(1.) << ";\t g'(1) = " << std::setw(8)
+            << dg(1.) << std::endl;
   auto h = pow<4>(x);
-  std::cout << "h(2) = " << std::setw(8) << h(2)
-            << ";\t h'(2) = " << std::setw(8) << d(d(h))(2.) << std::endl;
+  std::cout << "h(2) = " << std::setw(8) << h(2) << ";\t h'(2) = " << std::setw(8)
+            << d(d(h))(2.) << std::endl;
   // auto f = (pow<3>(sin(8*x-1))) / cos(pow<2>(x));
   auto f = (pow<4>(2 * x + 1) - pow<3>(x - 1) / (1 + x + pow<3>(x / 2.)));
-  std::cout << "f(2) = " << std::setw(8) << f(2)
-            << ";\t f'(2) = " << std::setw(8) << d(f)(2.) << std::endl;
+  std::cout << "f(2) = " << std::setw(8) << f(2) << ";\t f'(2) = " << std::setw(8)
+            << d(f)(2.) << std::endl;
   std::cout << "  f  is " << f << std::endl;
   std::cout << "d(f) is " << d(f) << std::endl;
 
@@ -698,4 +681,4 @@ int main() {
 
   plot(fC, "fT.dat");
   plot(dfC3, "dfT.dat");
-};
+}

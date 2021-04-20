@@ -210,12 +210,8 @@ int Function::memory_size() const { return sizeof(*this) + m_f->memory_size(); }
 Function sin(const Function &f) { return Function(new Sinus(f)); }
 Function cos(const Function &f) { return Function(new Cosinus(f)); }
 // Des opérateurs primaires
-Function operator+(const Function &f, const Function &g) {
-  return new Add(f, g);
-}
-Function operator*(const Function &f, const Function &g) {
-  return new Mult(f, g);
-}
+Function operator+(const Function &f, const Function &g) { return new Add(f, g); }
+Function operator*(const Function &f, const Function &g) { return new Mult(f, g); }
 Function operator/(const Function &f, const Function &g) {
   return f * Function(new Inverse(g));
 }
@@ -259,9 +255,7 @@ Function Add::diff() const { return m_f->diff() + m_g->diff(); }
 Function Mult::diff() const {
   return m_f->diff() * Function(m_g) + Function(m_f) * m_g->diff();
 }
-Function Inverse::diff() const {
-  return -m_f->diff() / Function(new Pow(m_f, 2));
-}
+Function Inverse::diff() const { return -m_f->diff() / Function(new Pow(m_f, 2)); }
 Function Pow::diff() const {
   // m_n != 0 par construction
   if (m_n == 1)
@@ -274,9 +268,7 @@ Function Pow::diff() const {
 Function d(const Function &f) { return f.diff(); }
 
 // Affichage d'une expression
-std::ostream &operator<<(std::ostream &o, const Function &f) {
-  return f.print(o);
-}
+std::ostream &operator<<(std::ostream &o, const Function &f) { return f.print(o); }
 
 void plot(const Function &f, const char *filename) {
   std::ofstream o(filename);
@@ -300,27 +292,25 @@ int main() {
 
   Function g = sin(x);
   Function dg = d(g);
-  std::cout << "g(1) = " << std::setw(8) << g(1)
-            << ";\t g'(1) = " << std::setw(8) << dg(1) << std::endl;
+  std::cout << "g(1) = " << std::setw(8) << g(1) << ";\t g'(1) = " << std::setw(8)
+            << dg(1) << std::endl;
   Function h = x ^ 4;
-  std::cout << "h(2) = " << std::setw(8) << h(2)
-            << ";\t h'(2) = " << std::setw(8) << d(d(h))(2.) << std::endl;
+  std::cout << "h(2) = " << std::setw(8) << h(2) << ";\t h'(2) = " << std::setw(8)
+            << d(d(h))(2.) << std::endl;
   // Function f = (sin(8*x-1)^3.) / cos(x^2.);
   Function f = (((2 * x + 1) ^ 4) - ((x - 1) ^ 3) / (1 + x + ((x / 2.) ^ 3)));
-  std::cout << "f(2) = " << std::setw(8) << f(2)
-            << ";\t f'(2) = " << std::setw(8) << d(f)(2.) << std::endl;
+  std::cout << "f(2) = " << std::setw(8) << f(2) << ";\t f'(2) = " << std::setw(8)
+            << d(f)(2.) << std::endl;
   std::cout << "  f  is " << f << std::endl;
   std::cout << "d(f) is " << d(f) << std::endl;
 
   std::cout << "Sizeofs : "
-            << "\n\t  x=" << (x).memory_size()
-            << "\n\t  g=" << (g).memory_size()
-            << "\n\t dg=" << (dg).memory_size()
-            << "\n\t  h=" << (h).memory_size()
+            << "\n\t  x=" << (x).memory_size() << "\n\t  g=" << (g).memory_size()
+            << "\n\t dg=" << (dg).memory_size() << "\n\t  h=" << (h).memory_size()
             << "\n\tddh=" << (d(d(h))).memory_size()
-            << "\n\t  f=" << (f).memory_size()
-            << "\n\t df=" << (d(f)).memory_size() << "\n";
+            << "\n\t  f=" << (f).memory_size() << "\n\t df=" << (d(f)).memory_size()
+            << "\n";
 
   plot(f, "f.dat");
   plot(d(f), "df.dat");
-};
+}

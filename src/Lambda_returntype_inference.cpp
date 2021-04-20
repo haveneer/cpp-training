@@ -19,17 +19,17 @@ auto lambda_to_fp(T) -> decltype(mem_func_to_func(&T::operator()));
 template <typename T> std::string type() { if (std::is_same_v<std::remove_extent_t<std::remove_const_t< std::remove_pointer_t<std::remove_reference_t<T>>>>, T>) return typeid(T).name(); else if (std::is_array_v<T>) return type<std::remove_extent_t<T>>() + "[]"; else if (std::is_const_v<T>) return type<std::remove_const_t<T>>() + " const"; else if (std::is_pointer_v<T>) return type<std::remove_pointer_t<T>>() + "*"; else if (std::is_reference_v<T>) return type<std::remove_reference_t<T>>() + ((std::is_lvalue_reference_v<T>) ? "&" : "") + ((std::is_rvalue_reference_v<T>) ? "&&" : ""); else std::string("cannot decode ") + typeid(T).name(); }
 #endif              // clang-format on
 
-#define DISPLAY_HEADER()                                                       \
-  std::cout << std::setw(12) << u8"\u03BB" << "  : " << std::setw(12)          \
-            << "C++ type" << std::setw(20) << "equivalent type"                \
+#define DISPLAY_HEADER()                                                            \
+  std::cout << std::setw(12) << u8"\u03BB" << "  : " << std::setw(12) << "C++ type" \
+            << std::setw(20) << "equivalent type"                                   \
             << "\n"
 
-#define DISPLAY_TYPE(F)                                                        \
-  {                                                                            \
-    using std_func = decltype(lambda_to_fp(F));                                \
-    std::cout << std::setw(12) << #F << " : " << std::setw(12)                 \
-              << type<decltype(F)>() << std::setw(20)                          \
-              << type<typename fn_sig<std_func>::type>() << "\n";              \
+#define DISPLAY_TYPE(F)                                           \
+  {                                                               \
+    using std_func = decltype(lambda_to_fp(F));                   \
+    std::cout << std::setw(12) << #F << " : " << std::setw(12)    \
+              << type<decltype(F)>() << std::setw(20)             \
+              << type<typename fn_sig<std_func>::type>() << "\n"; \
   }
 //#endregion
 
