@@ -1,15 +1,26 @@
 //#region [Declaration]
 #include <iostream>
 #include <memory>
+
+#if __has_include("colorize.hpp")
+#include "colorize.hpp"
+#else
+struct Colorize {
+  const void *p;
+};
+inline std::ostream &operator<<(std::ostream &o, const Colorize &c) {
+  return o << c.p;
+}
+#endif
 //#endregion
 
 class Foo {
 public:
   Foo() : Foo(0) {}
   explicit Foo(const int n) : m_n(n) {
-    std::cout << "Ctor Foo(" << m_n << ") @" << this << "\n";
+    std::cout << "Ctor Foo(" << m_n << ") @" << Colorize{this} << "\n";
   }
-  ~Foo() { std::cout << "Dtor Foo(" << m_n << ") @" << this << "\n"; }
+  ~Foo() { std::cout << "Dtor Foo(" << m_n << ") @" << Colorize{this} << "\n"; }
 
   Foo(const Foo &) = delete;
   void operator=(const Foo &) = delete;
@@ -19,7 +30,7 @@ public:
   }
 
   friend std::ostream &operator<<(std::ostream &o, const Foo &that) {
-    return o << "Foo(" << that.m_n << ") @" << &that;
+    return o << "Foo(" << that.m_n << ") @" << Colorize{&that};
   }
 
 private:
@@ -27,13 +38,9 @@ private:
 };
 
 //#region [Functions]
-auto f_by_copy(std::unique_ptr<Foo> p) {
-  std::cout << "By copy: " << *p << "\n";
-}
+auto f_by_copy(std::unique_ptr<Foo> p) { std::cout << "By copy: " << *p << "\n"; }
 
-auto f_by_ref(std::unique_ptr<Foo> &p) {
-  std::cout << "By ref: " << *p << "\n";
-}
+auto f_by_ref(std::unique_ptr<Foo> &p) { std::cout << "By ref: " << *p << "\n"; }
 
 auto f_by_move(std::unique_ptr<Foo> &&p) {
   std::unique_ptr<Foo> &q = p; // TODO: what if not ref ?
