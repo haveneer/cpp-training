@@ -1,5 +1,6 @@
 //#region [declarations]
-// Example from https://www.codingame.com/playgrounds/2205/7-features-of-c17-that-will-simplify-your-code/structured-bindings
+// Example from
+// https://www.codingame.com/playgrounds/2205/7-features-of-c17-that-will-simplify-your-code/structured-bindings
 
 #include <cstdlib>
 #include <iostream>
@@ -25,7 +26,19 @@ struct S {
 int main() {
   std::set<S> mySet;
 
-  // pre C++17:
+  // pre C++11:
+  {
+    S value{42, "Test", 3.14};
+    // unpack manually
+    std::pair<std::set<S>::iterator, bool> inserter = mySet.insert(value);
+    std::set<S>::iterator &iter = inserter.first;
+    const bool inserted = inserter.second;
+
+    if (inserted)
+      std::cout << "Value(" << iter->n << ", ...) was inserted\n";
+  }
+  
+  // with C++11:
   {
     S value{42, "Test", 3.14};
     std::set<S>::iterator iter;
