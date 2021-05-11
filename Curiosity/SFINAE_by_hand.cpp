@@ -6,7 +6,7 @@
 
 template <bool B> using bool_ = std::integral_constant<bool, B>;
 
-template <typename... Args> using requires = void;
+template <typename... Args> using requires = void; // could use std::void_t<Args...>
 
 template <typename T, typename EnableIf = void>
 struct has_size_member : bool_<false> {};
