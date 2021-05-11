@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 #include <tuple>
+#include <cassert>
 //#endregion
 
 struct MyStructBase {
