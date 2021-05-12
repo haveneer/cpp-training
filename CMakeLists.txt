@@ -60,6 +60,7 @@ endif ()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE) # 
 
 add_subdirectory(third_party/googletest)
+OPTION(BENCHMARK_ENABLE_TESTING "" OFF)
 add_subdirectory(third_party/benchmark)
 
 #------------------------------------------------------
