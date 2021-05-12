@@ -2,7 +2,7 @@ struct Base final {
   int i;
 }; // Base class: a final class, no virtual dtor
 
-// struct DerivedBase : public Base {}; // illegal: cannot override final struct
+// struct DerivedBase : public Base {}; // error: cannot override final struct
 
 class BaseClass {
 public:
@@ -22,7 +22,13 @@ public:
   int h() override { return 0; } // ok overrides BaseClass::h
 };
 
+auto call_on_derived(DerivedClass &c) { // since DerivedClass is 'final',
+                                        // no other derived class can be used
+                                        // as parameter => the compiler can resolve
+  return c.h();                         // virtual call at compile time: OPTIMIZATION
+}
 
 int main() {
-  return 0;
+  DerivedClass c;
+  call_on_derived(c);
 }
