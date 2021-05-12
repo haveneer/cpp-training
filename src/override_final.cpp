@@ -11,7 +11,7 @@ public:
 public:
   virtual int f(int) { return 0; }    // Pure virtual interface are always better
   virtual int g() final { return 0; } // HINT: these non virtual methods are for
-  virtual int f() { return 0; }       // pedagogic purpose ONLY
+  virtual int h() { return 0; }       // pedagogic purpose ONLY
 
 protected:
   void hidden_internal_method() {}
@@ -22,7 +22,7 @@ public:
   DerivedClass() = default;
   int f(double) /* override */ { return 1; } // does not override any method of Class
   // int g() { return 1; }                   // error: cannot override final method
-  int f() override { return 0; } //          // ok overrides BaseClass::h
+  int h() override { return 0; } //          // ok overrides BaseClass::h
 
 public:
   using BaseClass::hidden_internal_method; // now public !
