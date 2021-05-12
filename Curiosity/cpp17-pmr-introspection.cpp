@@ -7,8 +7,6 @@
 // https://www.bfilipek.com/2020/06/pmr-hacking.html
 // https://www.bfilipek.com/2020/08/pmr-dbg.html
 
-// later: use https://github.com/google/benchmark
-
 #include <array>
 #include <list>
 #include <set>
