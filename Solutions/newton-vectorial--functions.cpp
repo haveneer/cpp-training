@@ -64,7 +64,7 @@ auto LUSolver(const Matrix &LU, const std::vector<std::size_t> &pivot) {
     }
     return x;
   };
-};
+}
 
 auto conditionNumberEstimator(const Matrix &m, const Matrix &LU,
                               const std::vector<std::size_t> &pivot) {
