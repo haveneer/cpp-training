@@ -6,7 +6,7 @@ void print(Arg&& arg, Args&& ...args){
   int _[]{0, (void(std::cout << ',' << std::forward<Args>(args)), 0)...};
   (void)_; // disable warning on unused variable 
   std::cout << std::endl;
-};
+}
 
 int main() { // C++11 / C++14
   print("Hello", "world!");

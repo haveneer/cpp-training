@@ -108,4 +108,4 @@ double ulp(double f) {
 
   // implicitly uses b as equal to 2 in ldexp
   return std::ldexp(1, std::max(f_exp, e_min) - p + 1);
-};
+}

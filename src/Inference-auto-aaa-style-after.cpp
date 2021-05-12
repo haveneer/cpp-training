@@ -69,7 +69,7 @@ int main() {
 // clang-format on
 
 auto f1(double) -> int;
-auto f2(double) { /*...*/ };
+auto f2(double) { /*...*/ }
 auto f3 = [](double) { /*...*/ };
 
 using dict = std::set<std::string>;

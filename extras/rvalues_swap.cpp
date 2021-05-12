@@ -14,7 +14,7 @@ void exchange(Object &o1, Object &o2) {
   Object tmp(std::move(o1));
   o1 = std::move(o2);
   o2 = std::move(tmp);
-};
+}
 
 int main() {
   Object o1, o2;
