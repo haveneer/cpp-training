@@ -1,34 +1,6 @@
 #include <cstdint>
 
-// later: use https://github.com/google/benchmark
-#ifndef QUICK_BENCH
-namespace benchmark {
-
-class State {
-public:
-  struct Iterator {
-    uint64_t pos;
-    void operator++() { ++pos; }
-    auto operator*() const { return pos; }
-    bool operator!=(const Iterator &other) const { return pos != other.pos; }
-  };
-
-public:
-  State(uint64_t size) : m_size{size}, m_current{0} {}
-  Iterator begin() const { return {m_current}; }
-  Iterator end() const { return {m_size}; }
-
-private:
-  uint64_t m_size;
-  uint64_t m_current;
-};
-
-template <typename T> void DoNotOptimize(const T &) {}
-
-} // namespace benchmark
-#define BENCHMARK(X)
-#endif
-
+#include <benchmark/benchmark.h>
 #include <ctime>
 #include <map>
 #include <random>
@@ -78,14 +50,4 @@ static void UMap(benchmark::State &state) {
 // Register the function as a benchmark
 BENCHMARK(UMap);
 
-// ------------------------------------------------>%
-int main() {
-  benchmark::State state{10 * SIZE};
-#ifdef HAS_PMR
-  PMRList(state);
-  PMRVector(state);
-#endif
-  Random(state);
-  Map(state);
-  UMap(state);
-}
+BENCHMARK_MAIN();
