@@ -1,7 +1,6 @@
 #include <cstdint>
 
 #include <benchmark/benchmark.h>
-#include <ctime>
 #include <map>
 #include <random>
 #include <unordered_map>
