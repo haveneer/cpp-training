@@ -61,4 +61,6 @@ int main() {
 
   auto finder3 = products3.find("Car"); // My custom 'transparent' comparator
   assert(finder3 != products2.end());
+  
+  // Exists also for unordered_map & unordered_set 
 }
