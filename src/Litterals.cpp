@@ -44,7 +44,7 @@ int main() {
   DISPLAY( 314                                                 );
   DISPLAY( 314U                                                );
   DISPLAY( 18446744073709550592ull                             ); /* C++11 */
-  DISPLAY( 1'844'674'407'370'955'0592ull                       ); /* C++14 */
+  DISPLAY( 18'446'744'073'709'550'592ull                       ); /* C++14 */
   DISPLAY( 0b100111                                            ); /* C++14 */
   DISPLAY( 012345670                                           );
   DISPLAY( 0x123DEF                                            );
