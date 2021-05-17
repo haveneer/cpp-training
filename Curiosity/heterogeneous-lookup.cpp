@@ -60,7 +60,7 @@ int main() {
       {"Orange", "Something to eat and refresh", 50.0}};
 
   auto finder3 = products3.find("Car"); // My custom 'transparent' comparator
-  assert(finder3 != products2.end());
+  assert(finder3 != products3.end());
   
   // Exists also for unordered_map & unordered_set 
 }
