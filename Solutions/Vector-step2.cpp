@@ -2,10 +2,14 @@
 #include <algorithm>
 #include <iostream>
 #include <memory>
+#include <type_traits>
 #include <utility>
+#include <cassert>
 //#endregion
 
-template <typename T> class Vector {
+template <typename T,
+          std::enable_if_t<std::is_trivially_copy_constructible_v<T>, int> = 0>
+class Vector {
 public:
   // Without 'explicit', indirect instanciation as [](Vector<int> v){}(2) is allowed
   explicit Vector(int size) : m_size{size}, m_v{std::make_unique<T[]>(size)} {}
