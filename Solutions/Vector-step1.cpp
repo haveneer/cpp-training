@@ -80,4 +80,6 @@ int main() {
   // TODO define an algo using lambda on Vector
   // TODO make it generic / template
   // TODO optional: noexcept specifier
+  // TODO ajouter des vecteurs de type différents
+  // TODO rendre STL compliant Vector
 }
