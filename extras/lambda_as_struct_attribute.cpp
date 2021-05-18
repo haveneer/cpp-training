@@ -1,5 +1,6 @@
 //#region [declarations]
 #include <iostream>
+#include <functional>
 //#endregion
 
 template <typename Lambda> struct X {
