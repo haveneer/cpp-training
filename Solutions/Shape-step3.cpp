@@ -51,7 +51,7 @@ public:
   Grid() {}
   ~Grid() override = default;
   void display() const override { // fold expression to print name including dims
-    ((std::cout << "Grid< ") << ... << std::to_string(dims) + " ") << ">\n";
+    ((std::cout << "Grid< ") << ... << (std::to_string(dims) + " ")) << ">\n";
   }
 
 private:
