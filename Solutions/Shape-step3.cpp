@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <algorithm>
 //#endregion
 
 // TODO Créer une classe IShape avec une methode virtuelle 'display'
