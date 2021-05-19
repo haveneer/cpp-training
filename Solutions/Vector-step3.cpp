@@ -8,6 +8,7 @@
 #include <utility>
 #include <vector>
 #include <iterator>
+#include <cstring>
 //#endregion
 
 template <typename T> class Vector {
@@ -61,6 +62,7 @@ private:
   static void raw_copy(T *dst, const T *src, int size) {
     // Prefer optimized copy for trivially copiable data
     if constexpr (std::is_trivially_copy_constructible_v<T>) {
+      // For DEMO ONLY; before any performance measure prefer std::copy
       std::memcpy(dst, src, sizeof(T) * size);
     } else {
       for (auto i = 0; i < size; ++i)
