@@ -1,9 +1,10 @@
 //#region [declarations]
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <memory>
+#include <string>
 #include <vector>
-#include <algorithm>
 //#endregion
 
 // TODO Créer une classe IShape avec une methode virtuelle 'display'
@@ -11,7 +12,7 @@
 // TODO Créer une 'factory' de Shape dont la clef est un 'enum'
 // TODO Construire un vecteur de IShape
 // TODO Parcourir avec un algorithme de la STL pour parcourir et afficher les formes
-// TODO Peut-on faire plus performant / plus fiable ? 
+// TODO Peut-on faire plus performant / plus fiable ?
 
 class IShape {
 public:
@@ -56,8 +57,10 @@ public:
   }
 
 private:
-  int cells[(dims * ...)]; // compile time computation of the number of cells
-                           // using fold expression
+  static constexpr int ncells = (dims + ...); // compile time computation of the
+  int cells[ncells];                          // number of cells using fold expr
+                                              // NB: MSVC does not support to inline
+                                              // 'ncells' in 'cells' declaration
 };
 
 enum class Shape : int { Point, Circle, Square, Rectangle };
@@ -78,6 +81,7 @@ std::shared_ptr<IShape> runtimeMakeShape(Shape sh, const std::vector<int> &args)
     return std::make_shared<Rectangle>(args[0], args[1]);
   default:
     assert(false); // should not be possible
+    return nullptr;
   }
 }
 
