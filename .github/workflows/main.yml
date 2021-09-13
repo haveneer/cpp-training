@@ -6,6 +6,7 @@ on: [ push ]
 
 jobs:
   build-unix:
+    name: ${{ matrix.name }}
 
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}
@@ -57,11 +58,14 @@ jobs:
         run: cd build && ctest --output-on-failure
 
   build-windows:
+    name: ${{ matrix.name }}
 
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ windows-latest ]
+        include:
+          - name: Windows
+            os: windows-latest
 
     steps:
       - uses: actions/checkout@v2
