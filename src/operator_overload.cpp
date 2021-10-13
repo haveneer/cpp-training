@@ -6,8 +6,8 @@ struct Number {
   int val;
 
   // Operator overload inside type: first operand is implicitly current object
-  auto operator+(const Number &that) { return Number{val + that.val}; }
-  auto operator+(const int &that) { return Number{val + that}; }
+  auto operator+(const Number &that) const { return Number{val + that.val}; }
+  auto operator+(const int &that) const { return Number{val + that}; }
   auto operator<=(const Number &that) const { return val <= that.val; }
 };
 

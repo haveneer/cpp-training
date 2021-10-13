@@ -52,7 +52,7 @@ int main() {
   {
     std::unique_ptr<Foo> p(new Foo{3});
     std::unique_ptr<Foo> p1 = std::make_unique<Foo>(4); // Requires C++14
-    // std::unique_ptr<int> p2 = p1; // error: use of deleted function
+    // std::unique_ptr<Foo> p2 = p1; // error: use of deleted function
     //                               // unique_ptr(const unique_ptr&) = delete;
     std::unique_ptr<Foo> p3 = std::move(p1); // p1 is lost
     std::cout << "p1 is alive ? " << (bool)p1 << "\n";
