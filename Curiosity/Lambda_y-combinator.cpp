@@ -14,10 +14,14 @@ template <typename T> std::string type() { if (std::is_same_v<std::remove_extent
 #endif              // clang-format on
 //#endregion
 
-// Y combinator : C++ try again ?
-auto Y = [](auto &&f) {
-  auto A = [f](auto &&x) { return [f, x](auto &&y) { return f(x(x))(y); }; };
-  return A(A);
+// Y combinator = λf.(λx.xx)(λy.f(yy))
+// std::function<int(int)> is required because compiler cannot infer type
+// it cannot be replaced by a decltype()
+// Thus, this expression cannot be constexpr : https://godbolt.org/z/so97bedzP
+constexpr auto Y = [](auto &&f) {
+  return [](auto &&x) { return x(x); }([=](auto &&y) -> std::function<int(int)> {
+    return f([=](auto &&a) { return (y(y))(a); });
+  });
 };
 
 template <typename F> struct recursive {
@@ -54,6 +58,20 @@ int main() {
   // do not use std::function to make recursive anonymous function:
   // it could be very slower than true lambdas
 
+  constexpr auto almost_fac = [](auto f) {
+    return [=](auto n) { return n <= 1 ? n : n * f(n - 1); };
+  };
+  constexpr auto almost_fib = [](auto f) {
+    return [=](auto n) { return n < 2 ? 1 : f(n - 1) + f(n - 2); };
+  };
+
+  auto yfib = Y(almost_fib); // cannot be constexpr : https://godbolt.org/z/so97bedzP
+  auto yfac = Y(almost_fac); // 
+  std::cout << yfac(6) << '\n';
+  std::cout << yfib(6) << '\n';
+  //  static_assert((yfib(6) == 13), "");
+  //  static_assert((yfac(6) == 720), "");
+
   constexpr auto fib = rec17([](auto fib, int i) -> int {
     if (i == 0 || i == 1)
       return 1;
@@ -80,14 +98,10 @@ int main() {
       return b * b + sum(b - 1);
     }
   });
-
   static_assert((sum_interval(1, 3) == 14), "");
   std::cout << sum_interval(1, 3) << '\n';
 
   static_assert((sum_from_1(3) == 14), "");
+  //  static_assert((ysum_from_1(3) == 14), "");
   std::cout << sum_from_1(3) << '\n';
-
-  //  auto s = [](auto &&x) { return std::sin(x); };
-  //  auto ys = Y(s);
-  //  std::cout << ys(1) << "\n";
 }
