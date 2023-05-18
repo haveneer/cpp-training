@@ -2,6 +2,7 @@
 
 #include "gtest-parametric-sequence.hpp"
 #include "gtest/gtest.h"
+#include <algorithm>
 #include <array>
 #include <tuple>
 
