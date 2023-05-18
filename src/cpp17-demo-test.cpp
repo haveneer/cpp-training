@@ -285,7 +285,7 @@ void structured_bindings()
   for (const auto& [key, value] : mapping) {
     // Do something with key and value
   }
-  //tuple<float&,char&&,int> tpl(x,move(y),z);
+  //tuple<float&,char&&,int> tpl(x,std::move(y),z);
   //const auto& [a,b,c] = tpl;
 }
 
@@ -406,7 +406,7 @@ void map_demo()
   auto nh = m.extract(2);
   nh.key() = 4;
   /// @brief https://en.cppreference.com/w/cpp/container/map/insert
-  m.insert(move(nh));
+  m.insert(std::move(nh));
   // m == {{1, "mango"}, {3, "guava"}, {4, "papaya"}}
 
   /// @brief https://en.cppreference.com/w/cpp/container/map/merge
